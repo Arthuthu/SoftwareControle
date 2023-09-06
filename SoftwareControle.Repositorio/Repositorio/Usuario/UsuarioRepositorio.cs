@@ -1,0 +1,55 @@
+﻿using HFAcademia.Repositorio.Context;
+using Microsoft.EntityFrameworkCore;
+using SoftwareControle.Models;
+using SoftwareControle.Repository.Repositorio.Usuario;
+
+namespace HFAcademia.Repositório;
+
+public class UsuarioRepositorio : IUsuarioRepositorio
+{
+	private readonly ApplicationDbContext _context;
+	public UsuarioRepositorio(ApplicationDbContext context)
+	{
+		_context = context;
+	}
+	public async Task<List<UsuarioModel>?> Buscar(CancellationToken cancellationToken)
+	{
+		List<UsuarioModel>? users = await _context.Usuarios.ToListAsync(cancellationToken);
+
+		return users is not null ? users : null;
+	}
+	public async Task<UsuarioModel?> Buscar(Guid id, CancellationToken cancellationToken)
+	{
+		UsuarioModel? usuario = await _context.Usuarios.SingleOrDefaultAsync
+			(u => u.Id == id, cancellationToken);
+
+		return usuario is not null ? usuario : null;
+	}
+	public async Task Adicionar(UsuarioModel usuario, CancellationToken cancellationToken)
+	{
+		await _context.Usuarios.AddAsync(usuario, cancellationToken);
+		await _context.SaveChangesAsync(cancellationToken);
+	}
+	public async Task<bool> Atualizar(UsuarioModel user, CancellationToken cancellationToken)
+	{
+		UsuarioModel? requestedUser = await _context.Usuarios.SingleOrDefaultAsync
+			(u => u.Id == user.Id, cancellationToken);
+
+		if (requestedUser is null)
+			return false;
+
+		_context.Usuarios.Update(requestedUser);
+		await _context.SaveChangesAsync(cancellationToken);
+
+		return true;
+	}
+	public async Task<bool> Deletar(Guid id, CancellationToken cancellationToken)
+	{
+		int colunasAfetadas = await _context.Usuarios.Where(u => u.Id == id)
+									.ExecuteDeleteAsync(cancellationToken);
+
+		await _context.SaveChangesAsync(cancellationToken);
+
+		return colunasAfetadas > 0;
+	}
+}
