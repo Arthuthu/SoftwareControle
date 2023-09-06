@@ -1,0 +1,13 @@
+Colocar no secrets da API:
+
+{
+  "ConnectionStrings": {
+    "SoftwareControleConnection": ""
+  },
+  "Jwt": {
+    "Key": "MVOkCkVbj1CpfCc9cCef19OVVjCb1knKkCpCc9fCcMOebCVOVcMkfCj",
+    "Issuer": "https://localhost:7007/",
+    "Audience": "https://localhost:7007/"
+  }
+}
+
