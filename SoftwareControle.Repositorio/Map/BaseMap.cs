@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace HFAcademia.Map;
+namespace SoftwareControle.Map;
 
 public class BaseMap<T> : IEntityTypeConfiguration<T> where T : class
 {

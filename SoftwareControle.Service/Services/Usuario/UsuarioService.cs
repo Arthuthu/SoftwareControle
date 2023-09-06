@@ -1,7 +1,7 @@
 ﻿using SoftwareControle.Models;
 using SoftwareControle.Repository.Repositorio.Usuario;
 
-namespace HFAcademia.Services.Services.Usuario;
+namespace SoftwareControle.Services.Services.Usuario;
 
 public class UsuarioService : IUsuarioService
 {

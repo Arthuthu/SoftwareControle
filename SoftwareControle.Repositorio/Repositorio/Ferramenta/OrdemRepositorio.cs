@@ -1,4 +1,4 @@
-﻿using HFAcademia.Repositorio.Context;
+﻿using SoftwareControle.Repositorio.Context;
 using Microsoft.EntityFrameworkCore;
 using SoftwareControle.Models;
 

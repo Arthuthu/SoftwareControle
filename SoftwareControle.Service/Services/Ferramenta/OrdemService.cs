@@ -1,7 +1,7 @@
 ﻿using SoftwareControle.Models;
 using SoftwareControle.Repository.Repositorio.Ordem;
 
-namespace HFAcademia.Services.Services.Usuario;
+namespace SoftwareControle.Services.Services.Usuario;
 
 public class FerramentaService : IFerramentaService
 {

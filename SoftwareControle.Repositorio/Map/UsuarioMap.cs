@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SoftwareControle.Models;
 
-namespace HFAcademia.Map;
+namespace SoftwareControle.Map;
 
 public class UsuarioMap : BaseMap<FerramentaModel>
 {

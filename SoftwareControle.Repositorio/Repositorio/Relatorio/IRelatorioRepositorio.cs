@@ -1,6 +1,6 @@
 ﻿using SoftwareControle.Models;
 
-namespace HFAcademia.Repositório
+namespace SoftwareControle.Repositório
 {
 	public interface IRelatorioRepositorio
 	{

@@ -1,6 +1,6 @@
-﻿using HFAcademia.Repositório;
-using HFAcademia.Repositorio.Context;
-using HFAcademia.Services.Services.Usuario;
+﻿using SoftwareControle.Repositório;
+using SoftwareControle.Repositorio.Context;
+using SoftwareControle.Services.Services.Usuario;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -8,7 +8,7 @@ using SoftwareControle.Repository.Repositorio.Ordem;
 using SoftwareControle.Repository.Repositorio.Usuario;
 using System.Text;
 
-namespace HFAcademia.WebUi.Configuration;
+namespace SoftwareControle.WebUi.Configuration;
 
 public static class DependencyInjection
 {

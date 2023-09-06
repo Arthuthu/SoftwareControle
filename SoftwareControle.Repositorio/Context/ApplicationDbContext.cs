@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SoftwareControle.Models;
 
-namespace HFAcademia.Repositorio.Context;
+namespace SoftwareControle.Repositorio.Context;
 
 public class ApplicationDbContext : DbContext
 {

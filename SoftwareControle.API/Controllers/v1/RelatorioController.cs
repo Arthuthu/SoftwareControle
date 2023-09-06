@@ -1,8 +1,8 @@
-﻿using HFAcademia.Services.Services.Usuario;
+﻿using SoftwareControle.Services.Services.Usuario;
 using Microsoft.AspNetCore.Mvc;
 using SoftwareControle.Models;
 
-namespace HFAcademia.API.Controllers.v1;
+namespace SoftwareControle.API.Controllers.v1;
 
 [Route("api/v1/[controller]")]
 [ApiController]

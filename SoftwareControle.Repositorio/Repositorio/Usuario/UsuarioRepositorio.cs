@@ -1,9 +1,9 @@
-﻿using HFAcademia.Repositorio.Context;
+﻿using SoftwareControle.Repositorio.Context;
 using Microsoft.EntityFrameworkCore;
 using SoftwareControle.Models;
 using SoftwareControle.Repository.Repositorio.Usuario;
 
-namespace HFAcademia.Repositório;
+namespace SoftwareControle.Repositório;
 
 public class UsuarioRepositorio : IUsuarioRepositorio
 {

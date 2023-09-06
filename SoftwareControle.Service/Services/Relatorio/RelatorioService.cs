@@ -1,7 +1,7 @@
-﻿using HFAcademia.Repositório;
+﻿using SoftwareControle.Repositório;
 using SoftwareControle.Models;
 
-namespace HFAcademia.Services.Services.Usuario;
+namespace SoftwareControle.Services.Services.Usuario;
 
 public class RelatorioService : IRelatorioService
 {

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using SoftwareControle.Models;
 
-namespace HFAcademia.Services.Validacao;
+namespace SoftwareControle.Services.Validacao;
 
 public class UsuarioValidacao : AbstractValidator<UsuarioModel>
 {

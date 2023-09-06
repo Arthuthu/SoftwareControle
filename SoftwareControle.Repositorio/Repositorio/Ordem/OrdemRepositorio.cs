@@ -1,5 +1,5 @@
-﻿using HFAcademia.Repositorio.Context;
-using HFAcademia.Repositório;
+﻿using SoftwareControle.Repositorio.Context;
+using SoftwareControle.Repositório;
 using SoftwareControle.Models;
 using Microsoft.EntityFrameworkCore;
 

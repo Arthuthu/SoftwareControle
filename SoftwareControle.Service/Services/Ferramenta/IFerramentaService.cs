@@ -1,6 +1,6 @@
 ﻿using SoftwareControle.Models;
 
-namespace HFAcademia.Services.Services.Usuario
+namespace SoftwareControle.Services.Services.Usuario
 {
 	public interface IFerramentaService
 	{
