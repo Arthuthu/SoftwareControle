@@ -1,5 +1,13 @@
-var builder = WebApplication.CreateBuilder(args);
+using SoftwareControle.WebUi.Configuration;
 
+var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
+
+builder.Services
+	.AddApplicationDbContext(config)
+	.AddApplicationDependencyInjection()
+	.AddAuthenticationAndAuthorization(config)
+	.AddCorsPolicy();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -14,7 +22,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("OpenCorsPolicy");
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
