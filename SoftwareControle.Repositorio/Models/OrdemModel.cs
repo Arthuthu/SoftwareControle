@@ -8,7 +8,7 @@ public class OrdemModel
     public DateTime DataCriacao { get; set; }
     public DateTime DataPrazoMaximo { get; set; }
     public string NivelUrgencia { get; set; } = string.Empty;
-    public bool Concluida { get; set; } = false;
+    public string Situacao { get; set; } = string.Empty;
 
     // Propriedades de navegação
     public FerramentaModel? Ferramenta { get; set; }
