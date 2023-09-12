@@ -23,6 +23,6 @@ public class FerramentaMap : BaseMap<FerramentaModel>
 
 
         builder.HasOne(x => x.Usuario).WithMany(x => x.Ferramenta)
-			.HasForeignKey(x => x.UsuarioId).OnDelete(DeleteBehavior.NoAction); ;
+			.HasForeignKey(x => x.UsuarioId).OnDelete(DeleteBehavior.NoAction);
     }
 }
