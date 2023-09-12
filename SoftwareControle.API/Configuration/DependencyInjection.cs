@@ -18,13 +18,11 @@ public static class DependencyInjection
         services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
         services.AddScoped<IFerramentaRepositorio, FerramentaRepositorio>();
         services.AddScoped<IOrdemRepositorio, OrdemRepositorio>();
-        services.AddScoped<IRelatorioRepositorio, RelatorioRepositorio>();
 
 		//Services
 		services.AddScoped<IUsuarioService, UsuarioService>();
 		services.AddScoped<IFerramentaService, FerramentaService>();
 		services.AddScoped<IOrdemService, OrdemService>();
-		services.AddScoped<IRelatorioService, RelatorioService>();
 
 		return services;
     }

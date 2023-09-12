@@ -1,18 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SoftwareControle.Models;
 
 namespace SoftwareControle.Map;
 
-public class UsuarioMap : BaseMap<FerramentaModel>
+public class UsuarioMap : BaseMap<UsuarioModel>
 {
 	public UsuarioMap() : base("Usuarios")
 	{
 	}
 
-	public override void Configure(EntityTypeBuilder<FerramentaModel> builder)
+	public override void Configure(EntityTypeBuilder<UsuarioModel> builder)
 	{
 		base.Configure(builder);
 
 		builder.HasKey(x => x.Id);
-	}
+
+		builder.Property(x => x.Usuario).IsRequired().HasColumnName("Usuario").HasMaxLength(100);
+		builder.Property(x => x.Senha).IsRequired().HasColumnName("Senha").HasMaxLength(20);
+		builder.Property(x => x.Nome).IsRequired().HasColumnName("Nome").HasMaxLength(100);
+		builder.Property(x => x.DataCriacao).IsRequired().HasColumnName("DataCriacao").HasMaxLength(100);
+    }
 }

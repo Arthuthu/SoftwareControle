@@ -50,7 +50,7 @@ public class FerramentaController : ControllerBase
     }
 
     [HttpPut, Route("/ferramenta/atualizar")]
-    public async Task<IActionResult> Put([FromBody] FerramentaModel ferramenta,
+    public async Task<IActionResult> Put([FromForm] FerramentaModel ferramenta,
         CancellationToken cancellationToken)
     {
         bool ferramentaFoiAtualizada = await _ferramentaService.Atualizar(ferramenta,

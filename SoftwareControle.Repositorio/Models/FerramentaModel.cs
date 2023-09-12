@@ -6,9 +6,13 @@ public class FerramentaModel
     public string Descricao { get; set; } = string.Empty;
     public bool Disponivel { get; set; }
     public byte[]? Imagem { get; set; }
+    public DateTime DataCricao { get; set; }
+
+    //Chave estrangeira
+    public Guid UsuarioId { get; set; }
+
 
     // Propriedades de navegação
-    public List<UsuarioModel>? Usuarios { get; set; }
-    public List<RelatorioModel>? Relatorios { get; set; }
-    public List<OrdemModel> CriarOrdens { get; set; } = new List<OrdemModel>();
+    public UsuarioModel? Usuario { get; set; }
+    public List<OrdemModel>? Ordem { get; set; }
 }

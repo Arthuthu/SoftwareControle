@@ -50,7 +50,7 @@ public class OrdemController : ControllerBase
     }
 
     [HttpPut, Route("/ordem/atualizar")]
-    public async Task<IActionResult> Put([FromBody] OrdemModel ordem,
+    public async Task<IActionResult> Put([FromForm] OrdemModel ordem,
         CancellationToken cancellationToken)
     {
         bool ordemFoiAtualizada = await _ordemService.Atualizar(ordem,

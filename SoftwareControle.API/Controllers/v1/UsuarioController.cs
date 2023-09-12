@@ -50,7 +50,7 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPut, Route("/usuario/atualizar")]
-    public async Task<IActionResult> Put([FromBody] UsuarioModel usuario,
+    public async Task<IActionResult> Put([FromForm] UsuarioModel usuario,
         CancellationToken cancellationToken)
     {
         bool usuarioFoiAtualizado = await _usuarioService.Atualizar(usuario,
