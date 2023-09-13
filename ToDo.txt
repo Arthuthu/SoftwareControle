@@ -1,9 +1,3 @@
-FluentValidation para as entidades
-Fazer tela de login e verificar se usuario consegue logar
-Buscar usuario por login method
 Tela Index
 
-
-Ferramenta tera usuario mais recente que atualizou? Relatorio de atualizacao da ferramenta (log)
-
-Imagem da ferramenta nao sendo adicionado corretamente, verificar
+(Adicionar imagem para arquivo ou banco de dados para ferramenta nao funciona)

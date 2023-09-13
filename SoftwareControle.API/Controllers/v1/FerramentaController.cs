@@ -38,6 +38,7 @@ public class FerramentaController : ControllerBase
     }
 
     [HttpPost, Route("/ferramenta/criar")]
+    [Consumes("multipart/form-data")]
     public async Task<ActionResult<string?>> Post([FromForm] FerramentaModel ferramenta,
         CancellationToken cancellationToken)
     {

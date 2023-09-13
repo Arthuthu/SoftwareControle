@@ -8,6 +8,7 @@ public class UsuarioModel
 	public string Nome { get; set; } = string.Empty;
     public string Cargo { get; set; } = string.Empty;
     public DateTime DataCriacao { get; set; }
+    public DateTime? DataAtualizacao { get; set; }
 
     // Propriedades de navegação
     public List<FerramentaModel>? Ferramenta { get; set; }

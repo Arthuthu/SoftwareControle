@@ -20,7 +20,7 @@ public class FerramentaMap : BaseMap<FerramentaModel>
 		builder.Property(x => x.Descricao).IsRequired().HasColumnName("Descricao").HasMaxLength(500);
 		builder.Property(x => x.Imagem).HasColumnName("Imagem");
         builder.Property(x => x.DataCriacao).IsRequired().HasColumnName("DataCriacao").HasMaxLength(50);
-
+        builder.Property(x => x.DataCriacao).HasColumnName("DataAtualizacao");
 
         builder.HasOne(x => x.Usuario).WithMany(x => x.Ferramenta)
 			.HasForeignKey(x => x.UsuarioId).OnDelete(DeleteBehavior.NoAction);

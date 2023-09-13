@@ -7,6 +7,7 @@ public class FerramentaModel
     public bool Disponivel { get; set; }
     public byte[]? Imagem { get; set; }
     public DateTime DataCriacao { get; set; }
+    public DateTime? DataAtualizacao { get; set; }
 
     //Chave estrangeira
     public Guid UsuarioId { get; set; }

@@ -7,7 +7,9 @@ public class OrdemModel
     public string NivelUrgencia { get; set; } = string.Empty;
     public string Situacao { get; set; } = string.Empty;
     public DateTime DataPrazoMaximo { get; set; }
-    public DateTime DataCriacao { get; set; }    
+    public DateTime DataCriacao { get; set; }
+    public DateTime? DataAtualizacao { get; set; }
+
 
     //Chaves estrangeira
     public Guid UsuarioId { get; set; }
