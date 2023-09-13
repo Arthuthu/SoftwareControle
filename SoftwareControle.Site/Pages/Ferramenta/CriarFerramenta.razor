@@ -41,7 +41,7 @@
                     <button type="submit" class="botao-principal">Criar</button>
                 </div>
                 <div>
-                    <a href="/usuario/buscar" class="botao-principal" id="botao-anchor-ajuste">Voltar</a>
+                    <a href="/ferramentas" class="botao-principal" id="botao-anchor-ajuste">Voltar</a>
                 </div>
             </div>
         </div>
@@ -97,13 +97,15 @@
     {
         Ferramenta!.UsuarioId = IdUsuarioLogado;
 
-        resultado = await ferramentaEndpoints.Criar(Ferramenta);
+        var criarResultado = await ferramentaEndpoints.Criar(Ferramenta);
 
-        if (resultado is null)
+        if (criarResultado is null)
         {
             navManager.NavigateTo("/");
             return;
         }
+
+        resultado = FiltrarResultado(criarResultado);
     }
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
@@ -112,5 +114,14 @@
         var buffer = new byte[file.Size];
         await file.OpenReadStream().ReadAsync(buffer);
         Ferramenta!.Imagem = buffer;
+    }
+    private string? FiltrarResultado(string resultado)
+    {
+        if (resultado is not null)
+        {
+            return "Preencha todos os campos";
+        }
+
+        return null;
     }
 }

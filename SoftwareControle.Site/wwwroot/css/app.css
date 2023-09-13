@@ -134,4 +134,27 @@ navbar {
     margin: 0 auto;
 }
 
+.ferramenta-list {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 20px;
+    border: solid #808080;
+    text-decoration: none;
+    color: #FFF;
+}
+
+.ferramenta-list:hover {
+    background-color: #827a7a;
+    transition: 500ms;
+    color: #FFF;
+    cursor: pointer;
+}
+
+.ferramenta-node {
+    text-align: center;
+    width: 100%;
+}
+
 

@@ -1,0 +1,87 @@
+﻿@page "/ferramentas"
+
+@inject ISessaoUsuario sessao
+@inject IFerramentaEndpoints ferramentaEndpoints
+@inject IUsuarioEndpoints usuarioEndpoints
+@inject NavigationManager navManager
+
+<AuthorizeView>
+	<Authorized>
+		@if (Ferramentas is null)
+		{
+			<div class="text-center my-5 fs-3 fw-bold">
+				Não foi cadastrado nenhuma ferramenta ainda
+			</div>
+		}
+		else
+		{
+			<Virtualize Items="@Ferramentas" Context="ferramenta" OverscanCount="50">
+				<a class="ferramenta-list" href="/ferramenta/@ferramenta.Id">
+					<div class="ferramenta-node">@ferramenta.Nome</div>
+					<div class="ferramenta-node">@ferramenta.Descricao</div>
+					<div class="ferramenta-node">
+						@if (ferramenta.Disponivel is true)
+						{
+							<div class="text-success">Disponivel</div>
+						} else
+						{
+							<div class="text-danger">Indisponivel</div>
+						}
+					</div>
+				</a>
+			</Virtualize>
+		}
+		@if (UsuarioLogadoModel!.Cargo == "Administrador")
+		{
+			<div class="d-flex justify-content-around my-5">
+				<div>
+					<a class="botao-principal" href="/ferramenta/criar"
+					   id="botao-anchor-ajuste">Adicionar</a>
+				</div>
+				<div>
+					<a class="botao-principal" href="/" id="botao-anchor-ajuste">Voltar</a>
+				</div>
+			</div>
+		}
+	</Authorized>
+</AuthorizeView>
+
+@code {
+	private Guid UsuarioLogadoId { get; set; }
+
+	private List<FerramentaModel>? Ferramentas = new();
+	private UsuarioModel? UsuarioLogadoModel { get; set; }
+
+	protected async override Task OnInitializedAsync()
+	{
+		await BuscarUsuarioLogadoId();
+
+		if (UsuarioLogadoId == Guid.Empty)
+		{
+			navManager.NavigateTo("/login");
+			return;
+		}
+
+		await BuscarFerramentas();
+		await BuscarUsuarioLogadoModel();
+
+		if (UsuarioLogadoModel is null)
+		{
+			navManager.NavigateTo("/");
+			return;
+		}
+	}
+
+	private async Task BuscarUsuarioLogadoId()
+	{
+		UsuarioLogadoId = await sessao.BuscarIdDoUsuarioLogado();
+	}
+	private async Task BuscarFerramentas()
+	{
+		Ferramentas = await ferramentaEndpoints.Buscar();
+	}
+	private async Task BuscarUsuarioLogadoModel()
+	{
+		UsuarioLogadoModel = await usuarioEndpoints.BuscarPorId(UsuarioLogadoId);
+	}
+}
