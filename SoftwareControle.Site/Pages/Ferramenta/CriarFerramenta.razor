@@ -1,0 +1,70 @@
+﻿@page "/criar/ferramenta"
+
+@inject ISessaoUsuario sessao
+@inject IFerramentaEndpoints ferramentaEndpoints
+@inject IUsuarioEndpoints usuarioEndpoints
+@inject NavigationManager navManager
+
+@if(inicializado is true)
+{
+    <div>
+        Pagina
+    </div>
+
+    <div>
+        @resultado
+    </div>
+}
+
+@code {
+    private Guid IdUsuarioLogado { get; set; }
+    private UsuarioModel? UsuarioLogadoModel { get; set; }
+    private FerramentaModel? Ferramenta { get; set; }
+
+    private bool inicializado = false;
+    private string? resultado = "";
+
+    protected async override Task OnInitializedAsync()
+    {
+        await BuscarIdUsuarioLogado();
+        if (IdUsuarioLogado == Guid.Empty)
+        {
+            navManager.NavigateTo("/login");
+            return;
+        }
+
+        await BuscarModelUsuarioLogado();
+        if (UsuarioLogadoModel is null)
+        {
+            navManager.NavigateTo("/login");
+        }
+
+        if(UsuarioLogadoModel!.Cargo != "Administrador")
+        {
+            navManager.NavigateTo("/naoautorizado");
+            return;
+        }
+
+        inicializado = true;
+    }
+
+    private async Task BuscarIdUsuarioLogado()
+    {
+        IdUsuarioLogado = await sessao.BuscarIdDoUsuarioLogado();
+    }
+    private async Task BuscarModelUsuarioLogado()
+    {
+        UsuarioLogadoModel = await usuarioEndpoints.BuscarPorId(IdUsuarioLogado);
+    }
+
+    private async Task Criar()
+    {
+        resultado = await ferramentaEndpoints.Criar(Ferramenta!);
+
+        if (resultado is null)
+        {
+            navManager.NavigateTo("/ferramentas");
+            return;
+        }
+    }
+}

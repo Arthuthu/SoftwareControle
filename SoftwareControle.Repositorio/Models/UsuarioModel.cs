@@ -6,7 +6,7 @@ public class UsuarioModel
 	public string Usuario { get; set; } = string.Empty;
 	public string Senha { get; set; } = string.Empty;
 	public string Nome { get; set; } = string.Empty;
-	public bool Adminstrador { get; set; }
+    public string Cargo { get; set; } = string.Empty;
     public DateTime DataCriacao { get; set; }
 
     // Propriedades de navegação

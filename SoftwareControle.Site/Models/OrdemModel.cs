@@ -12,8 +12,4 @@ public class OrdemModel
     //Chaves estrangeira
     public Guid UsuarioId { get; set; }
     public Guid FerramentaId { get; set; }
-
-    // Propriedades de navegação
-    public FerramentaModel? Ferramenta { get; set; }
-    public UsuarioModel? Usuario { get; set; }
 }

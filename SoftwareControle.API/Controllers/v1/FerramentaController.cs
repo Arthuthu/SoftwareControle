@@ -26,7 +26,7 @@ public class FerramentaController : ControllerBase
         return Ok(ferramentas);
     }
 
-    [HttpGet, Route("/ferramentas/buscarporid/{id:guid}")]
+    [HttpGet, Route("/ferramenta/buscarporid/{id:guid}")]
     public async Task<IActionResult> Get(Guid id, CancellationToken cancellationToken)
     {
         var ferramenta = await _ferramentaService.Buscar(id, cancellationToken);

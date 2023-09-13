@@ -15,7 +15,7 @@ public class OrdemController : ControllerBase
         _ordemService = ordemService;
     }
 
-    [HttpGet, Route("/orderm/buscar")]
+    [HttpGet, Route("/ordem/buscar")]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
         var ordens = await _ordemService.Buscar(cancellationToken);
@@ -37,7 +37,7 @@ public class OrdemController : ControllerBase
         return Ok(orderm);
     }
 
-    [HttpPost, Route("/orderm/criar")]
+    [HttpPost, Route("/ordem/criar")]
     public async Task<ActionResult<string?>> Post([FromForm] OrdemModel orderm,
         CancellationToken cancellationToken)
     {

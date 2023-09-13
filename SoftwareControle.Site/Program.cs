@@ -5,7 +5,10 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using SoftwareControle.Services.Authentication.Classes;
 using SoftwareControle.Site;
 using SoftwareControle.Site.APICall.Authenticacao;
+using SoftwareControle.Site.APICall.Ferramenta;
+using SoftwareControle.Site.APICall.Ordem;
 using SoftwareControle.Site.APICall.Usuario;
+using SoftwareControle.Site.Sessao;
 using SoftwareControle.Website.Session;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -17,6 +20,8 @@ builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
 builder.Services.AddScoped<ISessaoUsuario, SessaoUsuario>();
 
 builder.Services.AddScoped<IUsuarioEndpoints, UsuarioEndpoints>();
+builder.Services.AddScoped<IFerramentaEndpoints, FerramentaEndpoints>();
+builder.Services.AddScoped<IOrdemEndpoints, OrdemEndpoints>();
 
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();

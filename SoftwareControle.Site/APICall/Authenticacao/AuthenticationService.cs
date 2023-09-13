@@ -35,7 +35,7 @@ public class AuthenticationService : IAuthenticationService
     {
         var data = new FormUrlEncodedContent(new[]
         {
-            new KeyValuePair<string, string>("email", userForAuthentication.Usuario),
+            new KeyValuePair<string, string>("usuario", userForAuthentication.Usuario),
             new KeyValuePair<string, string>("senha", userForAuthentication.Senha)
         });
 

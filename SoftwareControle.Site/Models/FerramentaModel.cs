@@ -10,9 +10,4 @@ public class FerramentaModel
 
     //Chave estrangeira
     public Guid UsuarioId { get; set; }
-
-
-    // Propriedades de navegação
-    public UsuarioModel? Usuario { get; set; }
-    public List<OrdemModel>? Ordem { get; set; }
 }

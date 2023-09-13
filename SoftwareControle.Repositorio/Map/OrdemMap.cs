@@ -19,7 +19,7 @@ public class OrdemMap : BaseMap<OrdemModel>
 		builder.Property(x => x.Descricao).IsRequired().HasMaxLength(1000).HasColumnName("Descricao");
 		builder.Property(x => x.NivelUrgencia).HasMaxLength(50).HasColumnName("NivelUrgencia");
 		builder.Property(x => x.Situacao).HasMaxLength(50).HasColumnName("Situacao");
-		builder.Property(x => x.DataCricao).HasMaxLength(50).HasColumnName("DataCriacao");
+		builder.Property(x => x.DataCriacao).HasMaxLength(50).HasColumnName("DataCriacao");
 		builder.Property(x => x.UsuarioId).HasMaxLength(50).HasColumnName("UsuarioId");
 		builder.Property(x => x.FerramentaId).HasMaxLength(50).HasColumnName("FerramentaId");
 

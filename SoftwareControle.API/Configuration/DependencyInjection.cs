@@ -7,6 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 using SoftwareControle.Repository.Repositorio.Ordem;
 using SoftwareControle.Repository.Repositorio.Usuario;
 using System.Text;
+using HFAcademia.Repositório;
+using Application.Services.Auth;
 
 namespace SoftwareControle.WebUi.Configuration;
 
@@ -15,13 +17,15 @@ public static class DependencyInjection
     public static IServiceCollection AddApplicationDependencyInjection(this IServiceCollection services)
     {
         //Repositorio
+        services.AddScoped<IAuthRepository, AuthRepository>();
         services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
         services.AddScoped<IFerramentaRepositorio, FerramentaRepositorio>();
         services.AddScoped<IOrdemRepositorio, OrdemRepositorio>();
 
 		//Services
+		services.AddScoped<IAuthService, AuthService>();
 		services.AddScoped<IUsuarioService, UsuarioService>();
-		services.AddScoped<IFerramentaService, FerramentaService>();
+        services.AddScoped<IFerramentaService, FerramentaService>();
 		services.AddScoped<IOrdemService, OrdemService>();
 
 		return services;

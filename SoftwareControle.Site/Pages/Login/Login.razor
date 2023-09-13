@@ -1,0 +1,63 @@
+﻿@page "/login"
+@using SoftwareControle.Models;
+
+@inject NavigationManager navManager
+@inject IAuthenticationService authService
+
+<EditForm Model="LoginUser" OnValidSubmit="ExecuteLogin">
+	<div class="login-form">
+		<div class="login-label">
+			Iniciar sessão
+		</div>
+
+		<div>
+			<label for="email" class="visually-hidden">Usuario</label>
+			<div>
+				<InputText @bind-Value="LoginUser.Usuario" placeholder="Usuario" 
+					class="primary-input-text"/>
+			</div>
+		</div>
+
+		<div>
+			<label for="senha" class="visually-hidden">Senha</label>
+			<div>
+				<InputText type="password" @bind-Value="LoginUser.Senha" placeholder="Senha" 
+					class="primary-input-text"/>
+			</div>
+		</div>
+
+		<div class="text-center mt-4">
+			<button type="submit" class="botao-principal">Entrar</button>
+		</div>
+	</div>
+
+	@if (showAuthenticationError)
+	{
+		<div role="alert" class="alert-message-div">
+			<p class="login-erro">@authenticationErrorText</p>
+		</div>
+	}
+</EditForm>
+
+@code {
+	private AuthenticationUserModel LoginUser = new();
+	private bool showAuthenticationError = false;
+	private string authenticationErrorText = "";
+
+	private async Task ExecuteLogin()
+	{
+		showAuthenticationError = false;
+
+		var result = await authService.Login(LoginUser);
+
+		if (result is not null)
+		{
+			navManager.NavigateTo("/");
+		}
+		else
+		{
+			authenticationErrorText = "Email ou senha incorretos";
+			showAuthenticationError = true;
+		}
+	}
+}

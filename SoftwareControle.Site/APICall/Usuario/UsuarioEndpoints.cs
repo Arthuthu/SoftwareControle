@@ -25,7 +25,7 @@ public class UsuarioEndpoints : IUsuarioEndpoints
         _config = config;
         _logger = logger;
     }
-    public async Task<List<UsuarioModel>?> BuscarUsuarios()
+    public async Task<List<UsuarioModel>?> Buscar()
     {
         string buscarTodosUsuariosEndpoint = _config["apiLocation"] + _config["bucarUsuarios"];
         var authResult = await _client.GetAsync(buscarTodosUsuariosEndpoint);
@@ -46,7 +46,7 @@ public class UsuarioEndpoints : IUsuarioEndpoints
     }
     public async Task<UsuarioModel?> BuscarPorId(Guid id)
     {
-        string buscarPorIdEndpoint = _config["apiLocation"] + _config["buscarPorId"] + $"/{id}";
+        string buscarPorIdEndpoint = _config["apiLocation"] + _config["buscarUsuarioPorId"] + $"/{id}";
         var authResult = await _client.GetAsync(buscarPorIdEndpoint);
         var authContent = await authResult.Content.ReadAsStringAsync();
 
@@ -70,7 +70,7 @@ public class UsuarioEndpoints : IUsuarioEndpoints
             new KeyValuePair<string, string>("Id", usuario.Id.ToString()),
             new KeyValuePair<string, string>("Usuario", usuario.Usuario),
             new KeyValuePair<string, string>("Senha", usuario.Senha),
-            new KeyValuePair<string, string>("Nome", usuario.Nome),
+            new KeyValuePair<string, string>("Nome", usuario.Nome)
 		});
 
         string criarUsuarioEndpoint = _config["apiLocation"] + _config["criarUsuario"];
