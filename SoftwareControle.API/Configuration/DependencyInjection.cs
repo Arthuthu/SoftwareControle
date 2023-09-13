@@ -10,6 +10,10 @@ using System.Text;
 using HFAcademia.Repositório;
 using Application.Services.Auth;
 using SoftwareControle.Service.Services.Ferramenta;
+using FluentValidation;
+using SoftwareControle.Services.Validacao;
+using SoftwareControle.Models;
+using SoftwareControle.Service.Validacao;
 
 namespace SoftwareControle.WebUi.Configuration;
 
@@ -29,7 +33,12 @@ public static class DependencyInjection
         services.AddScoped<IFerramentaService, FerramentaService>();
 		services.AddScoped<IOrdemService, OrdemService>();
 
-		return services;
+        //Validation
+        services.AddSingleton<IValidator<UsuarioModel>, UsuarioValidacao>();
+        services.AddSingleton<IValidator<FerramentaModel>, FerramentaValidacao>();
+        services.AddSingleton<IValidator<OrdemModel>, OrdemValidacao>();
+
+        return services;
     }
 
     public static IServiceCollection AddApplicationDbContext(this IServiceCollection services,

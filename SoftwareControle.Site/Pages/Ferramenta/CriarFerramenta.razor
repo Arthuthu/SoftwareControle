@@ -24,7 +24,8 @@
                     Descrição da ferramenta
                 </div>
                 <div>
-                    <InputTextArea @bind-Value="Ferramenta!.Descricao" class="input" placeholder="Descrição" />
+                    <InputTextArea @bind-Value="Ferramenta!.Descricao" class="input" 
+                    placeholder="Descrição" />
                 </div>
             </div>
             <div class="text-center">
@@ -96,19 +97,7 @@
     {
         Ferramenta!.UsuarioId = IdUsuarioLogado;
 
-        try
-        {
-            if (Ferramenta.Imagem is not null)
-            {
-                SaveImageToFile(Ferramenta.Imagem, Ferramenta.Nome);
-                Ferramenta.ImagemPath = Path.Combine("/imagens", Ferramenta.Nome);
-                resultado = await ferramentaEndpoints.Criar(Ferramenta);
-            }
-        }
-        catch (Exception ex)
-        {
-            resultado = ex.Message;
-        }
+        resultado = await ferramentaEndpoints.Criar(Ferramenta);
 
         if (resultado is null)
         {
@@ -123,10 +112,5 @@
         var buffer = new byte[file.Size];
         await file.OpenReadStream().ReadAsync(buffer);
         Ferramenta!.Imagem = buffer;
-    }
-    private void SaveImageToFile(byte[] imageData, string fileName)
-    {
-        string filePath = Path.Combine("wwwroot/imagens", fileName);
-        File.WriteAllBytes(filePath, imageData);
     }
 }

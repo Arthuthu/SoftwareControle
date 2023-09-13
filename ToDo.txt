@@ -5,3 +5,5 @@ Tela Index
 
 
 Ferramenta tera usuario mais recente que atualizou? Relatorio de atualizacao da ferramenta (log)
+
+Imagem da ferramenta nao sendo adicionado corretamente, verificar

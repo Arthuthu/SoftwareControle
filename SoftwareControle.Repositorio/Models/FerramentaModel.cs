@@ -5,7 +5,6 @@ public class FerramentaModel
     public string Nome { get; set; } = string.Empty;
     public string Descricao { get; set; } = string.Empty;
     public bool Disponivel { get; set; }
-    public string ImagemPath { get; set; } = string.Empty;
     public byte[]? Imagem { get; set; }
     public DateTime DataCriacao { get; set; }
 

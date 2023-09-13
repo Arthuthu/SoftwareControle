@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SoftwareControle.Models;
+using System.Net.Http.Headers;
 
 namespace SoftwareControle.Site.APICall.Ferramenta;
 
@@ -57,16 +58,24 @@ public class FerramentaEndpoints : IFerramentaEndpoints
     }
     public async Task<string?> Criar(FerramentaModel ferramenta)
     {
-        var data = new FormUrlEncodedContent(new[]
+        var content = new MultipartFormDataContent
         {
-            new KeyValuePair<string, string>("Nome", ferramenta.Nome),
-            new KeyValuePair<string, string>("Descricao", ferramenta.Descricao),
-            new KeyValuePair<string, string>("Imagem", ferramenta.Imagem?.ToString() ?? ""),
-            new KeyValuePair<string, string>("UsuarioId", ferramenta.UsuarioId.ToString()),
-        });
+            { new StringContent(ferramenta.Nome), "Nome" },
+            { new StringContent(ferramenta.Descricao), "Descricao" }
+        };
+
+        if (ferramenta.Imagem != null)
+        {
+            var imageContent = new ByteArrayContent(ferramenta.Imagem);
+            imageContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            content.Add(imageContent, "Imagem", $"{ferramenta.Nome}.jpg"); 
+        }
+
+        content.Add(new StringContent(ferramenta.UsuarioId.ToString()), "UsuarioId");
+
 
         string criarUsuarioEndpoint = _config["apiLocation"] + _config["criarFerramenta"];
-        var authResult = await _client.PostAsync(criarUsuarioEndpoint, data);
+        var authResult = await _client.PostAsync(criarUsuarioEndpoint, content);
         var authContent = await authResult.Content.ReadAsStringAsync();
 
         if (authResult.IsSuccessStatusCode is false)
@@ -88,7 +97,7 @@ public class FerramentaEndpoints : IFerramentaEndpoints
             new KeyValuePair<string, string>("Id", ferramenta.Id.ToString()),
             new KeyValuePair<string, string>("Nome", ferramenta.Nome),
             new KeyValuePair<string, string>("Descricao", ferramenta.Descricao),
-			new KeyValuePair<string, string>("ImagemPath", ferramenta.ImagemPath?.ToString() ?? "")
+			new KeyValuePair<string, string>("Imagem", ferramenta.Imagem?.ToString() ?? "")
 		});
 
         string atualizarEndpoint = _config["apiLocation"] + _config["atualizarFerramenta"];
