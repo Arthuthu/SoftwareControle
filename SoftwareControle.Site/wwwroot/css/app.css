@@ -3,6 +3,8 @@
 root {
     --background-primary-color: #000000;
     --background-secondary-color: #808080;
+    --background-button-primary-color: #dc6b0b;
+    --background-button-primary-color-hover: #fc831c;
 }
 
 html, body {
@@ -13,28 +15,28 @@ html, body {
     color: #FFF;
 }
 
+/* Botao */
+
 .botao-principal {
     color: #FFF;
-    background-color: #dc6b0b;
-    padding: 20px 40px;
+    background-color: #fc831c;
+    padding: 15px 25px;
     font-size: 25px;
     font-weight: bold;
     border-color: transparent;
     border-radius: 5px;
-}
-
-.botao-principal:hover {
-    transition: 500ms;
-    background-color: #fc831c;
-}
-
-#botao-anchor-ajuste {
-    padding: 27px 35px;
+    margin: 0 10px 0 0;
     text-decoration: none;
 }
 
-#botao-anchor-ajuste:hover {
-    color: #FFF;
+    .botao-principal:hover {
+        transition: 500ms;
+        background-color: #fc831c;
+        color: #FFF;
+    }
+
+#botao-padding-ajustes {
+    padding: 8px 20px;
 }
 
 .label-principal,
@@ -53,6 +55,7 @@ html, body {
 }
 
 /* Navbar */
+
 navbar {
     display: flex;
     justify-content: space-between;
@@ -157,4 +160,7 @@ navbar {
     width: 100%;
 }
 
-
+.ferramenta-detalhes-box {
+    padding: 20px;
+    border: solid #827a7a;
+}

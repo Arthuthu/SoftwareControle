@@ -1,0 +1,68 @@
+﻿@page "/ferramenta/{FerramentaId}"
+
+@inject ISessaoUsuario sessao
+@inject IFerramentaEndpoints ferramentaEndpoints
+@inject NavigationManager navManager
+
+<AuthorizeView>
+	<Authorized>
+		<div class="ferramenta-detalhes-box">
+			<div class="text-center my-4 fs-3">@Ferramenta!.Nome</div>
+			<div class="text-center my-4 fs-3">@Ferramenta!.Descricao</div>
+			<div class="d-flex justify-content-evenly my-4 fs-3">
+				<div>@if(Ferramenta.Disponivel is true)
+					{<div class="text-success">Disponivel</div>} 
+					else 
+					{<div class="text-danger">Indisponivel</div>}
+				</div>
+				<div>Data Criação: @Ferramenta.DataCriacao</div>
+				@if (Ferramenta.DataAtualizacao is not null)
+				{
+					<div>Ultima Atualização: @Ferramenta.DataAtualizacao</div>
+				}
+			</div>
+		</div>
+	</Authorized>
+</AuthorizeView>
+
+@code {
+	[Parameter]
+	public string? FerramentaId { get; set; }
+
+	private Guid UsuarioLogadoId { get; set; }
+	private FerramentaModel? Ferramenta { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		if (FerramentaId == Guid.Empty.ToString())
+		{
+			navManager.NavigateTo("/naoencontrado");
+			return;
+		}
+
+		await BuscarUsuarioLogadoId();
+
+		if (UsuarioLogadoId == Guid.Empty)
+		{
+			navManager.NavigateTo("/login");
+			return;
+		}
+
+		await BuscarFerramentaModel();
+
+		if (Ferramenta is null)
+		{
+			navManager.NavigateTo("/naoencontrado");
+			return;
+		}
+	}
+
+	private async Task BuscarUsuarioLogadoId()
+	{
+		UsuarioLogadoId = await sessao.BuscarIdDoUsuarioLogado();
+	}
+	private async Task BuscarFerramentaModel()
+	{
+		Ferramenta = await ferramentaEndpoints.BuscarPorId(Guid.Parse(FerramentaId!));
+	}
+}
