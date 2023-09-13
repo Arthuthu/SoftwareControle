@@ -4,32 +4,62 @@
 @inject IFerramentaEndpoints ferramentaEndpoints
 @inject NavigationManager navManager
 
-<AuthorizeView>
-	<Authorized>
-		<div class="ferramenta-detalhes-box">
+@if (inicializado)
+{
+	<div class="ferramenta-detalhes-box">
+		<div>
+			<div class="label-principal">Nome da ferramenta</div>
+			<div class="text-center my-2 fs-3">@Ferramenta!.Nome</div>
+		</div>
+		<div class="mt-4">
+			<div class="label-principal">Informações</div>
+			<div class="text-center my-4 fs-3">@Ferramenta!.Descricao</div>
+		</div>
+		<div class="d-flex justify-content-evenly my-4 fs-3">
 			<div>
-				<div class="label-principal">Nome da ferramenta</div>
-				<div class="text-center my-2 fs-3">@Ferramenta!.Nome</div>
-			</div>
-			<div class="mt-4">
-				<div class="label-principal">Informações</div>
-				<div class="text-center my-4 fs-3">@Ferramenta!.Descricao</div>
-			</div>
-			<div class="d-flex justify-content-evenly my-4 fs-3">
-				<div>@if(Ferramenta.Disponivel is true)
-					{<div class="text-success">Disponivel</div>} 
-					else 
-					{<div class="text-danger">Indisponivel</div>}
-				</div>
-				<div>Data Criação: @FerramentaDataCriacaoFormatado</div>
-				@if (Ferramenta.DataAtualizacao is not null)
+				@if (Ferramenta!.Disponivel is true)
 				{
-					<div>Ultima Atualização: @Ferramenta.DataAtualizacao</div>
+					<div class="text-success">Disponivel</div>
+				}
+				else
+				{
+					<div class="text-danger">Indisponivel</div>
 				}
 			</div>
+			<div>Data Criação: @FerramentaDataCriacaoFormatado</div>
+			@if (Ferramenta!.DataAtualizacao is not null)
+			{
+				<div>Ultima Atualização: @Ferramenta.DataAtualizacao</div>
+			}
 		</div>
-	</Authorized>
-</AuthorizeView>
+	</div>
+	<div class="d-flex my-5 justify-content-end align-items-center">
+		<div>
+			<a href="/ferramenta/editar/@Ferramenta.Id" class="botao-principal">Editar</a>
+		</div>
+		<div>
+			<button @onclick="MostrarDelete" class="botao-principal"
+					id="botao-padding-ajustes">
+				@mostrarDivToggleBotao
+			</button>
+		</div>
+		<div>
+			<a href="/ferramentas" class="botao-principal">Voltar</a>
+		</div>
+	</div>
+	@if (mostrarDeletarDiv)
+	{
+		<div class="text-center">
+			<div class="fs-4 my-4">
+				Tem certeza que deseja deletar essa ferramenta?
+			</div>
+			<div>
+				<button @onclick="Deletar" class="botao-principal">Confirmar</button>
+			</div>
+		</div>
+	}
+}
+
 
 @code {
 	[Parameter]
@@ -37,7 +67,11 @@
 
 	private Guid UsuarioLogadoId { get; set; }
 	private FerramentaModel? Ferramenta { get; set; }
+
 	private string FerramentaDataCriacaoFormatado = string.Empty;
+	private string mostrarDivToggleBotao = "Deletar";
+	private bool mostrarDeletarDiv = false;
+	private bool inicializado = false;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -64,6 +98,7 @@
 		}
 
 		FerramentaDataCriacaoFormatado = Ferramenta.DataCriacao.ToString("dd/MM/yyyy");
+		inicializado = true;
 	}
 
 	private async Task BuscarUsuarioLogadoId()
@@ -73,5 +108,22 @@
 	private async Task BuscarFerramentaModel()
 	{
 		Ferramenta = await ferramentaEndpoints.BuscarPorId(Guid.Parse(FerramentaId!));
+	}
+	private void MostrarDelete()
+	{
+		if (mostrarDeletarDiv is false)
+		{
+			mostrarDeletarDiv = true;
+			mostrarDivToggleBotao = "Ocultar";
+			return;
+		}
+
+		mostrarDeletarDiv = false;
+		mostrarDivToggleBotao = "Deletar";
+	}
+	private async Task Deletar()
+	{
+		await ferramentaEndpoints.Deletar(Guid.Parse(FerramentaId!));
+		navManager.NavigateTo("/ferramentas");
 	}
 }

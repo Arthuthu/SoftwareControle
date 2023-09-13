@@ -5,51 +5,54 @@
 @inject IUsuarioEndpoints usuarioEndpoints
 @inject NavigationManager navManager
 
-<AuthorizeView>
-	<Authorized>
-		@if (Ferramentas is null)
-		{
-			<div class="text-center my-5 fs-3 fw-bold">
-				Não foi cadastrado nenhuma ferramenta ainda
-			</div>
-		}
-		else
-		{
-			<Virtualize Items="@Ferramentas" Context="ferramenta" OverscanCount="50">
-				<a class="ferramenta-list" href="/ferramenta/@ferramenta.Id">
-					<div class="ferramenta-node">@ferramenta.Nome</div>
-					<div class="ferramenta-node">@ferramenta.Descricao</div>
-					<div class="ferramenta-node">
-						@if (ferramenta.Disponivel is true)
-						{
-							<div class="text-success">Disponivel</div>
-						} else
-						{
-							<div class="text-danger">Indisponivel</div>
-						}
-					</div>
-				</a>
-			</Virtualize>
-		}
-		@if (UsuarioLogadoModel!.Cargo == "Administrador")
-		{
-			<div class="d-flex my-5 justify-content-end">
-				<div>
-					<a class="botao-principal" href="/ferramenta/criar">Adicionar</a>
+@if (inicializado)
+{
+	@if (Ferramentas is null)
+	{
+		<div class="text-center my-5 fs-3 fw-bold">
+			Não foi cadastrado nenhuma ferramenta ainda
+		</div>
+	}
+	else
+	{
+		<Virtualize Items="@Ferramentas" Context="ferramenta" OverscanCount="50">
+			<a class="ferramenta-list" href="/ferramenta/@ferramenta.Id">
+				<div class="ferramenta-node">@ferramenta.Nome</div>
+				<div class="ferramenta-node">@ferramenta.Descricao</div>
+				<div class="ferramenta-node">
+					@if (ferramenta.Disponivel is true)
+					{
+						<div class="text-success">Disponivel</div>
+					}
+					else
+					{
+						<div class="text-danger">Indisponivel</div>
+					}
 				</div>
-				<div>
-					<a class="botao-principal" href="/">Voltar</a>
-				</div>
+			</a>
+		</Virtualize>
+	}
+	@if (UsuarioLogadoModel!.Cargo == "Administrador")
+	{
+		<div class="d-flex my-5 justify-content-end">
+			<div>
+				<a class="botao-principal" href="/ferramenta/criar">Adicionar</a>
 			</div>
-		}
-	</Authorized>
-</AuthorizeView>
+			<div>
+				<a class="botao-principal" href="/">Voltar</a>
+			</div>
+		</div>
+	}
+}
+
 
 @code {
 	private Guid UsuarioLogadoId { get; set; }
 
 	private List<FerramentaModel>? Ferramentas = new();
 	private UsuarioModel? UsuarioLogadoModel { get; set; }
+
+	private bool inicializado = false;
 
 	protected async override Task OnInitializedAsync()
 	{
@@ -69,6 +72,8 @@
 			navManager.NavigateTo("/");
 			return;
 		}
+
+		inicializado = true;
 	}
 
 	private async Task BuscarUsuarioLogadoId()
