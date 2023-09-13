@@ -161,6 +161,6 @@ navbar {
 }
 
 .ferramenta-detalhes-box {
-    padding: 20px;
     border: solid #827a7a;
+    border-radius: 10px 10px 0 0;
 }
