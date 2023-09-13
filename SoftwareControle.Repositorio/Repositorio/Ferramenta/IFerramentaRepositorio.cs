@@ -9,5 +9,7 @@ namespace SoftwareControle.Repository.Repositorio.Ordem
 		Task<List<FerramentaModel>?> Buscar(CancellationToken cancellationToken);
 		Task<FerramentaModel?> Buscar(Guid id, CancellationToken cancellationToken);
 		Task<bool> Deletar(Guid id, CancellationToken cancellationToken);
-	}
+		Task<FerramentaModel?> BuscarPorNome(string nome, CancellationToken cancellationToken);
+
+    }
 }

@@ -1,4 +1,5 @@
-﻿using SoftwareControle.Models;
+﻿using FluentValidation;
+using SoftwareControle.Models;
 using SoftwareControle.Repository.Repositorio.Ordem;
 
 namespace SoftwareControle.Services.Services.Usuario;
@@ -6,13 +7,16 @@ namespace SoftwareControle.Services.Services.Usuario;
 public class OrdemService : IOrdemService
 {
 	private readonly IOrdemRepositorio _ordemRepositorio;
+    private readonly IValidator<OrdemModel> _ordemValidator;
 
-	public OrdemService(IOrdemRepositorio ordemRepositorio)
-	{
-		_ordemRepositorio = ordemRepositorio;
-	}
 
-	public async Task<List<OrdemModel>?> Buscar(CancellationToken cancellationToken)
+    public OrdemService(IOrdemRepositorio ordemRepositorio, IValidator<OrdemModel> ordemValidator)
+    {
+        _ordemRepositorio = ordemRepositorio;
+        _ordemValidator = ordemValidator;
+    }
+
+    public async Task<List<OrdemModel>?> Buscar(CancellationToken cancellationToken)
 	{
 		return await _ordemRepositorio.Buscar(cancellationToken);
 	}
@@ -24,7 +28,12 @@ public class OrdemService : IOrdemService
 
 	public async Task<string?> Adicionar(OrdemModel ordem, CancellationToken cancellationToken)
 	{
-		await _ordemRepositorio.Adicionar(ordem, cancellationToken);
+        var resultado = _ordemValidator.Validate(ordem);
+
+        if (!resultado.IsValid)
+            return resultado.Errors.FirstOrDefault()!.ToString();
+
+        await _ordemRepositorio.Adicionar(ordem, cancellationToken);
 
 		return null;
 	}

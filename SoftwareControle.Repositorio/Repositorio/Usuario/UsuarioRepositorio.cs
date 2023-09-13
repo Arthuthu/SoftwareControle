@@ -8,7 +8,8 @@ namespace SoftwareControle.Repositório;
 public class UsuarioRepositorio : IUsuarioRepositorio
 {
 	private readonly ApplicationDbContext _context;
-	public UsuarioRepositorio(ApplicationDbContext context)
+
+    public UsuarioRepositorio(ApplicationDbContext context)
 	{
 		_context = context;
 	}
@@ -27,7 +28,7 @@ public class UsuarioRepositorio : IUsuarioRepositorio
 	}
 	public async Task Adicionar(UsuarioModel usuario, CancellationToken cancellationToken)
 	{
-		await _context.Usuarios.AddAsync(usuario, cancellationToken);
+        await _context.Usuarios.AddAsync(usuario, cancellationToken);
 		await _context.SaveChangesAsync(cancellationToken);
 	}
 	public async Task<bool> Atualizar(UsuarioModel user, CancellationToken cancellationToken)

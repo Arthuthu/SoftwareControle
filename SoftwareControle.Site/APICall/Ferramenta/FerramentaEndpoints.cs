@@ -61,9 +61,11 @@ public class FerramentaEndpoints : IFerramentaEndpoints
         {
             new KeyValuePair<string, string>("Nome", ferramenta.Nome),
             new KeyValuePair<string, string>("Descricao", ferramenta.Descricao),
+            new KeyValuePair<string, string>("Imagem", ferramenta.Imagem?.ToString() ?? ""),
+            new KeyValuePair<string, string>("UsuarioId", ferramenta.UsuarioId.ToString()),
         });
 
-        string criarUsuarioEndpoint = _config["apiLocation"] + _config["criarUsuario"];
+        string criarUsuarioEndpoint = _config["apiLocation"] + _config["criarFerramenta"];
         var authResult = await _client.PostAsync(criarUsuarioEndpoint, data);
         var authContent = await authResult.Content.ReadAsStringAsync();
 
@@ -86,7 +88,8 @@ public class FerramentaEndpoints : IFerramentaEndpoints
             new KeyValuePair<string, string>("Id", ferramenta.Id.ToString()),
             new KeyValuePair<string, string>("Nome", ferramenta.Nome),
             new KeyValuePair<string, string>("Descricao", ferramenta.Descricao),
-        });
+			new KeyValuePair<string, string>("ImagemPath", ferramenta.ImagemPath?.ToString() ?? "")
+		});
 
         string atualizarEndpoint = _config["apiLocation"] + _config["atualizarFerramenta"];
         var authResult = await _client.PutAsync(atualizarEndpoint, data);

@@ -28,8 +28,31 @@ html, body {
     background-color: #fc831c;
 }
 
-/* Navbar */
+#botao-anchor-ajuste {
+    padding: 27px 35px;
+    text-decoration: none;
+}
 
+#botao-anchor-ajuste:hover {
+    color: #FFF;
+}
+
+.label-principal,
+.ferramenta-form-label {
+    text-align: center;
+    padding: 20px 0;
+    font-size: 30px;
+    font-weight: bold;
+    background-image: linear-gradient(#2f2c2c, #2b2929);
+    border-radius: 10px 10px 0 0;
+}
+
+.input {
+    font-size: 1.4rem;
+    width: 80%;
+}
+
+/* Navbar */
 navbar {
     display: flex;
     justify-content: space-between;
@@ -59,7 +82,8 @@ navbar {
     font-weight: bold;
 }
 
-.nav-link:hover, .logo:hover {
+.nav-link:hover, .logo:hover,
+.nav-link:focus {
     transition: 500ms;
     color: #808080;
     cursor: pointer;
@@ -94,6 +118,20 @@ navbar {
     font-size: 30px;
     font-weight: bold;
     margin: 20px 0;
+}
+
+/* Ferramenta */
+
+.criar-ferramenta-form {
+    border: solid #FFF;
+    padding: 10px 10px 0 10px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.ferramenta-form-label {
+    width: 80%;
+    margin: 0 auto;
 }
 
 

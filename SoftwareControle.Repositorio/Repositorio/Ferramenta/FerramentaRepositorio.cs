@@ -52,4 +52,11 @@ public class FerramentaRepositorio : IFerramentaRepositorio
 
 		return colunasAfetadas > 0;
 	}
+    public async Task<FerramentaModel?> BuscarPorNome(string nome, CancellationToken cancellationToken)
+    {
+        FerramentaModel? ferramenta = await _context.Ferramentas.SingleOrDefaultAsync
+            (u => u.Nome == nome, cancellationToken);
+
+        return ferramenta is not null ? ferramenta : null;
+    }
 }

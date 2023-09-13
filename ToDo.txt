@@ -2,3 +2,6 @@ FluentValidation para as entidades
 Fazer tela de login e verificar se usuario consegue logar
 Buscar usuario por login method
 Tela Index
+
+
+Ferramenta tera usuario mais recente que atualizou? Relatorio de atualizacao da ferramenta (log)

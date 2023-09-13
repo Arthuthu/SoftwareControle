@@ -9,6 +9,7 @@ using SoftwareControle.Repository.Repositorio.Usuario;
 using System.Text;
 using HFAcademia.Repositório;
 using Application.Services.Auth;
+using SoftwareControle.Service.Services.Ferramenta;
 
 namespace SoftwareControle.WebUi.Configuration;
 

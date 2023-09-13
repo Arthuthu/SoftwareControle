@@ -1,4 +1,5 @@
-﻿using SoftwareControle.Models;
+﻿using FluentValidation;
+using SoftwareControle.Models;
 using SoftwareControle.Repository.Repositorio.Usuario;
 
 namespace SoftwareControle.Services.Services.Usuario;
@@ -6,13 +7,17 @@ namespace SoftwareControle.Services.Services.Usuario;
 public class UsuarioService : IUsuarioService
 {
 	private readonly IUsuarioRepositorio _usuarioRepositorio;
+    private readonly IValidator<UsuarioModel> _usuarioValidator;
 
-	public UsuarioService(IUsuarioRepositorio usuarioRepositorio)
-	{
-		_usuarioRepositorio = usuarioRepositorio;
-	}
 
-	public async Task<List<UsuarioModel>?> Buscar(CancellationToken cancellationToken)
+    public UsuarioService(IUsuarioRepositorio usuarioRepositorio,
+		IValidator<UsuarioModel> usuarioValidator)
+    {
+        _usuarioRepositorio = usuarioRepositorio;
+        _usuarioValidator = usuarioValidator;
+    }
+
+    public async Task<List<UsuarioModel>?> Buscar(CancellationToken cancellationToken)
 	{
 		return await _usuarioRepositorio.Buscar(cancellationToken);
 	}
@@ -24,7 +29,12 @@ public class UsuarioService : IUsuarioService
 
 	public async Task<string?> Adicionar(UsuarioModel usuario, CancellationToken cancellationToken)
 	{
-		await _usuarioRepositorio.Adicionar(usuario, cancellationToken);
+        var resultado = _usuarioValidator.Validate(usuario);
+
+        if (!resultado.IsValid)
+            return resultado.Errors.FirstOrDefault()!.ToString();
+
+        await _usuarioRepositorio.Adicionar(usuario, cancellationToken);
 
 		return null;
 	}

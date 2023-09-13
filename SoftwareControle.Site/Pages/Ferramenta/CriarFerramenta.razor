@@ -1,4 +1,4 @@
-﻿@page "/criar/ferramenta"
+﻿@page "/ferramenta/criar"
 
 @inject ISessaoUsuario sessao
 @inject IFerramentaEndpoints ferramentaEndpoints
@@ -7,11 +7,46 @@
 
 @if(inicializado is true)
 {
-    <div>
-        Pagina
-    </div>
+    <div class="ferramenta-form-label">Adicionar ferramenta</div>
 
-    <div>
+    <EditForm Model="Ferramenta" OnValidSubmit="Criar" Context="Form">
+        <div class="criar-ferramenta-form">
+            <div class="text-center my-4">
+                <div class="fs-3 my-2">
+                    Nome da ferramenta
+                </div>
+                <div>
+                    <InputText @bind-Value="Ferramenta!.Nome" class="input" placeholder="Nome" />
+                </div>
+            </div>
+            <div class="text-center my-4">
+                <div class="fs-3 my-2">
+                    Descrição da ferramenta
+                </div>
+                <div>
+                    <InputTextArea @bind-Value="Ferramenta!.Descricao" class="input" placeholder="Descrição" />
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="fs-3 my-2">
+                    Insira uma imagem
+                </div>
+                <div>
+                    <InputFile OnChange="HandleFileSelected" />
+                </div>
+            </div>
+            <div class="d-flex justify-content-evenly my-4 align-items-center">
+                <div>
+                    <button type="submit" class="botao-principal">Criar</button>
+                </div>
+                <div>
+                    <a href="/usuario/buscar" class="botao-principal" id="botao-anchor-ajuste">Voltar</a>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+
+    <div class="text-center my-5 fs-3">
         @resultado
     </div>
 }
@@ -19,7 +54,7 @@
 @code {
     private Guid IdUsuarioLogado { get; set; }
     private UsuarioModel? UsuarioLogadoModel { get; set; }
-    private FerramentaModel? Ferramenta { get; set; }
+    private FerramentaModel? Ferramenta = new();
 
     private bool inicializado = false;
     private string? resultado = "";
@@ -59,12 +94,39 @@
 
     private async Task Criar()
     {
-        resultado = await ferramentaEndpoints.Criar(Ferramenta!);
+        Ferramenta!.UsuarioId = IdUsuarioLogado;
+
+        try
+        {
+            if (Ferramenta.Imagem is not null)
+            {
+                SaveImageToFile(Ferramenta.Imagem, Ferramenta.Nome);
+                Ferramenta.ImagemPath = Path.Combine("/imagens", Ferramenta.Nome);
+                resultado = await ferramentaEndpoints.Criar(Ferramenta);
+            }
+        }
+        catch (Exception ex)
+        {
+            resultado = ex.Message;
+        }
 
         if (resultado is null)
         {
-            navManager.NavigateTo("/ferramentas");
+            navManager.NavigateTo("/");
             return;
         }
+    }
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        var buffer = new byte[file.Size];
+        await file.OpenReadStream().ReadAsync(buffer);
+        Ferramenta!.Imagem = buffer;
+    }
+    private void SaveImageToFile(byte[] imageData, string fileName)
+    {
+        string filePath = Path.Combine("wwwroot/imagens", fileName);
+        File.WriteAllBytes(filePath, imageData);
     }
 }
