@@ -38,6 +38,10 @@ public class FerramentaRepositorio : IFerramentaRepositorio
 		if (requestedFerramentas is null)
 			return false;
 
+		requestedFerramentas.Nome = ferramentas.Nome;
+		requestedFerramentas.Descricao = ferramentas.Descricao;
+		requestedFerramentas.Imagem = ferramentas.Imagem;
+
 		_context.Ferramentas.Update(requestedFerramentas);
 		await _context.SaveChangesAsync(cancellationToken);
 
