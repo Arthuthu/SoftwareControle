@@ -35,14 +35,14 @@
 		</div>
 	</div>
 	<div class="d-flex my-5 justify-content-end align-items-center">
-		@if(Ferramenta.Disponivel == true)
-		{
-			<div>
-				<a href="/ordem/criar/@FerramentaId" class="botao-principal">Criar ordem</a>
-			</div>
-		}
 		@if (UsuarioLogadoModel!.Cargo == "Administrador")
 		{
+			@if (Ferramenta.Disponivel == true)
+			{
+				<div>
+					<a href="/ordem/criar/@FerramentaId" class="botao-principal">Criar ordem</a>
+				</div>
+			}
 			<div>
 				<a href="/ferramenta/editar/@Ferramenta.Id" class="botao-principal">Editar</a>
 			</div>

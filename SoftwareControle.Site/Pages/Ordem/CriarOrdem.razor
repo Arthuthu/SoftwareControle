@@ -3,6 +3,7 @@
 @inject ISessaoUsuario sessao
 @inject IOrdemEndpoints ordemEndpoints
 @inject IFerramentaEndpoints ferramentaEndpoints
+@inject IUsuarioEndpoints usuarioEndpoints
 @inject NavigationManager navManager
 
 @if (inicializado)
@@ -60,6 +61,7 @@
     public Guid UsuarioLogadoId { get; set; }
     private OrdemModel? Ordem { get; set; } = new();
     private FerramentaModel? Ferramenta { get; set; }
+    private UsuarioModel? UsuarioLogadoModel { get; set; }
 
     private bool inicializado = false;
     private string? resultado = string.Empty;
@@ -70,6 +72,18 @@
         if(UsuarioLogadoId == Guid.Empty)
         {
             navManager.NavigateTo("/login");
+            return;
+        }
+
+        await BuscarUsuarioLogadoModel();
+        if(UsuarioLogadoModel is null)
+        {
+            navManager.NavigateTo("/login");
+            return;
+        }
+        if(UsuarioLogadoModel.Cargo != "Administrador")
+        {
+            navManager.NavigateTo("/naoautorizado");
             return;
         }
 
@@ -99,11 +113,15 @@
     {
         Ferramenta = await ferramentaEndpoints.BuscarPorId(Guid.Parse(FerramentaId!));
     }
+    private async Task BuscarUsuarioLogadoModel()
+    {
+        UsuarioLogadoModel = await usuarioEndpoints.BuscarPorId(UsuarioLogadoId);
+    }
 
     private async Task Criar()
     {
         Ordem!.FerramentaId = Guid.Parse(FerramentaId!);
-        Ordem.Situacao = "Iniciada";
+        Ordem.Situacao = "Espera";
         Ordem.UsuarioId = UsuarioLogadoId;
         Ferramenta!.Disponivel = false;
 

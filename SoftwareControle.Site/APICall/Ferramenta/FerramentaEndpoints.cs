@@ -67,12 +67,10 @@ public class FerramentaEndpoints : IFerramentaEndpoints
         if (ferramenta.Imagem != null)
         {
             var imageContent = new ByteArrayContent(ferramenta.Imagem);
-            imageContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
             content.Add(imageContent, "Imagem", $"{ferramenta.Nome}.jpg"); 
         }
 
         content.Add(new StringContent(ferramenta.UsuarioId.ToString()), "UsuarioId");
-
 
         string criarUsuarioEndpoint = _config["apiLocation"] + _config["criarFerramenta"];
         var authResult = await _client.PostAsync(criarUsuarioEndpoint, content);
@@ -89,7 +87,6 @@ public class FerramentaEndpoints : IFerramentaEndpoints
 
         return null;
     }
-
     public async Task<string?> Atualizar(FerramentaModel ferramenta)
     {
         var data = new FormUrlEncodedContent(new[]
