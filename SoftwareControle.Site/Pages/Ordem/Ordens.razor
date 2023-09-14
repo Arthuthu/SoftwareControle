@@ -13,12 +13,29 @@
     }
     else
     {
+        <div class="ferramenta-list" id="ferramenta-list-label">
+            <div class="ferramenta-node">Descrição</div>
+            <div class="ferramenta-node">Urgência</div>
+            <div class="ferramenta-node">Criado em</div>
+            <div class="ferramenta-node">Prazo máximo</div>
+            <div class="ferramenta-node">Situação</div>
+            <div class="ferramenta-node">Responsável</div>
+            <div class="ferramenta-node">Ferramenta</div>
+        </div>
         <Virtualize Items="@ListaOrdem" Context="ordem" OverscanCount="50">
             <a class="ferramenta-list" href="/ordem/@ordem.Id">
                 <div class="ferramenta-node">@ordem.Descricao</div>
-                <div class="ferramenta-node">@ordem.NivelUrgencia</div>
-                <div class="ferramenta-node">@ordem.DataCriacao.ToString()</div>
-                <div class="ferramenta-node">@ordem.DataPrazoMaximo.ToString()</div>
+                <div class="ferramenta-node">@if(@ordem.NivelUrgencia.ToString() == "Urgente")
+                    {
+                        <div class="text-color-danger">Urgente</div>
+                    }
+                    else
+                    {
+                        <div class="text-light">Normal</div>
+                    }
+                </div>
+                <div class="ferramenta-node">@ordem.DataCriacao</div>
+                <div class="ferramenta-node">@ordem.DataPrazoMaximo.ToString("dd/MM/yyyy")</div>
                 <div class="ferramenta-node">@ordem.Situacao</div>
                 <div class="ferramenta-node">@ordem.Usuario?.Nome</div>
                 <div class="ferramenta-node">@ordem.Ferramenta?.Nome</div>

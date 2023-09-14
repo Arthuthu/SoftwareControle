@@ -80,6 +80,12 @@
             return;
         }
 
+        if(Ferramenta.Disponivel is false)
+        {
+            navManager.NavigateTo("/findisponivel");
+            return;
+        }
+
         Ordem!.DataPrazoMaximo = DateTime.Today;
 
         inicializado = true;
@@ -99,10 +105,22 @@
         Ordem!.FerramentaId = Guid.Parse(FerramentaId!);
         Ordem.Situacao = "Iniciada";
         Ordem.UsuarioId = UsuarioLogadoId;
+        Ferramenta!.Disponivel = false;
 
-        resultado = await ordemEndpoints.Criar(Ordem);
+        try
+        {
+            resultado = await ordemEndpoints.Criar(Ordem);
+            if (resultado is not null)
+                return;
 
-        if(resultado is null)
+            resultado = await ferramentaEndpoints.Atualizar(Ferramenta);
+        }
+        catch(Exception ex)
+        {
+            resultado = ex.Message;
+        }
+
+        if(resultado == string.Empty)
         {
             navManager.NavigateTo($"/ordens");
             return;

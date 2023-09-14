@@ -33,6 +33,9 @@ public class OrdemService : IOrdemService
         if (!resultado.IsValid)
             return resultado.Errors.FirstOrDefault()!.ToString();
 
+		if (ordem.DataPrazoMaximo < DateTime.Today)
+			return "Não é possivel adicionar uma data de prazo maximo que não seja futura";
+
 		ordem.Id = Guid.NewGuid();
 		ordem.DataCriacao = DateTime.UtcNow.AddHours(-3);
 
