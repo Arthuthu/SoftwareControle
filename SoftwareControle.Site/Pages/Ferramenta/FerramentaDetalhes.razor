@@ -35,6 +35,9 @@
 		</div>
 	</div>
 	<div class="d-flex my-5 justify-content-end align-items-center">
+		<div>
+			<a href="/ordem/criar/@FerramentaId" class="botao-principal">Criar ordem</a>
+		</div>
 		@if (UsuarioLogadoModel!.Cargo == "Administrador")
 		{
 			<div>
@@ -43,15 +46,10 @@
 			<div>
 				<button @onclick="MostrarDelete" class="botao-principal"
 						id="botao-padding-ajustes">
-					@mostrarDivToggleBotao
+					@mostrarDeletarBotaoNome
 				</button>
 			</div>
 		}
-		<div>
-			<div>
-				<a href="/ordem/criar/@FerramentaId" class="botao-principal">Criar ordem</a>
-			</div>
-		</div>
 		<div>
 			<a href="/ferramentas" class="botao-principal">Voltar</a>
 		</div>
@@ -69,7 +67,6 @@
 	}
 }
 
-
 @code {
 	[Parameter]
 	public string? FerramentaId { get; set; }
@@ -79,7 +76,7 @@
 	private FerramentaModel? Ferramenta { get; set; }
 
 	private string FerramentaDataCriacaoFormatado = string.Empty;
-	private string mostrarDivToggleBotao = "Deletar";
+	private string mostrarDeletarBotaoNome = "Deletar";
 	private bool mostrarDeletarDiv = false;
 	private bool inicializado = false;
 
@@ -136,12 +133,12 @@
 		if (mostrarDeletarDiv is false)
 		{
 			mostrarDeletarDiv = true;
-			mostrarDivToggleBotao = "Ocultar";
+			mostrarDeletarBotaoNome = "Ocultar";
 			return;
 		}
 
 		mostrarDeletarDiv = false;
-		mostrarDivToggleBotao = "Deletar";
+		mostrarDeletarBotaoNome = "Deletar";
 	}
 
 }
