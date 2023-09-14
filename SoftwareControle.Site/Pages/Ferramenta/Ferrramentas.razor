@@ -7,34 +7,19 @@
 
 @if (inicializado)
 {
-	@if (Ferramentas is null)
+	<div>
+		<InputText @bind-Value="@nomeFerramenta" class="ferramenta-buscar-input"
+		@oninput="(e) => FilterFerramentaPorNome(e.Value?.ToString())"
+				   placeholder="Procurar ferramenta por nome" />
+	</div>
+	@if (Ferramentas is null || Ferramentas.Count() == 0)
 	{
 		<div class="text-center my-5 fs-3 fw-bold">
-			Não foi cadastrado nenhuma ferramenta ainda
+			Não foi encontrado nenhuma ferramenta.
 		</div>
 	}
 	else
 	{
-		<div class="d-flex justify-content-between align-items-center my-1">
-			<div class="w-100">
-				<InputText @bind-Value="@nomeFerramenta" class="ferramenta-buscar-input"
-						   placeholder="Procurar ferramenta por nome" />
-			</div>
-			<div class="d-flex my-2">
-				<div>
-					<button class="botao-principal" @onclick="()=> FilterFerramentaPorNome(nomeFerramenta)"
-							id="botao-padding-ajustes">
-						Buscar
-					</button>
-				</div>
-				<div>
-					<button class="botao-principal" @onclick="LimparBusca" id="botao-padding-ajustes">
-						Limpar
-					</button>
-				</div>
-			</div>
-		</div>
-
 		<Virtualize Items="@Ferramentas" Context="ferramenta" OverscanCount="50">
 			<a class="ferramenta-list" href="/ferramenta/@ferramenta.Id">
 				<div class="ferramenta-node">@ferramenta.Nome</div>
@@ -116,13 +101,16 @@
 		UsuarioLogadoModel = await usuarioEndpoints.BuscarPorId(UsuarioLogadoId);
 	}
 
-	private void FilterFerramentaPorNome(string nomeFerramenta)
+	private void FilterFerramentaPorNome(string? nomeFerramenta)
 	{
-		Ferramentas = TodasFerramentas!.Where(x => x.Nome.ToLower()
-			.Contains(nomeFerramenta.ToLower())).ToList();
+		if(nomeFerramenta is not null)
+		{
+			Ferramentas = TodasFerramentas!.Where(x => x.Nome.ToLower()
+				.Contains(nomeFerramenta.ToLower())).ToList();
 
-		if (nomeFerramenta == string.Empty)
-			Ferramentas = TodasFerramentas;
+			if (nomeFerramenta == string.Empty)
+				Ferramentas = TodasFerramentas;
+		}
 	}
 	private void LimparBusca()
 	{
