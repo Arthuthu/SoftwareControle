@@ -1,0 +1,58 @@
+﻿@page "/ordens"
+
+@inject ISessaoUsuario sessao
+@inject IUsuarioEndpoints usuarioEndpoints
+@inject IOrdemEndpoints ordemEndpoints
+@inject NavigationManager navManager
+
+@if (inicializado)
+{
+    @if(ListaOrdem is null)
+    {
+        <div class="text-center my-5 fs-3 fw-bold">Não foi registrado nenhuma ordem ainda</div>
+    }
+    else
+    {
+        <Virtualize Items="@ListaOrdem" Context="ordem" OverscanCount="50">
+            <a class="ferramenta-list" href="/ordem/@ordem.Id">
+                <div class="ferramenta-node">@ordem.Descricao</div>
+                <div class="ferramenta-node">@ordem.NivelUrgencia</div>
+                <div class="ferramenta-node">@ordem.DataCriacao.ToString()</div>
+                <div class="ferramenta-node">@ordem.DataPrazoMaximo.ToString()</div>
+                <div class="ferramenta-node">@ordem.Situacao</div>
+                <div class="ferramenta-node">@ordem.Usuario?.Nome</div>
+                <div class="ferramenta-node">@ordem.Ferramenta?.Nome</div>
+            </a>
+        </Virtualize>
+    }
+}
+
+@code {
+    private Guid UsuarioLogadoId { get; set; }
+    private List<OrdemModel>? ListaOrdem = new();
+
+    private bool inicializado = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await BuscarUsuarioLogadoId();
+        if(UsuarioLogadoId == Guid.Empty)
+        {
+            navManager.NavigateTo("/login");
+            return;
+        }
+
+        await BuscarTodasAsOrdens();
+
+        inicializado = true;
+    }
+
+    private async Task BuscarUsuarioLogadoId()
+    {
+        UsuarioLogadoId = await sessao.BuscarIdDoUsuarioLogado();
+    }
+    private async Task BuscarTodasAsOrdens()
+    {
+        ListaOrdem = await ordemEndpoints.Buscar();
+    }
+}

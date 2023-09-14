@@ -60,7 +60,11 @@ public class OrdemEndpoints : IOrdemEndpoints
         var data = new FormUrlEncodedContent(new[]
         {
             new KeyValuePair<string, string>("Descricao", ordem.Descricao),
-            new KeyValuePair<string, string>("DataPrazoMaximo", ordem.DataPrazoMaximo.ToString())
+            new KeyValuePair<string, string>("DataPrazoMaximo", ordem.DataPrazoMaximo.ToString()),
+            new KeyValuePair<string, string>("NivelUrgencia", ordem.NivelUrgencia.ToString()),
+            new KeyValuePair<string, string>("Situacao", ordem.Situacao.ToString()),
+            new KeyValuePair<string, string>("UsuarioId", ordem.UsuarioId.ToString()),
+            new KeyValuePair<string, string>("FerramentaId", ordem.FerramentaId.ToString()),
         });
 
         string criarUsuarioEndpoint = _config["apiLocation"] + _config["criarFerramenta"];
@@ -83,10 +87,11 @@ public class OrdemEndpoints : IOrdemEndpoints
     {
         var data = new FormUrlEncodedContent(new[]
         {
+            new KeyValuePair<string, string>("Id", ordem.Id.ToString()),
             new KeyValuePair<string, string>("Descricao", ordem.Descricao),
-            new KeyValuePair<string, string>("Situacao", ordem.Situacao),
-            new KeyValuePair<string, string>("NivelUrgencia", ordem.NivelUrgencia),
-            new KeyValuePair<string, string>("DataPrazoMaximo", ordem.DataPrazoMaximo.ToString())
+            new KeyValuePair<string, string>("DataPrazoMaximo", ordem.DataPrazoMaximo.ToString()),
+            new KeyValuePair<string, string>("NivelUrgencia", ordem.NivelUrgencia.ToString()),
+            new KeyValuePair<string, string>("Situacao", ordem.Situacao.ToString()),
         });
 
         string atualizarEndpoint = _config["apiLocation"] + _config["atualizarOrdem"];

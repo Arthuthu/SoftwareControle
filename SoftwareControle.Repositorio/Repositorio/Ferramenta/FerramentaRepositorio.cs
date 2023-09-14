@@ -30,19 +30,21 @@ public class FerramentaRepositorio : IFerramentaRepositorio
 		await _context.Ferramentas.AddAsync(ferramentas, cancellationToken);
 		await _context.SaveChangesAsync(cancellationToken);
 	}
-	public async Task<bool> Atualizar(FerramentaModel ferramentas, CancellationToken cancellationToken)
+	public async Task<bool> Atualizar(FerramentaModel ferramenta, CancellationToken cancellationToken)
 	{
-		FerramentaModel? requestedFerramentas = await _context.Ferramentas.SingleOrDefaultAsync
-			(u => u.Id == ferramentas.Id, cancellationToken);
+		FerramentaModel? requestedFerramenta = await _context.Ferramentas.SingleOrDefaultAsync
+			(u => u.Id == ferramenta.Id, cancellationToken);
 
-		if (requestedFerramentas is null)
+		if (requestedFerramenta is null)
 			return false;
 
-		requestedFerramentas.Nome = ferramentas.Nome;
-		requestedFerramentas.Descricao = ferramentas.Descricao;
-		requestedFerramentas.Imagem = ferramentas.Imagem;
+		requestedFerramenta.Nome = ferramenta.Nome;
+		requestedFerramenta.Descricao = ferramenta.Descricao;
+		requestedFerramenta.Imagem = ferramenta.Imagem;
+		requestedFerramenta.DataAtualizacao = ferramenta.DataAtualizacao;
+		requestedFerramenta.Disponivel = ferramenta.Disponivel;
 
-		_context.Ferramentas.Update(requestedFerramentas);
+		_context.Ferramentas.Update(requestedFerramenta);
 		await _context.SaveChangesAsync(cancellationToken);
 
 		return true;

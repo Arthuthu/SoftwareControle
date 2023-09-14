@@ -1,6 +1,7 @@
 ﻿using SoftwareControle.Services.Services.Usuario;
 using Microsoft.AspNetCore.Mvc;
 using SoftwareControle.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SoftwareControle.API.Controllers.v1;
 
@@ -15,7 +16,7 @@ public class FerramentaController : ControllerBase
         _ferramentaService = ferramentaService;
     }
 
-    [HttpGet, Route("/ferramenta/buscar")]
+    [HttpGet, Route("/ferramenta/buscar"), Authorize]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
         var ferramentas = await _ferramentaService.Buscar(cancellationToken);
@@ -26,7 +27,7 @@ public class FerramentaController : ControllerBase
         return Ok(ferramentas);
     }
 
-    [HttpGet, Route("/ferramenta/buscarporid/{id:guid}")]
+    [HttpGet, Route("/ferramenta/buscarporid/{id:guid}"), Authorize]
     public async Task<IActionResult> Get(Guid id, CancellationToken cancellationToken)
     {
         var ferramenta = await _ferramentaService.Buscar(id, cancellationToken);
@@ -37,7 +38,7 @@ public class FerramentaController : ControllerBase
         return Ok(ferramenta);
     }
 
-    [HttpPost, Route("/ferramenta/criar")]
+    [HttpPost, Route("/ferramenta/criar"), Authorize]
     [Consumes("multipart/form-data")]
     public async Task<ActionResult<string?>> Post([FromForm] FerramentaModel ferramenta,
         CancellationToken cancellationToken)
@@ -50,7 +51,7 @@ public class FerramentaController : ControllerBase
         return Ok(null);
     }
 
-    [HttpPut, Route("/ferramenta/atualizar")]
+    [HttpPut, Route("/ferramenta/atualizar"), Authorize]
     public async Task<IActionResult> Put([FromForm] FerramentaModel ferramenta,
         CancellationToken cancellationToken)
     {
@@ -63,7 +64,7 @@ public class FerramentaController : ControllerBase
         return Ok(null);
     }
 
-    [HttpDelete, Route("/ferramenta/deletar/{id:guid}")]
+    [HttpDelete, Route("/ferramenta/deletar/{id:guid}"), Authorize]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
         bool ferramentaFoiDeletada = await _ferramentaService.Deletar(id, cancellationToken);

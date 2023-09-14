@@ -15,8 +15,17 @@ html, body {
     color: #FFF;
 }
 
-/* Botao */
+.text-color-success {
+    color: #2fce10;
+    font-weight: bold;
+}
 
+.text-color-danger {
+    color: #f60f0f;
+    font-weight: bold;
+}
+
+/* Botao */
 .botao-principal {
     color: #FFF;
     background-color: #fc831c;
@@ -163,4 +172,9 @@ navbar {
 .ferramenta-detalhes-box {
     border: solid #827a7a;
     border-radius: 10px 10px 0 0;
+}
+
+.ferramenta-buscar-input {
+    font-size: 1.4rem;
+    width: 97%;
 }

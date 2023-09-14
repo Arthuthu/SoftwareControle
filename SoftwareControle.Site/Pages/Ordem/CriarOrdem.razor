@@ -1,0 +1,45 @@
+﻿@page "/ordem/criar/{FerramentaId}"
+
+@inject ISessaoUsuario sessao
+@inject IOrdemEndpoints ordemEndpoints
+@inject NavigationManager navManager
+
+@if (inicializado)
+{
+    <EditForm Model="Ordem" OnValidSubmit="Criar" Context="Form">
+       
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public string? FerramentaId { get; set; }
+
+    public Guid UsuarioLogadoId { get; set; }
+    private OrdemModel? Ordem { get; set; }
+
+    private bool inicializado = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await BuscarUsuarioLogadoId();
+        if(UsuarioLogadoId == Guid.Empty)
+        {
+            navManager.NavigateTo("/login");
+            return;
+        }
+
+        inicializado = true;
+    }
+
+    private async Task BuscarUsuarioLogadoId()
+    {
+        UsuarioLogadoId = await sessao.BuscarIdDoUsuarioLogado();
+    }
+
+    private async Task Criar()
+    {
+        Ordem!.FerramentaId = Guid.Parse(FerramentaId!);
+        Ordem.UsuarioId = UsuarioLogadoId;
+    }
+}

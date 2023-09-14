@@ -51,6 +51,8 @@ public class FerramentaService : IFerramentaService
 
     public async Task<bool> Atualizar(FerramentaModel ferramenta, CancellationToken cancellationToken)
     {
+        ferramenta.DataAtualizacao = DateTime.UtcNow.AddHours(-3);
+
         return await _ferramentaRepositorio.Atualizar(ferramenta, cancellationToken);
     }
     public async Task<bool> Deletar(Guid id, CancellationToken cancellationToken)

@@ -1,6 +1,7 @@
 ﻿@page "/ferramenta/{FerramentaId}"
 
 @inject ISessaoUsuario sessao
+@inject IUsuarioEndpoints usuarioEndpoints
 @inject IFerramentaEndpoints ferramentaEndpoints
 @inject NavigationManager navManager
 
@@ -19,11 +20,11 @@
 			<div>
 				@if (Ferramenta!.Disponivel is true)
 				{
-					<div class="text-success">Disponivel</div>
+					<div class="text-color-success">Disponivel</div>
 				}
 				else
 				{
-					<div class="text-danger">Indisponivel</div>
+					<div class="text-color-danger">Indisponivel</div>
 				}
 			</div>
 			<div>Data Criação: @FerramentaDataCriacaoFormatado</div>
@@ -34,14 +35,22 @@
 		</div>
 	</div>
 	<div class="d-flex my-5 justify-content-end align-items-center">
+		@if (UsuarioLogadoModel!.Cargo == "Administrador")
+		{
+			<div>
+				<a href="/ferramenta/editar/@Ferramenta.Id" class="botao-principal">Editar</a>
+			</div>
+			<div>
+				<button @onclick="MostrarDelete" class="botao-principal"
+						id="botao-padding-ajustes">
+					@mostrarDivToggleBotao
+				</button>
+			</div>
+		}
 		<div>
-			<a href="/ferramenta/editar/@Ferramenta.Id" class="botao-principal">Editar</a>
-		</div>
-		<div>
-			<button @onclick="MostrarDelete" class="botao-principal"
-					id="botao-padding-ajustes">
-				@mostrarDivToggleBotao
-			</button>
+			<div>
+				<a href="/ordem/criar/@FerramentaId" class="botao-principal">Criar ordem</a>
+			</div>
 		</div>
 		<div>
 			<a href="/ferramentas" class="botao-principal">Voltar</a>
@@ -66,6 +75,7 @@
 	public string? FerramentaId { get; set; }
 
 	private Guid UsuarioLogadoId { get; set; }
+	private UsuarioModel? UsuarioLogadoModel { get; set; }
 	private FerramentaModel? Ferramenta { get; set; }
 
 	private string FerramentaDataCriacaoFormatado = string.Empty;
@@ -89,9 +99,10 @@
 			return;
 		}
 
+		await BuscarUsuarioLogadoModel();
 		await BuscarFerramentaModel();
 
-		if (Ferramenta is null)
+		if (Ferramenta is null || UsuarioLogadoModel is null)
 		{
 			navManager.NavigateTo("/naoencontrado");
 			return;
@@ -105,10 +116,21 @@
 	{
 		UsuarioLogadoId = await sessao.BuscarIdDoUsuarioLogado();
 	}
+	private async Task BuscarUsuarioLogadoModel()
+	{
+		UsuarioLogadoModel = await usuarioEndpoints.BuscarPorId(UsuarioLogadoId);
+	}
 	private async Task BuscarFerramentaModel()
 	{
 		Ferramenta = await ferramentaEndpoints.BuscarPorId(Guid.Parse(FerramentaId!));
 	}
+
+	private async Task Deletar()
+	{
+		await ferramentaEndpoints.Deletar(Guid.Parse(FerramentaId!));
+		navManager.NavigateTo("/ferramentas");
+	}
+
 	private void MostrarDelete()
 	{
 		if (mostrarDeletarDiv is false)
@@ -121,9 +143,5 @@
 		mostrarDeletarDiv = false;
 		mostrarDivToggleBotao = "Deletar";
 	}
-	private async Task Deletar()
-	{
-		await ferramentaEndpoints.Deletar(Guid.Parse(FerramentaId!));
-		navManager.NavigateTo("/ferramentas");
-	}
+
 }

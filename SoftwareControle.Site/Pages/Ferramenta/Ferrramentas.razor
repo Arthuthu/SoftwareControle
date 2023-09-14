@@ -15,6 +15,26 @@
 	}
 	else
 	{
+		<div class="d-flex justify-content-between align-items-center my-1">
+			<div class="w-100">
+				<InputText @bind-Value="@nomeFerramenta" class="ferramenta-buscar-input"
+						   placeholder="Procurar ferramenta por nome" />
+			</div>
+			<div class="d-flex my-2">
+				<div>
+					<button class="botao-principal" @onclick="()=> FilterFerramentaPorNome(nomeFerramenta)"
+							id="botao-padding-ajustes">
+						Buscar
+					</button>
+				</div>
+				<div>
+					<button class="botao-principal" @onclick="LimparBusca" id="botao-padding-ajustes">
+						Limpar
+					</button>
+				</div>
+			</div>
+		</div>
+
 		<Virtualize Items="@Ferramentas" Context="ferramenta" OverscanCount="50">
 			<a class="ferramenta-list" href="/ferramenta/@ferramenta.Id">
 				<div class="ferramenta-node">@ferramenta.Nome</div>
@@ -22,37 +42,38 @@
 				<div class="ferramenta-node">
 					@if (ferramenta.Disponivel is true)
 					{
-						<div class="text-success">Disponivel</div>
+						<div class="text-color-success">Disponivel</div>
 					}
 					else
 					{
-						<div class="text-danger">Indisponivel</div>
+						<div class="text-color-danger">Indisponivel</div>
 					}
 				</div>
 			</a>
 		</Virtualize>
 	}
+	<div class="d-flex my-5 justify-content-end">
 	@if (UsuarioLogadoModel!.Cargo == "Administrador")
 	{
-		<div class="d-flex my-5 justify-content-end">
-			<div>
-				<a class="botao-principal" href="/ferramenta/criar">Adicionar</a>
-			</div>
-			<div>
-				<a class="botao-principal" href="/">Voltar</a>
-			</div>
+		<div>
+			<a class="botao-principal" href="/ferramenta/criar">Adicionar</a>
 		</div>
 	}
+		<div>
+			<a class="botao-principal" href="/">Voltar</a>
+		</div>
+	</div>
 }
-
 
 @code {
 	private Guid UsuarioLogadoId { get; set; }
 
 	private List<FerramentaModel>? Ferramentas = new();
+	private List<FerramentaModel>? TodasFerramentas = new();
 	private UsuarioModel? UsuarioLogadoModel { get; set; }
 
 	private bool inicializado = false;
+	private string nomeFerramenta = string.Empty;
 
 	protected async override Task OnInitializedAsync()
 	{
@@ -82,10 +103,30 @@
 	}
 	private async Task BuscarFerramentas()
 	{
-		Ferramentas = await ferramentaEndpoints.Buscar();
+		var ferramentasRequest = await ferramentaEndpoints.Buscar();
+
+		if (ferramentasRequest is not null)
+		{
+			Ferramentas = ferramentasRequest!.OrderByDescending(x => x.Nome).ToList();
+			TodasFerramentas = Ferramentas;
+		}
 	}
 	private async Task BuscarUsuarioLogadoModel()
 	{
 		UsuarioLogadoModel = await usuarioEndpoints.BuscarPorId(UsuarioLogadoId);
+	}
+
+	private void FilterFerramentaPorNome(string nomeFerramenta)
+	{
+		Ferramentas = TodasFerramentas!.Where(x => x.Nome.ToLower()
+			.Contains(nomeFerramenta.ToLower())).ToList();
+
+		if (nomeFerramenta == string.Empty)
+			Ferramentas = TodasFerramentas;
+	}
+	private void LimparBusca()
+	{
+		Ferramentas = TodasFerramentas!.OrderByDescending(x => x.Nome).ToList();
+		nomeFerramenta = string.Empty;
 	}
 }

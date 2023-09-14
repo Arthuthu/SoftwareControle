@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftwareControle.Repositorio.Context;
 
@@ -11,9 +12,11 @@ using SoftwareControle.Repositorio.Context;
 namespace SoftwareControle.Repositorio.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230913223526_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,13 +143,12 @@ namespace SoftwareControle.Repositorio.Migrations
                         .HasColumnName("Cargo");
 
                     b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DataAtualizacao");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataCriacao")
                         .HasMaxLength(100)
                         .HasColumnType("datetime2")
-                        .HasColumnName("DataCriacao");
+                        .HasColumnName("DataAtualizacao");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -168,7 +170,11 @@ namespace SoftwareControle.Repositorio.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Usuarios", (string)null);
+                    b.ToTable("Usuarios", null, t =>
+                        {
+                            t.Property("DataAtualizacao")
+                                .HasColumnName("DataAtualizacao1");
+                        });
                 });
 
             modelBuilder.Entity("SoftwareControle.Models.FerramentaModel", b =>

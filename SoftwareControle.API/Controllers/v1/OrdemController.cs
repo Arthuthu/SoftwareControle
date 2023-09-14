@@ -1,6 +1,7 @@
 ﻿using SoftwareControle.Services.Services.Usuario;
 using Microsoft.AspNetCore.Mvc;
 using SoftwareControle.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SoftwareControle.API.Controllers.v1;
 
@@ -15,7 +16,7 @@ public class OrdemController : ControllerBase
         _ordemService = ordemService;
     }
 
-    [HttpGet, Route("/ordem/buscar")]
+    [HttpGet, Route("/ordem/buscar"), Authorize]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
         var ordens = await _ordemService.Buscar(cancellationToken);
@@ -26,7 +27,7 @@ public class OrdemController : ControllerBase
         return Ok(ordens);
     }
 
-    [HttpGet, Route("/ordem/buscarporid/{id:guid}")]
+    [HttpGet, Route("/ordem/buscarporid/{id:guid}"), Authorize]
     public async Task<IActionResult> Get(Guid id, CancellationToken cancellationToken)
     {
         var orderm = await _ordemService.Buscar(id, cancellationToken);
@@ -37,7 +38,7 @@ public class OrdemController : ControllerBase
         return Ok(orderm);
     }
 
-    [HttpPost, Route("/ordem/criar")]
+    [HttpPost, Route("/ordem/criar"), Authorize]
     public async Task<ActionResult<string?>> Post([FromForm] OrdemModel orderm,
         CancellationToken cancellationToken)
     {
@@ -49,7 +50,7 @@ public class OrdemController : ControllerBase
         return Ok(null);
     }
 
-    [HttpPut, Route("/ordem/atualizar")]
+    [HttpPut, Route("/ordem/atualizar"), Authorize]
     public async Task<IActionResult> Put([FromForm] OrdemModel ordem,
         CancellationToken cancellationToken)
     {
@@ -62,7 +63,7 @@ public class OrdemController : ControllerBase
         return Ok(ordem);
     }
 
-    [HttpDelete, Route("/ordem/deletar/{id:guid}")]
+    [HttpDelete, Route("/ordem/deletar/{id:guid}"), Authorize]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
         bool ordemFoiDeletada = await _ordemService.Deletar(id, cancellationToken);

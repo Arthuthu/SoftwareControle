@@ -1,7 +1,6 @@
-﻿using SoftwareControle.Repositorio.Context;
-using SoftwareControle.Repositório;
+﻿using Microsoft.EntityFrameworkCore;
 using SoftwareControle.Models;
-using Microsoft.EntityFrameworkCore;
+using SoftwareControle.Repositorio.Context;
 
 namespace SoftwareControle.Repository.Repositorio.Ordem;
 
@@ -15,7 +14,10 @@ public class OrdemRepositorio : IOrdemRepositorio
 	}
 	public async Task<List<OrdemModel>?> Buscar(CancellationToken cancellationToken)
 	{
-		List<OrdemModel>? ordens = await _context.Ordens.ToListAsync(cancellationToken);
+		List<OrdemModel>? ordens = await _context.Ordens
+			.Include(x => x.Usuario)
+			.ThenInclude(x => x!.Ferramenta)
+			.ToListAsync(cancellationToken);
 
 		return ordens is not null ? ordens : null;
 	}
@@ -38,6 +40,12 @@ public class OrdemRepositorio : IOrdemRepositorio
 
 		if (requestedOrdem is null)
 			return false;
+
+		requestedOrdem.Descricao = ordem.Descricao;
+		requestedOrdem.NivelUrgencia = ordem.NivelUrgencia;
+		requestedOrdem.Situacao = ordem.Situacao;
+		requestedOrdem.DataPrazoMaximo = ordem.DataPrazoMaximo;
+		requestedOrdem.DataAtualizacao = DateTime.UtcNow.AddHours(-3);
 
 		_context.Ordens.Update(requestedOrdem);
 		await _context.SaveChangesAsync(cancellationToken);

@@ -39,6 +39,12 @@ public class UsuarioRepositorio : IUsuarioRepositorio
 		if (requestedUser is null)
 			return false;
 
+		requestedUser.Usuario = user.Usuario;
+		requestedUser.Nome = user.Nome;
+		requestedUser.Senha = user.Senha;
+		requestedUser.Cargo = user.Cargo;
+		requestedUser.DataAtualizacao = DateTime.UtcNow.AddHours(-3);
+
 		_context.Usuarios.Update(requestedUser);
 		await _context.SaveChangesAsync(cancellationToken);
 
