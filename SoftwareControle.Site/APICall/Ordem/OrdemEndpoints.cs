@@ -36,6 +36,7 @@ public class OrdemEndpoints : IOrdemEndpoints
 
         return ordemModel;
     }
+
     public async Task<OrdemModel?> BuscarPorId(Guid id)
     {
         string buscarPorIdEndpoint = _config["apiLocation"] + _config["buscarOrdemPorId"] + $"/{id}";
@@ -67,7 +68,7 @@ public class OrdemEndpoints : IOrdemEndpoints
             new KeyValuePair<string, string>("FerramentaId", ordem.FerramentaId.ToString()),
         });
 
-        string criarUsuarioEndpoint = _config["apiLocation"] + _config["criarFerramenta"];
+        string criarUsuarioEndpoint = _config["apiLocation"] + _config["criarOrdem"];
         var authResult = await _client.PostAsync(criarUsuarioEndpoint, data);
         var authContent = await authResult.Content.ReadAsStringAsync();
 

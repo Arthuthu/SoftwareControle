@@ -16,7 +16,7 @@ public class OrdemController : ControllerBase
         _ordemService = ordemService;
     }
 
-    [HttpGet, Route("/ordem/buscar"), Authorize]
+    [HttpGet, Route("/ordem/buscar")]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
         var ordens = await _ordemService.Buscar(cancellationToken);

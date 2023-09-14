@@ -33,6 +33,9 @@ public class OrdemService : IOrdemService
         if (!resultado.IsValid)
             return resultado.Errors.FirstOrDefault()!.ToString();
 
+		ordem.Id = Guid.NewGuid();
+		ordem.DataCriacao = DateTime.UtcNow.AddHours(-3);
+
         await _ordemRepositorio.Adicionar(ordem, cancellationToken);
 
 		return null;

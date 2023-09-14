@@ -12,11 +12,9 @@ public class OrdemModel
     public DateTime DataCriacao { get; set; }
     public DateTime? DataAtualizacao { get; set; }
 
-
     //Chaves estrangeira
     public Guid UsuarioId { get; set; }
     public Guid FerramentaId { get; set; }
-
 
     public UsuarioModel? Usuario { get; set; }
     public FerramentaModel? Ferramenta { get; set; }

@@ -16,7 +16,7 @@ public class OrdemRepositorio : IOrdemRepositorio
 	{
 		List<OrdemModel>? ordens = await _context.Ordens
 			.Include(x => x.Usuario)
-			.ThenInclude(x => x!.Ferramenta)
+			.Include(x => x!.Ferramenta)
 			.ToListAsync(cancellationToken);
 
 		return ordens is not null ? ordens : null;
