@@ -72,6 +72,7 @@ public class OrdemEndpoints : IOrdemEndpoints
             new KeyValuePair<string, string>("Situacao", ordem.Situacao.ToString()),
             new KeyValuePair<string, string>("UsuarioId", ordem.UsuarioId.ToString()),
             new KeyValuePair<string, string>("FerramentaId", ordem.FerramentaId.ToString()),
+            new KeyValuePair<string, string>("NomeFerramenta", ordem.NomeFerramenta.ToString()),
         });
 
         string criarUsuarioEndpoint = _config["apiLocation"] + _config["criarOrdem"];
@@ -99,6 +100,8 @@ public class OrdemEndpoints : IOrdemEndpoints
             new KeyValuePair<string, string>("DataPrazoMaximo", ordem.DataPrazoMaximo.ToString()),
             new KeyValuePair<string, string>("NivelUrgencia", ordem.NivelUrgencia.ToString()),
             new KeyValuePair<string, string>("Situacao", ordem.Situacao.ToString()),
+            new KeyValuePair<string, string>("NomeResponsavel", ordem.NomeResponsavel!.ToString()),
+            new KeyValuePair<string, string>("NomeFerramenta", ordem.NomeFerramenta.ToString()),
         });
 
         string atualizarEndpoint = _config["apiLocation"] + _config["atualizarOrdem"];

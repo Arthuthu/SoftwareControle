@@ -7,7 +7,7 @@
 
 @if (inicializado)
 {
-    @if(ListaOrdem is null)
+    @if(ListaOrdem is null || ListaOrdem.Count() == 0)
     {
         <div class="text-center my-5 fs-3 fw-bold">Não foi registrado nenhuma ordem</div>
     }
@@ -36,9 +36,19 @@
                 </div>
                 <div class="ferramenta-node">@ordem.DataCriacao</div>
                 <div class="ferramenta-node">@ordem.DataPrazoMaximo.ToString("dd/MM/yyyy")</div>
-                <div class="ferramenta-node">@ordem.Situacao</div>
-                <div class="ferramenta-node">@ordem.Usuario?.Nome</div>
-                <div class="ferramenta-node">@ordem.Ferramenta?.Nome</div>
+                <div class="ferramenta-node">@if (ordem.Situacao == "Espera")
+                    {
+                        <div class="situacao-espera">Espera</div>
+                    } else if (ordem.Situacao == "Iniciada")
+                    {
+                        <div class="situacao-iniciada">Iniciada</div>
+                    } else
+                    {
+                        <div class="situacao-finalizada">Finalizada</div>
+                    }
+                </div>
+                <div class="ferramenta-node">@ordem.NomeResponsavel</div>
+                <div class="ferramenta-node">@ordem.NomeFerramenta</div>
             </a>
         </Virtualize>
     }

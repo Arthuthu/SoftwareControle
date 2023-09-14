@@ -122,6 +122,8 @@
     {
         Ordem!.FerramentaId = Guid.Parse(FerramentaId!);
         Ordem.Situacao = "Espera";
+        Ordem.UsuarioId = UsuarioLogadoId;
+        Ordem.NomeFerramenta = Ferramenta!.Nome;
         Ferramenta!.Disponivel = false;
 
         try

@@ -27,6 +27,21 @@ html, body {
     font-weight: bold;
 }
 
+.situacao-espera {
+    color: #FFF;
+    font-weight: bold;
+}
+
+.situacao-finalizada {
+    color: #0db415;
+    font-weight: bold;
+}
+
+.situacao-iniciada {
+    color: #168fcc;
+    font-weight: bold;
+}
+
 /* Botao */
 .botao-principal {
     color: #FFF;

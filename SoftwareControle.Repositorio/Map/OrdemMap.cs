@@ -23,6 +23,8 @@ public class OrdemMap : BaseMap<OrdemModel>
 		builder.Property(x => x.UsuarioId).HasMaxLength(50).HasColumnName("UsuarioId");
 		builder.Property(x => x.FerramentaId).HasMaxLength(50).HasColumnName("FerramentaId");
         builder.Property(x => x.DataCriacao).HasColumnName("DataAtualizacao");
+        builder.Property(x => x.NomeFerramenta).IsRequired().HasColumnName("NomeFerramenta").HasMaxLength(64);
+        builder.Property(x => x.NomeResponsavel).HasColumnName("NomeResponsavel").HasMaxLength(100);
 
         builder.HasOne(x => x.Ferramenta).WithMany(x => x.Ordem)
 			.HasForeignKey(x => x.FerramentaId);
