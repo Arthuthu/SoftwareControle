@@ -14,12 +14,36 @@ public class OrdemRepositorio : IOrdemRepositorio
 	}
 	public async Task<List<OrdemModel>?> Buscar(CancellationToken cancellationToken)
 	{
-		List<OrdemModel>? ordens = await _context.Ordens
+        List<OrdemModel>? ordens = await _context.Ordens
             .Include(x => x!.Ferramenta)
             .Include(x => x.Usuario)
-			.ToListAsync(cancellationToken);
+            .Select(x => new OrdemModel
+            {
+                Id = x.Id,
+                Descricao = x.Descricao,
+                NivelUrgencia = x.NivelUrgencia,
+                Situacao = x.Situacao,
+                DataPrazoMaximo = x.DataPrazoMaximo,
+                DataCriacao = x.DataCriacao,
+                DataAtualizacao = x.DataAtualizacao,
+                UsuarioId = x.UsuarioId,
+                FerramentaId = x.FerramentaId,
+                Ferramenta = x.Ferramenta,
+                Usuario = new UsuarioModel
+                {
+                    Id = x.Usuario!.Id,
+                    Usuario = x.Usuario.Usuario,
+                    Nome = x.Usuario.Nome,
+                    Cargo = x.Usuario.Cargo,
+                    DataCriacao = x.Usuario.DataCriacao,
+                    DataAtualizacao = x.Usuario.DataAtualizacao,
+                    Ordem = x.Usuario.Ordem,
+                    Ferramenta = x.Usuario.Ferramenta
+                }
+            })
+            .ToListAsync(cancellationToken);
 
-		return ordens is not null ? ordens : null;
+        return ordens is not null ? ordens : null;
 	}
 	public async Task<OrdemModel?> Buscar(Guid id, CancellationToken cancellationToken)
 	{

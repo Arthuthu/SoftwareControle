@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using SoftwareControle.Models;
 using Microsoft.AspNetCore.Authorization;
+using SoftwareControle.API.Response;
+using SoftwareControle.API.Mapper;
 
 namespace SoftwareControle.API.Controllers.v1;
 
@@ -21,10 +23,18 @@ public class UsuarioController : ControllerBase
     {
         var usuarios = await _usuarioService.Buscar(cancellationToken);
 
+        List<UsuarioResponse> usuariosResponse = new();
+
         if (usuarios is null)
             return NotFound();
 
-        return Ok(usuarios);
+        foreach (var usuario in usuarios)
+        {
+            var usuarioResponse = usuario.MapUsuarioModelToResponse();
+            usuariosResponse.Add(usuarioResponse);
+        }
+
+        return Ok(usuariosResponse);
     }
 
     [HttpGet, Route("/usuario/buscarporid/{id:guid}"), Authorize]
@@ -35,7 +45,9 @@ public class UsuarioController : ControllerBase
         if (usuario is null)
             return NotFound();
 
-        return Ok(usuario);
+        UsuarioResponse? usuarioResponse = usuario.MapUsuarioModelToResponse();
+
+        return Ok(usuarioResponse);
     }
 
     [HttpPost, Route("/usuario/criar"), Authorize]
