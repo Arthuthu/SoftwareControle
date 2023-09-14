@@ -15,8 +15,8 @@ public class OrdemRepositorio : IOrdemRepositorio
 	public async Task<List<OrdemModel>?> Buscar(CancellationToken cancellationToken)
 	{
 		List<OrdemModel>? ordens = await _context.Ordens
-			.Include(x => x.Usuario)
-			.Include(x => x!.Ferramenta)
+            .Include(x => x!.Ferramenta)
+            .Include(x => x.Usuario)
 			.ToListAsync(cancellationToken);
 
 		return ordens is not null ? ordens : null;

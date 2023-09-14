@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SoftwareControle.Models;
+using SoftwareControle.Site.Models;
 
 namespace SoftwareControle.Site.APICall.Ordem;
 
@@ -17,6 +19,7 @@ public class OrdemEndpoints : IOrdemEndpoints
         _config = config;
         _logger = logger;
     }
+
     public async Task<List<OrdemModel>?> Buscar()
     {
         string buscarTodosEndpoint = _config["apiLocation"] + _config["buscarOrdem"];
@@ -32,7 +35,10 @@ public class OrdemEndpoints : IOrdemEndpoints
             return null;
         }
 
-        var ordemModel = JsonConvert.DeserializeObject<List<OrdemModel>>(authContent);
+        var settings = new JsonSerializerSettings();
+        settings.Converters.Add(new CustomConverter());
+
+        var ordemModel = JsonConvert.DeserializeObject<List<OrdemModel>>(authContent, settings);
 
         return ordemModel;
     }
@@ -125,5 +131,31 @@ public class OrdemEndpoints : IOrdemEndpoints
         }
 
         return authContent;
+    }
+}
+
+public class CustomConverter : JsonConverter
+{
+    public override bool CanConvert(Type objectType)
+    {
+        return objectType == typeof(OrdemModel);
+    }
+
+    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+    {
+        JObject obj = JObject.Load(reader);
+
+        OrdemModel ordemModel = new OrdemModel();
+        serializer.Populate(obj.CreateReader(), ordemModel);
+
+        // Manually map the Usuario property
+        ordemModel.Usuario = obj["usuario"].ToObject<UsuarioModel>();
+
+        return ordemModel;
+    }
+
+    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    {
+        throw new NotImplementedException();
     }
 }

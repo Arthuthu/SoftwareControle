@@ -1,4 +1,6 @@
-﻿namespace SoftwareControle.Models;
+﻿using SoftwareControle.Site.Models;
+
+namespace SoftwareControle.Models;
 public class FerramentaModel
 {
     public Guid Id { get; set; }
@@ -11,4 +13,5 @@ public class FerramentaModel
 
     //Chave estrangeira
     public Guid UsuarioId { get; set; }
+    public UsuarioModel? Usuario { get; set; }
 }

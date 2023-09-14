@@ -22,5 +22,8 @@ public class UsuarioMap : BaseMap<UsuarioModel>
 		builder.Property(x => x.Cargo).IsRequired().HasColumnName("Cargo").HasMaxLength(100);
         builder.Property(x => x.DataCriacao).IsRequired().HasColumnName("DataCriacao").HasMaxLength(100);
 		builder.Property(x => x.DataAtualizacao).HasColumnName("DataAtualizacao");
+
+		builder.HasMany(x => x.Ferramenta).WithOne(x => x.Usuario)
+			.HasForeignKey(x => x.UsuarioId).OnDelete(DeleteBehavior.Cascade);
     }
 }

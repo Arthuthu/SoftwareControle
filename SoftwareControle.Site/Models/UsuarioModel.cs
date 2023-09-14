@@ -9,5 +9,4 @@ public class UsuarioModel
 	public string Cargo { get; set; } = string.Empty;
 	public DateTime DataCriacao { get; set; }
     public DateTime? DataAtualizacao { get; set; }
-
 }

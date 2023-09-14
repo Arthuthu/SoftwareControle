@@ -16,6 +16,7 @@ public class OrdemController : ControllerBase
         _ordemService = ordemService;
     }
 
+    [ProducesResponseType(typeof(List<OrdemModel>),200)]
     [HttpGet, Route("/ordem/buscar")]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {

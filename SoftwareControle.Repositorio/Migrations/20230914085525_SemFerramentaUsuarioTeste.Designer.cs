@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftwareControle.Repositorio.Context;
 
@@ -11,9 +12,11 @@ using SoftwareControle.Repositorio.Context;
 namespace SoftwareControle.Repositorio.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230914085525_SemFerramentaUsuarioTeste")]
+    partial class SemFerramentaUsuarioTeste
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,12 +58,7 @@ namespace SoftwareControle.Repositorio.Migrations
                         .HasColumnType("nvarchar(64)")
                         .HasColumnName("Nome");
 
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Ferramentas", null, t =>
                         {
@@ -171,17 +169,6 @@ namespace SoftwareControle.Repositorio.Migrations
                     b.ToTable("Usuarios", (string)null);
                 });
 
-            modelBuilder.Entity("SoftwareControle.Models.FerramentaModel", b =>
-                {
-                    b.HasOne("SoftwareControle.Models.UsuarioModel", "Usuario")
-                        .WithMany("Ferramenta")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Usuario");
-                });
-
             modelBuilder.Entity("SoftwareControle.Models.OrdemModel", b =>
                 {
                     b.HasOne("SoftwareControle.Models.FerramentaModel", "Ferramenta")
@@ -208,8 +195,6 @@ namespace SoftwareControle.Repositorio.Migrations
 
             modelBuilder.Entity("SoftwareControle.Models.UsuarioModel", b =>
                 {
-                    b.Navigation("Ferramenta");
-
                     b.Navigation("Ordem");
                 });
 #pragma warning restore 612, 618

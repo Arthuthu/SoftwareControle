@@ -11,6 +11,6 @@ public class UsuarioModel
     public DateTime? DataAtualizacao { get; set; }
 
     // Propriedades de navegação
-    public List<FerramentaModel>? Ferramenta { get; set; }
     public List<OrdemModel>? Ordem { get; set; }
+    public List<FerramentaModel>? Ferramenta { get; set; }
 }

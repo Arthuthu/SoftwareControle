@@ -8,12 +8,10 @@ public class FerramentaModel
     public byte[]? Imagem { get; set; }
     public DateTime DataCriacao { get; set; }
     public DateTime? DataAtualizacao { get; set; }
-
-    //Chave estrangeira
+    
     public Guid UsuarioId { get; set; }
 
-
     // Propriedades de navegação
-    public UsuarioModel? Usuario { get; set; }
     public List<OrdemModel>? Ordem { get; set; }
+    public UsuarioModel? Usuario { get; set; }
 }
