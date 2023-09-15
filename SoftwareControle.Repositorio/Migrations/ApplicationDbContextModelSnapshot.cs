@@ -29,12 +29,12 @@ namespace SoftwareControle.Repositorio.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataCriacao")
-                        .HasMaxLength(50)
                         .HasColumnType("datetime2")
                         .HasColumnName("DataAtualizacao");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataCriacao");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
@@ -62,11 +62,7 @@ namespace SoftwareControle.Repositorio.Migrations
 
                     b.HasIndex("UsuarioId");
 
-                    b.ToTable("Ferramentas", null, t =>
-                        {
-                            t.Property("DataAtualizacao")
-                                .HasColumnName("DataAtualizacao1");
-                        });
+                    b.ToTable("Ferramentas", (string)null);
                 });
 
             modelBuilder.Entity("SoftwareControle.Models.OrdemModel", b =>

@@ -12,8 +12,8 @@ using SoftwareControle.Repositorio.Context;
 namespace SoftwareControle.Repositorio.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230914085525_SemFerramentaUsuarioTeste")]
-    partial class SemFerramentaUsuarioTeste
+    [Migration("20230915201257_MigracaoInicial")]
+    partial class MigracaoInicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,12 +32,12 @@ namespace SoftwareControle.Repositorio.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataCriacao")
-                        .HasMaxLength(50)
                         .HasColumnType("datetime2")
                         .HasColumnName("DataAtualizacao");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataCriacao");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
@@ -58,13 +58,14 @@ namespace SoftwareControle.Repositorio.Migrations
                         .HasColumnType("nvarchar(64)")
                         .HasColumnName("Nome");
 
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Ferramentas", null, t =>
-                        {
-                            t.Property("DataAtualizacao")
-                                .HasColumnName("DataAtualizacao1");
-                        });
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("Ferramentas", (string)null);
                 });
 
             modelBuilder.Entity("SoftwareControle.Models.OrdemModel", b =>
@@ -100,6 +101,17 @@ namespace SoftwareControle.Repositorio.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("NivelUrgencia");
+
+                    b.Property<string>("NomeFerramenta")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
+                        .HasColumnName("NomeFerramenta");
+
+                    b.Property<string>("NomeResponsavel")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("NomeResponsavel");
 
                     b.Property<string>("Situacao")
                         .IsRequired()
@@ -169,6 +181,17 @@ namespace SoftwareControle.Repositorio.Migrations
                     b.ToTable("Usuarios", (string)null);
                 });
 
+            modelBuilder.Entity("SoftwareControle.Models.FerramentaModel", b =>
+                {
+                    b.HasOne("SoftwareControle.Models.UsuarioModel", "Usuario")
+                        .WithMany("Ferramenta")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("SoftwareControle.Models.OrdemModel", b =>
                 {
                     b.HasOne("SoftwareControle.Models.FerramentaModel", "Ferramenta")
@@ -195,6 +218,8 @@ namespace SoftwareControle.Repositorio.Migrations
 
             modelBuilder.Entity("SoftwareControle.Models.UsuarioModel", b =>
                 {
+                    b.Navigation("Ferramenta");
+
                     b.Navigation("Ordem");
                 });
 #pragma warning restore 612, 618

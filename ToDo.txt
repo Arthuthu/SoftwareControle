@@ -3,6 +3,7 @@ Tela Index
 Usuario aceita e finaliza ordem
 Ordem detalhes
 Relatorios
+Admin criar usuario funcionario
 
 Caching
 

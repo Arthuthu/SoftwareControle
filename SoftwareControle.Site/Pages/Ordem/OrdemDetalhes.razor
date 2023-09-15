@@ -1,8 +1,129 @@
 ﻿@page "/ordem/{OrdemId}"
 
+@inject ISessaoUsuario sessao
+@inject IUsuarioEndpoints usuarioEndpoints
+@inject IOrdemEndpoints ordemEndpoints
+@inject NavigationManager navManager
+
+@if (inicializado)
+{
+	<div class="ferramenta-detalhes-box">
+		<div>
+			<div class="label-principal">Descrição</div>
+			<div class="text-center my-2 fs-3">@OrdemModel!.Descricao</div>
+		</div>
+		<div class="d-flex mt-4">
+			<div class="label-principal">Urgência</div>
+			<div class="text-center my-4 fs-3">@OrdemModel.NivelUrgencia</div>
+		</div>
+		<div class="d-flex mt-4">
+			<div class="label-principal">Situação</div>
+			<div class="text-center my-4 fs-3">@OrdemModel.Situacao</div>
+		</div>
+	</div>
+	<div class="d-flex my-5 justify-content-end align-items-center">
+		<div>
+			<a href="/aceitarordem/@OrdemId" class="botao-principal">Aceitar ordem</a>
+		</div>
+		@if (UsuarioLogadoModel!.Cargo == "Administrador")
+		{
+			<div>
+				<a href="/ordem/editar/@OrdemModel.Id" class="botao-principal">Editar</a>
+			</div>
+			<div>
+				<button @onclick="MostrarDelete" class="botao-principal"
+						id="botao-padding-ajustes">
+					@mostrarDeletarBotaoNome
+				</button>
+			</div>
+		}
+		<div>
+			<a href="/ordens" class="botao-principal">Voltar</a>
+		</div>
+	</div>
+	@if (mostrarDeletarDiv)
+	{
+		<div class="text-center">
+			<div class="fs-4 my-4">
+				Tem certeza que deseja deletar essa ordem?
+			</div>
+			<div>
+				<button @onclick="Deletar" class="botao-principal">Confirmar</button>
+			</div>
+		</div>
+	}
+}
+
 @code {
-    [Parameter]
-    public string? OrdemId { get; set; }
+	[Parameter]
+	public string? OrdemId { get; set; }
 
+	private Guid UsuarioLogadoId { get; set; }
+	private UsuarioModel? UsuarioLogadoModel { get; set; }
+	private OrdemModel? OrdemModel { get; set; }
 
+	private bool inicializado = false;
+	private bool mostrarDeletarDiv = false;
+	private string mostrarDeletarBotaoNome = "Deletar";
+
+	protected async override Task OnInitializedAsync()
+	{
+		if(OrdemId == Guid.Empty.ToString())
+		{
+			navManager.NavigateTo("/naoencontrado");
+			return;
+		}
+
+		await BuscarUsuarioLogadoId();
+		if(UsuarioLogadoId == Guid.Empty)
+		{
+			navManager.NavigateTo("/login");
+			return;
+		}
+
+		await BuscarUsuarioModel();
+		if(UsuarioLogadoModel is null)
+		{
+			navManager.NavigateTo("/naoencontrado");
+			return;
+		}
+
+		await BuscarOrdemModel();
+		if(OrdemModel is null)
+		{
+			navManager.NavigateTo("/naoencontrado");
+			return;
+		}
+
+		inicializado = true;
+	}
+
+	private async Task BuscarUsuarioLogadoId()
+	{
+		UsuarioLogadoId = await sessao.BuscarIdDoUsuarioLogado();
+	}
+	private async Task BuscarUsuarioModel()
+	{
+		UsuarioLogadoModel = await usuarioEndpoints.BuscarPorId(UsuarioLogadoId);
+	}
+	private async Task BuscarOrdemModel()
+	{
+		OrdemModel = await ordemEndpoints.BuscarPorId(Guid.Parse(OrdemId!));
+	}
+	private void MostrarDelete()
+	{
+		if(mostrarDeletarDiv is false)
+		{
+			mostrarDeletarBotaoNome = "Ocultar";
+			mostrarDeletarDiv = true;
+			return;
+		}
+
+		mostrarDeletarBotaoNome = "Deletar";
+		mostrarDeletarDiv = false;
+	}
+	private async Task Deletar()
+	{
+		await ordemEndpoints.Deletar(Guid.Parse(OrdemId!));
+	}
 }

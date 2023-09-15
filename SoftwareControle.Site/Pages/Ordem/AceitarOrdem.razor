@@ -1,0 +1,70 @@
+﻿@page "/aceitarodem/{OrdemId}"
+
+@inject ISessaoUsuario sessao
+@inject IUsuarioEndpoints usuarioEndpoints
+@inject IOrdemEndpoints ordemEndpoints
+@inject NavigationManager navManager
+
+@code {
+	[Parameter]
+	public string? OrdemId { get; set; }
+
+	private Guid UsuarioLogadoId { get; set; }
+	private UsuarioModel? UsuarioLogadoModel { get; set; }
+	private OrdemModel? Ordem { get; set; }
+
+	private bool inicializado = false;
+
+	protected async override Task OnInitializedAsync()
+	{
+		if(OrdemId == Guid.Empty.ToString())
+		{
+			navManager.NavigateTo("/naoencontrado");
+			return;
+		}
+
+		await BuscarOrdemModel();
+		if(Ordem is null || Ordem.NomeResponsavel != string.Empty)
+		{
+			navManager.NavigateTo("/naoencontrado");
+			return;
+		}
+
+		await BuscarUsuarioLogadoId();
+		if(UsuarioLogadoId == Guid.Empty)
+		{
+			navManager.NavigateTo("/login");
+			return;
+		}
+
+		await BuscarUsuarioLogadoModel();
+		if(UsuarioLogadoModel is null)
+		{
+			navManager.NavigateTo("/naoencontrado");
+			return;
+		}
+
+		await AceitarOrdemMethod();
+	}
+
+	private async Task BuscarUsuarioLogadoId()
+	{
+		UsuarioLogadoId = await sessao.BuscarIdDoUsuarioLogado();
+	}
+	private async Task BuscarUsuarioLogadoModel()
+	{
+		UsuarioLogadoModel = await usuarioEndpoints.BuscarPorId(UsuarioLogadoId);
+	}
+	private async Task BuscarOrdemModel()
+	{
+		Ordem = await ordemEndpoints.BuscarPorId(Guid.Parse(OrdemId!));
+	}
+	private async Task AceitarOrdemMethod()
+	{
+		Ordem!.NomeResponsavel = UsuarioLogadoModel!.Nome;
+		Ordem.Situacao = "Iniciada";
+
+		await ordemEndpoints.Atualizar(Ordem);
+	}
+}
+

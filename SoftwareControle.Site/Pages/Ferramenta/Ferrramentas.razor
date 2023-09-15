@@ -7,6 +7,11 @@
 
 @if (inicializado)
 {
+	<div>
+		<InputText @bind-Value="@nomeFerramenta" class="ferramenta-buscar-input"
+		@oninput="(e) => FilterFerramentaPorNome(e.Value?.ToString())"
+				   placeholder="Procurar ferramenta por nome" />
+	</div>
 	@if (Ferramentas is null || Ferramentas.Count() == 0)
 	{
 		<div class="text-center my-5 fs-3 fw-bold">
@@ -15,11 +20,6 @@
 	}
 	else
 	{
-		<div>
-			<InputText @bind-Value="@nomeFerramenta" class="ferramenta-buscar-input"
-			@oninput="(e) => FilterFerramentaPorNome(e.Value?.ToString())"
-					   placeholder="Procurar ferramenta por nome" />
-		</div>
 		<div class="ferramenta-list">
 			<div class="ferramenta-node">Foto</div>
 			<div class="ferramenta-node">Nome</div>

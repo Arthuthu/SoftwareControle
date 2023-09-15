@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SoftwareControle.Repositorio.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class MigracaoInicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,8 +20,8 @@ namespace SoftwareControle.Repositorio.Migrations
                     Senha = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Cargo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", maxLength: 100, nullable: false),
-                    DataAtualizacao1 = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DataCriacao = table.Column<DateTime>(type: "datetime2", maxLength: 100, nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -37,8 +37,8 @@ namespace SoftwareControle.Repositorio.Migrations
                     Descricao = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Disponivel = table.Column<bool>(type: "bit", nullable: false),
                     Imagem = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", maxLength: 50, nullable: false),
-                    DataAtualizacao1 = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -48,7 +48,8 @@ namespace SoftwareControle.Repositorio.Migrations
                         name: "FK_Ferramentas_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,
                         principalTable: "Usuarios",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -59,6 +60,8 @@ namespace SoftwareControle.Repositorio.Migrations
                     Descricao = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     NivelUrgencia = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Situacao = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NomeFerramenta = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    NomeResponsavel = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     DataPrazoMaximo = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime2", maxLength: 50, nullable: false),
                     DataAtualizacao1 = table.Column<DateTime>(type: "datetime2", nullable: true),
