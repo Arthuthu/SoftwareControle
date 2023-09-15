@@ -1,6 +1,6 @@
-﻿using SoftwareControle.Repositorio.Context;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SoftwareControle.Models;
+using SoftwareControle.Repositorio.Context;
 using SoftwareControle.Repository.Repositorio.Usuario;
 
 namespace SoftwareControle.Repositório;
@@ -60,5 +60,22 @@ public class UsuarioRepositorio : IUsuarioRepositorio
 		await _context.SaveChangesAsync(cancellationToken);
 
 		return colunasAfetadas > 0;
+	}
+
+	public async Task<UsuarioModel?> BuscarPorNome(string nome, CancellationToken cancellationToken)
+	{
+		UsuarioModel? usuario = await _context.Usuarios.SingleOrDefaultAsync
+			(u => u.Nome == nome, cancellationToken);
+
+		return usuario is not null ? usuario : null;
+	}
+
+	public async Task<UsuarioModel?> BuscarPorUsuarioLogin(string usuarioLogin,
+		CancellationToken cancellationToken)
+	{
+		UsuarioModel? usuario = await _context.Usuarios.SingleOrDefaultAsync
+			(u => u.Usuario == usuarioLogin, cancellationToken);
+
+		return usuario is not null ? usuario : null;
 	}
 }

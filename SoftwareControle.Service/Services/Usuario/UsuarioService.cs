@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using SoftwareControle.Models;
 using SoftwareControle.Repository.Repositorio.Usuario;
+using System.Formats.Asn1;
 
 namespace SoftwareControle.Services.Services.Usuario;
 
@@ -34,7 +35,15 @@ public class UsuarioService : IUsuarioService
         if (!resultado.IsValid)
             return resultado.Errors.FirstOrDefault()!.ToString();
 
-        await _usuarioRepositorio.Adicionar(usuario, cancellationToken);
+		var nomeJaUtilizado = await VerificarNomeUsuario(usuario, cancellationToken);
+		if (nomeJaUtilizado is not null)
+			return "Um usuario com este nome completo ja foi cadastrado";
+
+		var usuarioLoginJaUtilizado = await VerificarNomeUsuarioLogin(usuario, cancellationToken);
+		if (usuarioLoginJaUtilizado is not null)
+			return "Um usuario com este login de usuario ja foi cadastrado";
+
+		await _usuarioRepositorio.Adicionar(usuario, cancellationToken);
 
 		return null;
 	}
@@ -46,5 +55,25 @@ public class UsuarioService : IUsuarioService
 	public async Task<bool> Deletar(Guid id, CancellationToken cancellationToken)
 	{
 		return await _usuarioRepositorio.Deletar(id, cancellationToken);
+	}
+	
+	private async Task<UsuarioModel?> VerificarNomeUsuario(UsuarioModel usuario, CancellationToken ct)
+	{
+		var usuarioRequested = await _usuarioRepositorio.BuscarPorNome(usuario.Nome, ct);
+
+		if(usuarioRequested is null)
+			return null;
+
+		return usuarioRequested;
+	}
+
+	private async Task <UsuarioModel?> VerificarNomeUsuarioLogin(UsuarioModel usuario, CancellationToken ct)
+	{
+		var usuarioRequested = await _usuarioRepositorio.BuscarPorUsuarioLogin(usuario.Usuario, ct);
+
+		if (usuarioRequested is null)
+			return null;
+
+		return usuarioRequested;
 	}
 }
