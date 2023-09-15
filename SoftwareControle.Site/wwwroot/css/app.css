@@ -9,9 +9,9 @@ root {
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-image: linear-gradient(#000000, #808080);
+    background-image: linear-gradient(#000000, #090909);
     background-repeat: no-repeat;
-    height: 100vw;
+    background-size: cover;
     color: #FFF;
 }
 
