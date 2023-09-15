@@ -1,8 +1,4 @@
 Tela Index
 
-(Adicionar imagem para arquivo ou banco de dados para ferramenta nao funciona)
-
 Historico de quem atualizou as ferramentas?
 Historico de quem criou essas ordens?
-
-Label nas ordens

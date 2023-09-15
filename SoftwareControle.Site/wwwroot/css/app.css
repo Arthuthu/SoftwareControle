@@ -202,6 +202,12 @@ navbar {
 }
 
 .ferramentas-lista-foto {
-    height: 70px;
-    width: 70px;
+    height: 80px;
+    width: 80px;
+    border: solid #808080;
+}
+
+.ferramentas-lista-foto:hover {
+    height: 100px;
+    width: 100px;
 }

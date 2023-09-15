@@ -20,12 +20,22 @@
 	}
 	else
 	{
+		<div class="ferramenta-list">
+			<div class="ferramenta-node">Foto</div>
+			<div class="ferramenta-node">Nome</div>
+			<div class="ferramenta-node">Descrição</div>
+			<div class="ferramenta-node">Disponibilidade</div>
+		</div>
 		<Virtualize Items="@Ferramentas" Context="ferramenta" OverscanCount="50">
 			<a class="ferramenta-list" href="/ferramenta/@ferramenta.Id">
-				<div class="ferramenta-node">@if(ferramenta.Imagem is not null)
+				<div class="ferramenta-node">@if(ferramenta.ImagemString != string.Empty)
 				{
 					<img src="data:image/jpeg;base64,@ferramenta.ImagemString" alt="Foto" 
 						class="ferramentas-lista-foto">
+				}
+				else
+				{
+					<div class="ferramenta-node">Sem foto</div>
 				}
 				</div>
 				<div class="ferramenta-node">@ferramenta.Nome</div>
