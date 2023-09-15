@@ -112,19 +112,13 @@
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
         var file = e.File;
+
         if (file != null)
         {
-            Console.WriteLine("File is not null");
-            using (var stream = file.OpenReadStream())
-            {
-                Console.WriteLine("Stream is opened");
-                using (var memoryStream = new MemoryStream())
-                {
-                    stream.CopyTo(memoryStream);
-                    Ferramenta!.Imagem = memoryStream.ToArray();
-                    Console.WriteLine("Imagem property set successfully");
-                }
-            }
+            var stream = file.OpenReadStream();
+            var bytes = new byte[stream.Length];
+            await stream.ReadAsync(bytes);
+            Ferramenta!.Imagem = bytes;
         }
     }
 

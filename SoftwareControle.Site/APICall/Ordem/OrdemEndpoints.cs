@@ -35,10 +35,7 @@ public class OrdemEndpoints : IOrdemEndpoints
             return null;
         }
 
-        var settings = new JsonSerializerSettings();
-        settings.Converters.Add(new CustomConverter());
-
-        var ordemModel = JsonConvert.DeserializeObject<List<OrdemModel>>(authContent, settings);
+        var ordemModel = JsonConvert.DeserializeObject<List<OrdemModel>>(authContent);
 
         return ordemModel;
     }
@@ -134,31 +131,5 @@ public class OrdemEndpoints : IOrdemEndpoints
         }
 
         return authContent;
-    }
-}
-
-public class CustomConverter : JsonConverter
-{
-    public override bool CanConvert(Type objectType)
-    {
-        return objectType == typeof(OrdemModel);
-    }
-
-    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-    {
-        JObject obj = JObject.Load(reader);
-
-        OrdemModel ordemModel = new OrdemModel();
-        serializer.Populate(obj.CreateReader(), ordemModel);
-
-        // Manually map the Usuario property
-        ordemModel.Usuario = obj["usuario"].ToObject<UsuarioModel>();
-
-        return ordemModel;
-    }
-
-    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-    {
-        throw new NotImplementedException();
     }
 }

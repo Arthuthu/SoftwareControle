@@ -125,9 +125,15 @@
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
         var file = e.File;
-        var buffer = new byte[file.Size];
-        await file.OpenReadStream().ReadAsync(buffer);
-        Ferramenta!.Imagem = buffer;
+
+        if (file != null)
+        {
+            var stream = file.OpenReadStream();
+            var bytes = new byte[stream.Length];
+            await stream.ReadAsync(bytes);
+
+            Ferramenta!.Imagem = bytes;
+        }
     }
 
     private string? FiltrarResultado(string resultado)

@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using SoftwareControle.Models;
 using Microsoft.AspNetCore.Authorization;
+using SoftwareControle.API.Requests;
+using SoftwareControle.API.Mapper;
 
 namespace SoftwareControle.API.Controllers.v1;
 
@@ -39,11 +41,11 @@ public class FerramentaController : ControllerBase
     }
 
     [HttpPost, Route("/ferramenta/criar"), Authorize]
-    [Consumes("multipart/form-data")]
-    public async Task<ActionResult<string?>> Post([FromForm] FerramentaModel ferramenta,
+    public async Task<ActionResult<string?>> Post([FromForm] FerramentaRequest ferramenta,
         CancellationToken cancellationToken)
     {
-        var resultado = await _ferramentaService.Adicionar(ferramenta, cancellationToken);
+        var resultado = await _ferramentaService.Adicionar(ferramenta.MapFerramentaRequestToFerramentaModel(),
+            cancellationToken);
 
         if (resultado is not null)
             return BadRequest(resultado);

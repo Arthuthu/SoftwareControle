@@ -1,4 +1,5 @@
 ﻿namespace SoftwareControle.Models;
+
 public class FerramentaModel
 {
     public Guid Id { get; set; }

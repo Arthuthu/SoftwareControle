@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SoftwareControle.Models;
+using System.Collections;
 using System.Net.Http.Headers;
 
 namespace SoftwareControle.Site.APICall.Ferramenta;
@@ -58,22 +59,22 @@ public class FerramentaEndpoints : IFerramentaEndpoints
     }
     public async Task<string?> Criar(FerramentaModel ferramenta)
     {
-        var content = new MultipartFormDataContent
+        if(ferramenta.Imagem is not null)
         {
-            { new StringContent(ferramenta.Nome), "Nome" },
-            { new StringContent(ferramenta.Descricao), "Descricao" }
-        };
-
-        if (ferramenta.Imagem != null)
-        {
-            var imageContent = new ByteArrayContent(ferramenta.Imagem);
-            content.Add(imageContent, "Imagem", $"{ferramenta.Nome}.jpg"); 
+            ferramenta.ImagemString = Convert.ToBase64String(ferramenta.Imagem);
         }
 
-        content.Add(new StringContent(ferramenta.UsuarioId.ToString()), "UsuarioId");
+        var data = new FormUrlEncodedContent(new[]
+        {
+            new KeyValuePair<string, string>("Id", ferramenta.Id.ToString()),
+            new KeyValuePair<string, string>("Nome", ferramenta.Nome),
+            new KeyValuePair<string, string>("Descricao", ferramenta.Descricao),
+            new KeyValuePair<string, string>("ImagemString", ferramenta.ImagemString ?? ""),
+            new KeyValuePair<string, string>("UsuarioId", ferramenta.UsuarioId.ToString())
+        });
 
         string criarUsuarioEndpoint = _config["apiLocation"] + _config["criarFerramenta"];
-        var authResult = await _client.PostAsync(criarUsuarioEndpoint, content);
+        var authResult = await _client.PostAsync(criarUsuarioEndpoint, data);
         var authContent = await authResult.Content.ReadAsStringAsync();
 
         if (authResult.IsSuccessStatusCode is false)
@@ -89,13 +90,18 @@ public class FerramentaEndpoints : IFerramentaEndpoints
     }
     public async Task<string?> Atualizar(FerramentaModel ferramenta)
     {
+        if (ferramenta.Imagem is not null)
+        {
+            ferramenta.ImagemString = Convert.ToBase64String(ferramenta.Imagem);
+        }
+
         var data = new FormUrlEncodedContent(new[]
         {
             new KeyValuePair<string, string>("Id", ferramenta.Id.ToString()),
             new KeyValuePair<string, string>("Nome", ferramenta.Nome),
             new KeyValuePair<string, string>("Descricao", ferramenta.Descricao),
-			new KeyValuePair<string, string>("Imagem", ferramenta.Imagem?.ToString() ?? "")
-		});
+            new KeyValuePair<string, string>("ImagemString", ferramenta.ImagemString ?? "")
+        });
 
         string atualizarEndpoint = _config["apiLocation"] + _config["atualizarFerramenta"];
         var authResult = await _client.PutAsync(atualizarEndpoint, data);
