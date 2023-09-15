@@ -22,6 +22,12 @@
 	{
 		<Virtualize Items="@Ferramentas" Context="ferramenta" OverscanCount="50">
 			<a class="ferramenta-list" href="/ferramenta/@ferramenta.Id">
+				<div class="ferramenta-node">@if(ferramenta.Imagem is not null)
+				{
+					<img src="data:image/jpeg;base64,@ferramenta.ImagemString" alt="Foto" 
+						class="ferramentas-lista-foto">
+				}
+				</div>
 				<div class="ferramenta-node">@ferramenta.Nome</div>
 				<div class="ferramenta-node">@ferramenta.Descricao</div>
 				<div class="ferramenta-node">
@@ -93,6 +99,13 @@
 		if (ferramentasRequest is not null)
 		{
 			Ferramentas = ferramentasRequest!.OrderByDescending(x => x.Nome).ToList();
+
+			foreach (var ferramenta in Ferramentas)
+			{
+				if(ferramenta.Imagem is not null)
+					ferramenta.ImagemString = Convert.ToBase64String(ferramenta.Imagem);
+			}
+
 			TodasFerramentas = Ferramentas;
 		}
 	}

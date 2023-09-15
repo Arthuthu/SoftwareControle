@@ -100,7 +100,8 @@ public class FerramentaEndpoints : IFerramentaEndpoints
             new KeyValuePair<string, string>("Id", ferramenta.Id.ToString()),
             new KeyValuePair<string, string>("Nome", ferramenta.Nome),
             new KeyValuePair<string, string>("Descricao", ferramenta.Descricao),
-            new KeyValuePair<string, string>("ImagemString", ferramenta.ImagemString ?? "")
+            new KeyValuePair<string, string>("Disponivel", ferramenta.Disponivel.ToString()),
+			new KeyValuePair<string, string>("ImagemString", ferramenta.ImagemString ?? "")
         });
 
         string atualizarEndpoint = _config["apiLocation"] + _config["atualizarFerramenta"];
