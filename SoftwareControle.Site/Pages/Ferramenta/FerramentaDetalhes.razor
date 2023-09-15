@@ -8,6 +8,14 @@
 @if (inicializado)
 {
 	<div class="ferramenta-detalhes-box">
+		@if(Ferramenta?.ImagemString != string.Empty)
+		{
+			<div class="text-center my-4">
+				<img src="data:image/jpeg;base64,@Ferramenta?.ImagemString" alt="Foto"
+					 class="ferramenta-detalhes-foto">
+			</div>
+		}
+
 		<div>
 			<div class="label-principal">Nome da ferramenta</div>
 			<div class="text-center my-2 fs-3">@Ferramenta!.Nome</div>
@@ -123,6 +131,10 @@
 	private async Task BuscarFerramentaModel()
 	{
 		Ferramenta = await ferramentaEndpoints.BuscarPorId(Guid.Parse(FerramentaId!));
+		if(Ferramenta is not null && Ferramenta.Imagem is not null)
+		{
+			Ferramenta.ImagemString = Convert.ToBase64String(Ferramenta.Imagem);
+		}
 	}
 
 	private async Task Deletar()

@@ -211,3 +211,9 @@ navbar {
     height: 100px;
     width: 100px;
 }
+
+.ferramenta-detalhes-foto {
+    height: 300px;
+    width: 300px;
+    border: solid #808080;
+}
