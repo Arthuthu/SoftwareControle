@@ -1,4 +1,4 @@
-﻿@page "/aceitarodem/{OrdemId}"
+﻿@page "/aceitarordem/{OrdemId}"
 
 @inject ISessaoUsuario sessao
 @inject IUsuarioEndpoints usuarioEndpoints
@@ -24,7 +24,7 @@
 		}
 
 		await BuscarOrdemModel();
-		if(Ordem is null || Ordem.NomeResponsavel != string.Empty)
+		if(Ordem is null || Ordem.NomeResponsavel != string.Empty || Ordem.Situacao != "Espera")
 		{
 			navManager.NavigateTo("/naoencontrado");
 			return;
@@ -65,6 +65,8 @@
 		Ordem.Situacao = "Iniciada";
 
 		await ordemEndpoints.Atualizar(Ordem);
+
+		navManager.NavigateTo($"/ordem/{OrdemId}");
 	}
 }
 
