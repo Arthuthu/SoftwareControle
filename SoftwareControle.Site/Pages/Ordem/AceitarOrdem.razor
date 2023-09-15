@@ -13,8 +13,6 @@
 	private UsuarioModel? UsuarioLogadoModel { get; set; }
 	private OrdemModel? Ordem { get; set; }
 
-	private bool inicializado = false;
-
 	protected async override Task OnInitializedAsync()
 	{
 		if(OrdemId == Guid.Empty.ToString())

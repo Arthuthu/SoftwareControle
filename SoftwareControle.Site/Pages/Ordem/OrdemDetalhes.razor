@@ -15,15 +15,7 @@
 		</div>
 		<div>
 			<div class="label-principal">Descrição</div>
-			<div class="text-center my-5 fs-3">@if (@OrdemModel.NivelUrgencia.ToString() == "Urgente")
-				{
-					<div class="text-color-danger">Urgente</div>
-				}
-				else
-				{
-					<div class="text-light">Normal</div>
-				}
-			</div>
+			<div class="text-center my-5 fs-3">@OrdemModel.Descricao</div>
 		</div>
 		<div>
 			<div class="label-principal">Informações</div>

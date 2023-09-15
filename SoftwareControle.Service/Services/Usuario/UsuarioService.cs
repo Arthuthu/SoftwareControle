@@ -37,7 +37,7 @@ public class UsuarioService : IUsuarioService
 
 		var nomeJaUtilizado = await VerificarNomeUsuario(usuario, cancellationToken);
 		if (nomeJaUtilizado is not null)
-			return "Um usuario com este nome completo ja foi cadastrado";
+			return "Este nome ja esta cadastrado no sistema";
 
 		var usuarioLoginJaUtilizado = await VerificarNomeUsuarioLogin(usuario, cancellationToken);
 		if (usuarioLoginJaUtilizado is not null)

@@ -1,5 +1,99 @@
 ﻿@page "/finalizarordem/{OrdemId}"
 
+@inject ISessaoUsuario sessao
+@inject IUsuarioEndpoints usuarioEndpoints
+@inject IFerramentaEndpoints ferramentaEndpoints
+@inject IOrdemEndpoints ordemEndpoints
+@inject NavigationManager navManager
+
 @code {
-	
+	[Parameter]
+	public string? OrdemId { get; set; }
+
+	private Guid UsuarioLogadoId { get; set; }
+	private UsuarioModel? UsuarioLogadoModel { get; set; }
+	private FerramentaModel? FerramentaModel { get; set; }
+	private OrdemModel? OrdemModel { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		if(OrdemId == Guid.Empty.ToString())
+		{
+			navManager.NavigateTo("/naoencontrado");
+			return;
+		}
+
+		await BuscarUsuarioLogadoId();
+		if(UsuarioLogadoId == Guid.Empty)
+		{
+			navManager.NavigateTo("/login");
+			return;
+		}
+
+		await BuscarUsuarioLogadoModel();
+		if(UsuarioLogadoModel is null)
+		{
+			navManager.NavigateTo("/naoencontrado");
+			return;
+		}
+
+		await BuscarOrdemModel();
+		if(OrdemModel is null)
+		{
+			navManager.NavigateTo("/naoencontrado");
+			return;
+		}
+
+		if(OrdemModel.Situacao != "Iniciada" || 
+			OrdemModel.NomeResponsavel != UsuarioLogadoModel.Nome)
+		{
+			navManager.NavigateTo("/naoencontrado");
+			return;
+		}
+
+		await BuscarFerramentaModel();
+		if(FerramentaModel is null)
+		{
+			navManager.NavigateTo("/naoencontrado");
+			return;
+		}
+
+		await Atualizar();
+	}
+
+	private async Task BuscarUsuarioLogadoId()
+	{
+		UsuarioLogadoId = await sessao.BuscarIdDoUsuarioLogado();
+	}
+	private async Task BuscarUsuarioLogadoModel()
+	{
+		UsuarioLogadoModel = await usuarioEndpoints.BuscarPorId(UsuarioLogadoId!);
+	}
+	private async Task BuscarOrdemModel()
+	{
+		OrdemModel = await ordemEndpoints.BuscarPorId(Guid.Parse(OrdemId!));
+	}
+	private async Task BuscarFerramentaModel()
+	{
+		FerramentaModel = await ferramentaEndpoints.BuscarPorId(OrdemModel!.FerramentaId);
+	}
+
+	private async Task Atualizar()
+	{
+		OrdemModel!.Situacao = "Finalizada";
+		FerramentaModel!.Disponivel = true;
+
+		try
+		{
+			await ordemEndpoints.Atualizar(OrdemModel);
+			await ferramentaEndpoints.Atualizar(FerramentaModel);
+			navManager.NavigateTo($"/ordem/{OrdemId}");
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine(ex);
+			navManager.NavigateTo("/erro");
+			throw;
+		}
+	}
 }

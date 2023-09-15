@@ -5,6 +5,7 @@ Ordem detalhes
 Relatorios
 Admin criar usuario funcionario
 Pagina expiracao
+Logging
 
 Caching
 
