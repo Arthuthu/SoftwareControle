@@ -27,19 +27,31 @@ html, body {
     font-weight: bold;
 }
 
-.situacao-espera {
+.situacao-espera, .situacao-espera-detalhes {
     color: #FFF;
     font-weight: bold;
 }
 
-.situacao-finalizada {
+.situacao-espera-detalhes {
+    font-size: 25px;
+}
+
+.situacao-finalizada, .situacao-finalizada-detalhes {
     color: #0db415;
     font-weight: bold;
 }
 
-.situacao-iniciada {
+.situacao-finalizada-detalhes {
+    font-size: 25px;
+}
+
+.situacao-iniciada, .situacao-iniciada-detalhes {
     color: #168fcc;
     font-weight: bold;
+}
+
+.situacao-iniciada-detalhes {
+    font-size: 25px;
 }
 
 /* Botao */

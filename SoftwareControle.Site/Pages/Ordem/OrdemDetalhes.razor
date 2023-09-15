@@ -7,19 +7,81 @@
 
 @if (inicializado)
 {
+	<div class="text-center my-3 fs-3 fw-bold">Informações da ordem</div>
 	<div class="ferramenta-detalhes-box">
 		<div>
+			<div class="label-principal">Ferramenta</div>
+			<div class="text-center my-4 fs-3">@OrdemModel!.NomeFerramenta</div>
+		</div>
+		<div>
 			<div class="label-principal">Descrição</div>
-			<div class="text-center my-2 fs-3">@OrdemModel!.Descricao</div>
+			<div class="text-center my-5 fs-3">@if (@OrdemModel.NivelUrgencia.ToString() == "Urgente")
+				{
+					<div class="text-color-danger">Urgente</div>
+				}
+				else
+				{
+					<div class="text-light">Normal</div>
+				}
+			</div>
 		</div>
-		<div class="d-flex mt-4">
-			<div class="label-principal">Urgência</div>
-			<div class="text-center my-4 fs-3">@OrdemModel.NivelUrgencia</div>
+		<div>
+			<div class="label-principal">Informações</div>
+			<div class="d-flex justify-content-evenly align-items-center">
+				<div class="my-4 text-center">
+					<div class="mb-2 fs-3 fw-bold">Urgência</div>
+					<div class="fs-4">
+						@if (OrdemModel.NivelUrgencia == "Urgente")
+						{
+							<div class="text-color-danger">Urgente</div>
+						}
+						else
+						{
+							<div class="text-light">Normal</div>
+						}
+					</div>
+				</div>
+				<div class="my-4 text-center">
+					<div class="mb-2 fs-3 fw-bold">Situação</div>
+					@if (OrdemModel.Situacao == "Espera")
+					{
+						<div class="situacao-espera-detalhes">Espera</div>
+					}
+					else if (OrdemModel.Situacao == "Iniciada")
+					{
+						<div class="situacao-iniciada-detalhes">Iniciada</div>
+					}
+					else
+					{
+						<div class="situacao-finalizada-detalhes">Finalizada</div>
+					}
+				</div>
+			</div>
 		</div>
-		<div class="d-flex mt-4">
-			<div class="label-principal">Situação</div>
-			<div class="text-center my-4 fs-3">@OrdemModel.Situacao</div>
+		<div>
+			<div class="label-principal">Prazos</div>
+			<div class="d-flex justify-content-evenly align-items-center">
+				<div class="my-4 text-center">
+					<div class="mb-2 fs-3 fw-bold">Prazo máximo</div>
+					<div class="fs-4">
+						@OrdemModel.DataPrazoMaximo.ToString("dd/MM/yyyy")
+					</div>
+				</div>
+				<div class="my-4 text-center">
+					<div class="mb-2 fs-3 fw-bold">Criado em</div>
+					<div class="fs-4">
+						@OrdemModel.DataCriacao
+					</div>
+				</div>
+			</div>
 		</div>
+		@if(OrdemModel.NomeResponsavel != string.Empty)
+		{
+			<div>
+				<div class="label-principal">Responsavel</div>
+				<div class="text-center my-4 fs-3">@OrdemModel.NomeResponsavel</div>
+			</div>
+		}
 	</div>
 	<div class="d-flex my-5 justify-content-end align-items-center">
 		<div>
