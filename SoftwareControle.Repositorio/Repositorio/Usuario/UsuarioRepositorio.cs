@@ -65,7 +65,7 @@ public class UsuarioRepositorio : IUsuarioRepositorio
 	public async Task<UsuarioModel?> BuscarPorNome(string nome, CancellationToken cancellationToken)
 	{
 		UsuarioModel? usuario = await _context.Usuarios.SingleOrDefaultAsync
-			(u => u.Nome == nome, cancellationToken);
+			(u => u.Nome.ToLower() == nome.ToLower(), cancellationToken);
 
 		return usuario is not null ? usuario : null;
 	}
@@ -74,7 +74,7 @@ public class UsuarioRepositorio : IUsuarioRepositorio
 		CancellationToken cancellationToken)
 	{
 		UsuarioModel? usuario = await _context.Usuarios.SingleOrDefaultAsync
-			(u => u.Usuario == usuarioLogin, cancellationToken);
+			(u => u.Usuario.ToLower() == usuarioLogin.ToLower(), cancellationToken);
 
 		return usuario is not null ? usuario : null;
 	}
