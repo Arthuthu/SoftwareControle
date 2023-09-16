@@ -12,7 +12,6 @@
                 <div>
                     <a class="nav-link" href="/ferramentas">Ferramentas</a>
                 </div>
-
                 @if (@context.User.FindFirst(ClaimTypes.Role)?.Value == "Administrador")
                 {
                     <div>
@@ -23,31 +22,27 @@
                     <a class="nav-link" href="/ordens">Ordens</a>
                 </div>
             </div>
-        </Authorized>
-    </AuthorizeView>
-    <div class="nav-links">
-        <AuthorizeView>
-            <Authorized>
+            <div class="nav-links">
                 <a class="nav-link">
                     @context.User.FindFirst(ClaimTypes.Name)?.Value
                 </a>
                 <a class="nav-link" href="/logout">
                     <span>Sair</span>
                 </a>
-            </Authorized>
-            <NotAuthorized>
-                <a class="nav-link" href="/login">
-                    <span>Entrar</span>
-                </a>
-            </NotAuthorized>
-        </AuthorizeView>
-    </div>
+            </div>
+        </Authorized>
+        <NotAuthorized>
+            <a class="nav-link" href="/login">
+                <span>Entrar</span>
+            </a>
+         </NotAuthorized>
+    </AuthorizeView>
 </navbar>
 <div>
     <main>
-        <article>
+        <div>
             @Body
-        </article>
+        </div>
     </main>
 </div>
 

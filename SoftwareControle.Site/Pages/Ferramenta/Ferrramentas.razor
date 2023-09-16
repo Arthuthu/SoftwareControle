@@ -20,27 +20,27 @@
 	}
 	else
 	{
-		<div class="ferramenta-list">
-			<div class="ferramenta-node">Foto</div>
-			<div class="ferramenta-node">Nome</div>
-			<div class="ferramenta-node">Descrição</div>
-			<div class="ferramenta-node">Disponibilidade</div>
+		<div class="elementos-lista">
+			<div class="elemento-node">Foto</div>
+			<div class="elemento-node">Nome</div>
+			<div class="elemento-node">Descrição</div>
+			<div class="elemento-node">Disponibilidade</div>
 		</div>
 		<Virtualize Items="@Ferramentas" Context="ferramenta" OverscanCount="50">
-			<a class="ferramenta-list" href="/ferramenta/@ferramenta.Id">
-				<div class="ferramenta-node">@if(ferramenta.ImagemString != string.Empty)
+			<a class="elementos-lista" href="/ferramenta/@ferramenta.Id">
+				<div class="elemento-node">@if(ferramenta.ImagemString != string.Empty)
 				{
 					<img src="data:image/jpeg;base64,@ferramenta.ImagemString" alt="Foto" 
 						class="ferramentas-lista-foto">
 				}
 				else
 				{
-					<div class="ferramenta-node">Sem foto</div>
+					<div class="elemento-node">Sem foto</div>
 				}
 				</div>
-				<div class="ferramenta-node">@ferramenta.Nome</div>
-				<div class="ferramenta-node">@ferramenta.Descricao</div>
-				<div class="ferramenta-node">
+				<div class="elemento-node">@ferramenta.Nome</div>
+				<div class="elemento-node">@ferramenta.Descricao</div>
+				<div class="elemento-node">
 					@if (ferramenta.Disponivel is true)
 					{
 						<div class="text-color-success">Disponivel</div>

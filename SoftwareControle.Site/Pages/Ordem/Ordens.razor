@@ -13,19 +13,19 @@
     }
     else
     {
-        <div class="ferramenta-list" id="ferramenta-list-label">
-            <div class="ferramenta-node">Descrição</div>
-            <div class="ferramenta-node">Urgência</div>
-            <div class="ferramenta-node">Criado em</div>
-            <div class="ferramenta-node">Prazo máximo</div>
-            <div class="ferramenta-node">Situação</div>
-            <div class="ferramenta-node">Responsável</div>
-            <div class="ferramenta-node">Ferramenta</div>
+        <div class="elementos-lista" id="elementos-lista-label">
+            <div class="elemento-node">Descrição</div>
+            <div class="elemento-node">Urgência</div>
+            <div class="elemento-node">Criado em</div>
+            <div class="elemento-node">Prazo máximo</div>
+            <div class="elemento-node">Situação</div>
+            <div class="elemento-node">Responsável</div>
+            <div class="elemento-node">Ferramenta</div>
         </div>
         <Virtualize Items="@ListaOrdem" Context="ordem" OverscanCount="50">
-            <a class="ferramenta-list" href="/ordem/@ordem.Id">
-                <div class="ferramenta-node">@ordem.Descricao</div>
-                <div class="ferramenta-node">@if(@ordem.NivelUrgencia.ToString() == "Urgente")
+            <a class="elementos-lista" href="/ordem/@ordem.Id">
+                <div class="elemento-node">@ordem.Descricao</div>
+                <div class="elemento-node">@if(@ordem.NivelUrgencia.ToString() == "Urgente")
                     {
                         <div class="text-color-danger">Urgente</div>
                     }
@@ -34,9 +34,9 @@
                         <div class="text-light">Normal</div>
                     }
                 </div>
-                <div class="ferramenta-node">@ordem.DataCriacao</div>
-                <div class="ferramenta-node">@ordem.DataPrazoMaximo.ToString("dd/MM/yyyy")</div>
-                <div class="ferramenta-node">@if (ordem.Situacao == "Espera")
+                <div class="elemento-node">@ordem.DataCriacao</div>
+                <div class="elemento-node">@ordem.DataPrazoMaximo.ToString("dd/MM/yyyy")</div>
+                <div class="elemento-node">@if (ordem.Situacao == "Espera")
                     {
                         <div class="situacao-espera">Espera</div>
                     } else if (ordem.Situacao == "Iniciada")
@@ -47,8 +47,8 @@
                         <div class="situacao-finalizada">Finalizada</div>
                     }
                 </div>
-                <div class="ferramenta-node">@ordem.NomeResponsavel</div>
-                <div class="ferramenta-node">@ordem.NomeFerramenta</div>
+                <div class="elemento-node">@ordem.NomeResponsavel</div>
+                <div class="elemento-node">@ordem.NomeFerramenta</div>
             </a>
         </Virtualize>
     }
