@@ -1,5 +1,52 @@
 ﻿@page "/usuario/criar"
 
-@code {
+@inject ISessaoUsuario sessao
+@inject IUsuarioEndpoints usuarioEndpoints
+@inject NavigationManager navManager
 
+@if (inicializado)
+{
+	
+}
+
+@code {
+	public Guid UsuarioLogadoId { get; set; }
+	private UsuarioModel? UsuarioLogadoModel { get; set; }
+	private UsuarioModel? UsuarioQueSeraCriado = new();
+
+	private bool inicializado = false;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await BuscarUsuarioLogadoId();
+		if(UsuarioLogadoId == Guid.Empty)
+		{
+			navManager.NavigateTo("/login");
+			return;
+		}
+
+		await BuscarUsuarioLogadoModel();
+		if(UsuarioLogadoModel is null)
+		{
+			navManager.NavigateTo("/naoencontrado");
+			return;
+		}
+
+		if(UsuarioLogadoModel.Cargo != "Administrador")
+		{
+			navManager.NavigateTo("/naoautorizado");
+			return;
+		}
+
+		inicializado = true;
+	}
+
+	private async Task BuscarUsuarioLogadoId()
+	{
+		UsuarioLogadoId = await sessao.BuscarIdDoUsuarioLogado();
+	}
+	private async Task BuscarUsuarioLogadoModel()
+	{
+		UsuarioLogadoModel = await usuarioEndpoints.BuscarPorId(UsuarioLogadoId);
+	}
 }
