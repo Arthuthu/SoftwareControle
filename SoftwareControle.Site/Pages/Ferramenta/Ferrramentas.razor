@@ -135,9 +135,4 @@
 				Ferramentas = TodasFerramentas;
 		}
 	}
-	private void LimparBusca()
-	{
-		Ferramentas = TodasFerramentas!.OrderByDescending(x => x.Nome).ToList();
-		nomeFerramenta = string.Empty;
-	}
 }

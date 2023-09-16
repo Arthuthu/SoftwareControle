@@ -8,48 +8,25 @@
 {
 	<div>
 		<InputText @bind-Value="@usuarioLoginNome" class="ferramenta-buscar-input"
-		@oninput="(e) => FilterFerramentaPorNome(e.Value?.ToString())"
+		@oninput="(e) => FiltrarUsuarioPorNome(e.Value?.ToString())"
 				   placeholder="Procurar ferramenta por nome" />
 	</div>
-	@if (Ferramentas is null || Ferramentas.Count() == 0)
+	@if (ListaUsuarios is null || ListaUsuarios.Count() == 0)
 	{
 		<div class="text-center my-5 fs-3 fw-bold">
-			Não foi encontrado nenhuma ferramenta.
+			Não foi encontrado nenhum usuário.
 		</div>
 	}
 	else
 	{
 		<div class="ferramenta-list">
-			<div class="ferramenta-node">Foto</div>
 			<div class="ferramenta-node">Nome</div>
-			<div class="ferramenta-node">Descrição</div>
-			<div class="ferramenta-node">Disponibilidade</div>
+			<div class="ferramenta-node">Login</div>
 		</div>
-		<Virtualize Items="@Ferramentas" Context="ferramenta" OverscanCount="50">
-			<a class="ferramenta-list" href="/ferramenta/@ferramenta.Id">
-				<div class="ferramenta-node">
-					@if (ferramenta.ImagemString != string.Empty)
-					{
-						<img src="data:image/jpeg;base64,@ferramenta.ImagemString" alt="Foto"
-							 class="ferramentas-lista-foto">
-					}
-					else
-					{
-						<div class="ferramenta-node">Sem foto</div>
-					}
-				</div>
-				<div class="ferramenta-node">@ferramenta.Nome</div>
-				<div class="ferramenta-node">@ferramenta.Descricao</div>
-				<div class="ferramenta-node">
-					@if (ferramenta.Disponivel is true)
-					{
-						<div class="text-color-success">Disponivel</div>
-					}
-					else
-					{
-						<div class="text-color-danger">Indisponivel</div>
-					}
-				</div>
+		<Virtualize Items="@ListaUsuarios" Context="usuario" OverscanCount="50">
+			<a class="ferramenta-list" href="/usuario/@usuario.Id">
+				<div class="ferramenta-node">@usuario.Nome</div>
+				<div class="ferramenta-node">@usuario.Usuario</div>
 			</a>
 		</Virtualize>
 	}
@@ -57,7 +34,7 @@
 		@if (UsuarioLogadoModel!.Cargo == "Administrador")
 		{
 			<div>
-				<a class="botao-principal" href="/ferramenta/criar">Adicionar</a>
+				<a class="botao-principal" href="/usuario/criar">Criar usuario</a>
 			</div>
 		}
 		<div>
@@ -115,8 +92,15 @@
 		TodosUsuarios = ListaUsuarios;
 	}
 
-	private void FilterFerramentaPorNome(string usuarioLoginNome);
+	private void FiltrarUsuarioPorNome(string? usuarioLogiNome)
 	{
-		
+		if (usuarioLogiNome is not null)
+		{
+			ListaUsuarios = TodosUsuarios!.Where(x => x.Nome.ToLower()
+				.Contains(usuarioLogiNome.ToLower())).ToList();
+
+			if (usuarioLogiNome == string.Empty)
+				ListaUsuarios = TodosUsuarios;
+		}
 	}
 }

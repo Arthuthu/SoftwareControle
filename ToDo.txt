@@ -9,3 +9,5 @@ Lightmode
 Caching
 
 Revisar codigo
+
+Mudar ferramenta-node para nome generalizado
