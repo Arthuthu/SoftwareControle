@@ -6,14 +6,25 @@
     <a class="logo" href="/">
         Software Controle
     </a>
-    <div class="d-flex">
-        <div>
-            <a class="nav-link" href="/ferramentas">Ferramentas</a>
-        </div>
-        <div>
-            <a class="nav-link" href="/ordens">Ordens</a>
-        </div>
-    </div>
+    <AuthorizeView>
+        <Authorized>
+            <div class="d-flex">
+                <div>
+                    <a class="nav-link" href="/ferramentas">Ferramentas</a>
+                </div>
+
+                @if (@context.User.FindFirst(ClaimTypes.Role)?.Value == "Administrador")
+                {
+                    <div>
+                        <a class="nav-link" href="/usuarios">Usuarios</a>
+                    </div>
+                }
+                <div>
+                    <a class="nav-link" href="/ordens">Ordens</a>
+                </div>
+            </div>
+        </Authorized>
+    </AuthorizeView>
     <div class="nav-links">
         <AuthorizeView>
             <Authorized>
