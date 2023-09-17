@@ -1,4 +1,4 @@
-﻿namespace SoftwareControle.Models;
+﻿namespace SoftwareControle.Site.Models;
 
 public class RelatorioModel
 {

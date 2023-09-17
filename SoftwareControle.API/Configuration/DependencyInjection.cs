@@ -37,6 +37,7 @@ public static class DependencyInjection
         services.AddSingleton<IValidator<UsuarioModel>, UsuarioValidacao>();
         services.AddSingleton<IValidator<FerramentaModel>, FerramentaValidacao>();
         services.AddSingleton<IValidator<OrdemModel>, OrdemValidacao>();
+        services.AddSingleton<IValidator<RelatorioModel>, RelatorioValidacao>();
 
         return services;
     }

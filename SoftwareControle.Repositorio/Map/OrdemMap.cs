@@ -16,7 +16,7 @@ public class OrdemMap : BaseMap<OrdemModel>
 
 		builder.HasKey(x => x.Id);
 
-		builder.Property(x => x.Descricao).IsRequired().HasMaxLength(1000).HasColumnName("Descricao");
+		builder.Property(x => x.Descricao).IsRequired().HasMaxLength(3000).HasColumnName("Descricao");
 		builder.Property(x => x.NivelUrgencia).HasMaxLength(50).HasColumnName("NivelUrgencia");
 		builder.Property(x => x.Situacao).HasMaxLength(50).HasColumnName("Situacao");
 		builder.Property(x => x.DataCriacao).HasMaxLength(50).HasColumnName("DataCriacao");

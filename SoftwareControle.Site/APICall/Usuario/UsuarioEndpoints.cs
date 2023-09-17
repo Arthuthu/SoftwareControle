@@ -27,8 +27,8 @@ public class UsuarioEndpoints : IUsuarioEndpoints
     }
     public async Task<List<UsuarioModel>?> Buscar()
     {
-        string buscarTodosUsuariosEndpoint = _config["apiLocation"] + _config["bucarUsuarios"];
-        var authResult = await _client.GetAsync(buscarTodosUsuariosEndpoint);
+        string buscarTodosEndpoint = _config["apiLocation"] + _config["bucarUsuarios"];
+        var authResult = await _client.GetAsync(buscarTodosEndpoint);
         var authContent = await authResult.Content.ReadAsStringAsync();
 
         if (authResult.IsSuccessStatusCode is false)
@@ -72,8 +72,8 @@ public class UsuarioEndpoints : IUsuarioEndpoints
             new KeyValuePair<string, string>("Nome", usuario.Nome)
 		});
 
-        string criarUsuarioEndpoint = _config["apiLocation"] + _config["criarUsuario"];
-        var authResult = await _client.PostAsync(criarUsuarioEndpoint, data);
+        string criarEndpoint = _config["apiLocation"] + _config["criarUsuario"];
+        var authResult = await _client.PostAsync(criarEndpoint, data);
         var authContent = await authResult.Content.ReadAsStringAsync();
 
         if (authResult.IsSuccessStatusCode is false)
@@ -98,8 +98,8 @@ public class UsuarioEndpoints : IUsuarioEndpoints
 			new KeyValuePair<string, string>("Nome", usuario.Nome),
 		});
 
-		string atualizarUsuarioEndpoint = _config["apiLocation"] + _config["atualizarUsuario"];
-        var authResult = await _client.PutAsync(atualizarUsuarioEndpoint, data);
+		string atualizarEndpoint = _config["apiLocation"] + _config["atualizarUsuario"];
+        var authResult = await _client.PutAsync(atualizarEndpoint, data);
         var authContent = await authResult.Content.ReadAsStringAsync();
 
         if (authResult.IsSuccessStatusCode is false)
@@ -115,8 +115,8 @@ public class UsuarioEndpoints : IUsuarioEndpoints
     }
     public async Task<string?> Deletar(Guid id)
     {
-        string deletarUsuarioEndpoint = _config["apiLocation"] + _config["deletarUsuario"] + $"/{id}";
-        var authResult = await _client.DeleteAsync(deletarUsuarioEndpoint);
+        string deletarEndpoint = _config["apiLocation"] + _config["deletarUsuario"] + $"/{id}";
+        var authResult = await _client.DeleteAsync(deletarEndpoint);
         var authContent = await authResult.Content.ReadAsStringAsync();
 
         if (authResult.IsSuccessStatusCode is false)

@@ -31,19 +31,19 @@ public class OrdemController : ControllerBase
     [HttpGet, Route("/ordem/buscarporid/{id:guid}"), Authorize]
     public async Task<IActionResult> Get(Guid id, CancellationToken cancellationToken)
     {
-        var orderm = await _ordemService.Buscar(id, cancellationToken);
+        var ordem = await _ordemService.Buscar(id, cancellationToken);
 
-        if (orderm is null)
+        if (ordem is null)
             return NotFound();
 
-        return Ok(orderm);
+        return Ok(ordem);
     }
 
     [HttpPost, Route("/ordem/criar"), Authorize]
-    public async Task<ActionResult<string?>> Post([FromForm] OrdemModel orderm,
+    public async Task<ActionResult<string?>> Post([FromForm] OrdemModel ordem,
         CancellationToken cancellationToken)
     {
-        var resultado = await _ordemService.Adicionar(orderm, cancellationToken);
+        var resultado = await _ordemService.Adicionar(ordem, cancellationToken);
 
         if (resultado is not null)
             return BadRequest(resultado);
@@ -61,7 +61,7 @@ public class OrdemController : ControllerBase
         if (ordemFoiAtualizada is false)
             return NotFound("Ordem não encontrada");
 
-        return Ok(ordem);
+        return Ok(null);
     }
 
     [HttpDelete, Route("/ordem/deletar/{id:guid}"), Authorize]

@@ -11,6 +11,7 @@ public class ApplicationDbContext : DbContext
 	public DbSet<UsuarioModel> Usuarios { get; set; }
 	public DbSet<FerramentaModel> Ferramentas { get; set; }
 	public DbSet<OrdemModel> Ordens { get; set; }
+	public DbSet<RelatorioModel> Relatorio { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
