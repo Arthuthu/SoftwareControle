@@ -17,6 +17,19 @@ html, body {
     margin: 0 20px;
 }
 
+.dark-mode {
+    background-image: linear-gradient(#000000, #090909);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #FFF;
+}
+
+.light-mode {
+    color: #000;
+    background-color: #FFF;
+}
+
 /* Text colors */
 
 .text-color-success {

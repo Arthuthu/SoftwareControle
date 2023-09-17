@@ -4,6 +4,7 @@
 @inject IUsuarioEndpoints usuarioEndpoints
 @inject IFerramentaEndpoints ferramentaEndpoints
 @inject IOrdemEndpoints ordemEndpoints
+@inject IRelatorioEndpoints relatorioEndpoints
 @inject NavigationManager navManager
 
 @code {
@@ -14,6 +15,7 @@
 	private UsuarioModel? UsuarioLogadoModel { get; set; }
 	private FerramentaModel? FerramentaModel { get; set; }
 	private OrdemModel? OrdemModel { get; set; }
+	private RelatorioModel Relatorio = new();
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -87,6 +89,7 @@
 		{
 			await ordemEndpoints.Atualizar(OrdemModel);
 			await ferramentaEndpoints.Atualizar(FerramentaModel);
+			await CriarRelatorio();
 			navManager.NavigateTo($"/ordem/{OrdemId}");
 		}
 		catch (Exception ex)
@@ -95,5 +98,13 @@
 			navManager.NavigateTo("/erro");
 			throw;
 		}
+	}
+	private async Task CriarRelatorio()
+	{
+		Relatorio.Descricao = $"O {UsuarioLogadoModel!.Nome} aceitou a ordem {OrdemModel!.Descricao} " +
+		$"Ferramenta: {OrdemModel.NomeFerramenta}"; 
+		Relatorio.UsuarioNome = UsuarioLogadoModel.Nome;
+
+		await relatorioEndpoints.Criar(Relatorio);
 	}
 }

@@ -4,6 +4,7 @@
 @inject IOrdemEndpoints ordemEndpoints
 @inject IFerramentaEndpoints ferramentaEndpoints
 @inject IUsuarioEndpoints usuarioEndpoints
+@inject IRelatorioEndpoints relatorioEndpoints
 @inject NavigationManager navManager
 
 @if (inicializado)
@@ -66,6 +67,7 @@
     private OrdemModel? Ordem { get; set; } = new();
     private FerramentaModel? Ferramenta { get; set; }
     private UsuarioModel? UsuarioLogadoModel { get; set; }
+    private RelatorioModel Relatorio = new();
 
     private bool inicializado = false;
     private string? resultado = string.Empty;
@@ -145,8 +147,16 @@
 
         if(resultado == string.Empty)
         {
+            await CriarRelatorio();
             navManager.NavigateTo($"/ordens");
             return;
         }
+    }
+    private async Task CriarRelatorio()
+    {
+        Relatorio.Descricao = $"Foi criado uma ordem: {Ordem!.Descricao} da ferramenta {Ordem.NomeFerramenta}";
+        Relatorio.FerramentaNome = Ordem.NomeFerramenta;
+
+        await relatorioEndpoints.Criar(Relatorio);
     }
 }

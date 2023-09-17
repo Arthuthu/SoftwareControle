@@ -108,12 +108,7 @@
             return;
         }
 
-        resultado = await CriarRelatorio();
-        if (resultado is not null)
-        {
-            resultado = FiltrarResultado(resultado);
-            return;
-        }
+        await CriarRelatorio();
 
         navManager.NavigateTo("/ferramentas");
     }

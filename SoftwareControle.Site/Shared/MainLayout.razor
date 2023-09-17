@@ -44,5 +44,16 @@
 </div>
 
 @code {
+    private string theme = "dark-mode";
 
+    private void ToggleMode()
+    {
+        if (theme == "dark-mode")
+        {
+            theme = "light-mode";
+            return;
+        }
+
+        theme = "dark-mode";
+    }
 }

@@ -3,6 +3,7 @@
 @inject ISessaoUsuario sessao
 @inject IUsuarioEndpoints usuarioEndpoints
 @inject IOrdemEndpoints ordemEndpoints
+@inject IRelatorioEndpoints relatorioEndpoints
 @inject NavigationManager navManager
 
 @code {
@@ -12,6 +13,7 @@
 	private Guid UsuarioLogadoId { get; set; }
 	private UsuarioModel? UsuarioLogadoModel { get; set; }
 	private OrdemModel? Ordem { get; set; }
+	private RelatorioModel Relatorio = new();
 
 	protected async override Task OnInitializedAsync()
 	{
@@ -63,8 +65,17 @@
 		Ordem.Situacao = "Iniciada";
 
 		await ordemEndpoints.Atualizar(Ordem);
+		await CriarRelatorio();
 
 		navManager.NavigateTo($"/ordem/{OrdemId}");
+	}
+	private async Task CriarRelatorio()
+	{
+		Relatorio.Descricao = $"O {UsuarioLogadoModel!.Nome} aceitou a ordem {Ordem!.Descricao} " + 
+		$"Ferramenta: {Ordem.NomeFerramenta}";
+		Relatorio.UsuarioNome = UsuarioLogadoModel.Nome;
+
+		await relatorioEndpoints.Criar(Relatorio);
 	}
 }
 
