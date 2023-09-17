@@ -22,6 +22,7 @@ builder.Services.AddScoped<ISessaoUsuario, SessaoUsuario>();
 builder.Services.AddScoped<IUsuarioEndpoints, UsuarioEndpoints>();
 builder.Services.AddScoped<IFerramentaEndpoints, FerramentaEndpoints>();
 builder.Services.AddScoped<IOrdemEndpoints, OrdemEndpoints>();
+builder.Services.AddScoped<IRelatorioEndpoints, RelatorioEndpoints>();
 
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();

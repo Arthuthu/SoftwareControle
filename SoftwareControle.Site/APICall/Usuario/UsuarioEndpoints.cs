@@ -8,20 +8,14 @@ namespace SoftwareControle.Site.APICall.Usuario;
 public class UsuarioEndpoints : IUsuarioEndpoints
 {
     private readonly HttpClient _client;
-    private readonly AuthenticationStateProvider _authenticationStateProvider;
-    private readonly NavigationManager _navigationManager;
     private readonly IConfiguration _config;
     private readonly ILogger<UsuarioEndpoints> _logger;
 
     public UsuarioEndpoints(HttpClient client,
-    AuthenticationStateProvider authenticationStateProvider,
-    NavigationManager navigationManager,
     IConfiguration config,
     ILogger<UsuarioEndpoints> logger)
     {
         _client = client;
-        _authenticationStateProvider = authenticationStateProvider;
-        _navigationManager = navigationManager;
         _config = config;
         _logger = logger;
     }

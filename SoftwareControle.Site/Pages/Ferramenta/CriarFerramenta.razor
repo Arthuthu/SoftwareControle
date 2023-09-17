@@ -3,6 +3,7 @@
 @inject ISessaoUsuario sessao
 @inject IFerramentaEndpoints ferramentaEndpoints
 @inject IUsuarioEndpoints usuarioEndpoints
+@inject IRelatorioEndpoints relatorioEndpoints
 @inject NavigationManager navManager
 
 @if(inicializado)
@@ -56,6 +57,7 @@
 @code {
     private Guid IdUsuarioLogado { get; set; }
     private UsuarioModel? UsuarioLogadoModel { get; set; }
+    private RelatorioModel? Relatorio = new();
     private FerramentaModel? Ferramenta = new();
 
     private bool inicializado = false;
@@ -100,13 +102,24 @@
 
         var criarResultado = await ferramentaEndpoints.Criar(Ferramenta);
 
-        if (criarResultado is null)
+        if(criarResultado is not null)
         {
-            navManager.NavigateTo("/ferramentas");
+            resultado = FiltrarResultado(criarResultado);
             return;
         }
 
-        resultado = FiltrarResultado(criarResultado);
+        await CriarRelatorio();
+        navManager.NavigateTo("/ferramentas");
+    }
+
+    private async Task CriarRelatorio()
+    {
+        Relatorio!.Descricao = $"O usuario {UsuarioLogadoModel!.Nome} adicionou a ferramenta " +
+        $"{Ferramenta!.Nome} ao sistema";
+        Relatorio.FerramentaNome = Ferramenta.Nome;
+        Relatorio.UsuarioNome = UsuarioLogadoModel.Nome;
+
+        await relatorioEndpoints.Criar(Relatorio);
     }
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)

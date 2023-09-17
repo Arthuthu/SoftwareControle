@@ -34,6 +34,9 @@ public class RelatorioService : IRelatorioService
         if (!resultado.IsValid)
             return resultado.Errors.FirstOrDefault()!.ToString();
 
+        relatorio.Id = Guid.NewGuid();
+        relatorio.DataCriacao = DateTime.UtcNow.AddHours(-3);
+
         await _relatorioRepositorio.Adicionar(relatorio, cancellationToken);
 
         return null;

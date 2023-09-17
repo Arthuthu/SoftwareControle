@@ -61,10 +61,7 @@ public class RelatorioEndpoints : IRelatorioEndpoints
         {
             new KeyValuePair<string, string>("Descricao", relatorio.Descricao),
             new KeyValuePair<string, string>("UsuarioNome", relatorio.UsuarioNome ?? ""),
-            new KeyValuePair<string, string>("FerramentaNome", relatorio.FerramentaNome ?? ""),
-            new KeyValuePair<string, string>("UsuarioId", relatorio.UsuarioId.ToString() ?? ""),
-            new KeyValuePair<string, string>("FerramentaId", relatorio.FerramentaId.ToString() ?? ""),
-            new KeyValuePair<string, string>("OrdemId", relatorio.OrdemId.ToString() ?? "")
+            new KeyValuePair<string, string>("FerramentaNome", relatorio.FerramentaNome ?? "")
         });
 
         string criarUsuarioEndpoint = _config["apiLocation"] + _config["criarRelatorio"];
@@ -90,10 +87,7 @@ public class RelatorioEndpoints : IRelatorioEndpoints
             new KeyValuePair<string, string>("Id", relatorio.Id.ToString()),
             new KeyValuePair<string, string>("Descricao", relatorio.Descricao),
             new KeyValuePair<string, string>("UsuarioNome", relatorio.UsuarioNome ?? ""),
-            new KeyValuePair<string, string>("FerramentaNome", relatorio.FerramentaNome ?? ""),
-            new KeyValuePair<string, string>("UsuarioId", relatorio.UsuarioId.ToString() ?? ""),
-            new KeyValuePair<string, string>("FerramentaId", relatorio.FerramentaId.ToString() ?? ""),
-            new KeyValuePair<string, string>("OrdemId", relatorio.OrdemId.ToString() ?? "")
+            new KeyValuePair<string, string>("FerramentaNome", relatorio.FerramentaNome ?? "")
         });
 
         string atualizarUsuarioEndpoint = _config["apiLocation"] + _config["atualizarRelatorio"];

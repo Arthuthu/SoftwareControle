@@ -14,6 +14,8 @@ using FluentValidation;
 using SoftwareControle.Services.Validacao;
 using SoftwareControle.Models;
 using SoftwareControle.Service.Validacao;
+using SoftwareControle.Repositorio.Repositorio.Relatorio;
+using SoftwareControle.Service.Services.Relatorio;
 
 namespace SoftwareControle.WebUi.Configuration;
 
@@ -26,12 +28,14 @@ public static class DependencyInjection
         services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
         services.AddScoped<IFerramentaRepositorio, FerramentaRepositorio>();
         services.AddScoped<IOrdemRepositorio, OrdemRepositorio>();
+        services.AddScoped<IRelatorioRepositorio, RelatorioRepositorio>();
 
-		//Services
-		services.AddScoped<IAuthService, AuthService>();
+        //Services
+        services.AddScoped<IAuthService, AuthService>();
 		services.AddScoped<IUsuarioService, UsuarioService>();
         services.AddScoped<IFerramentaService, FerramentaService>();
 		services.AddScoped<IOrdemService, OrdemService>();
+		services.AddScoped<IRelatorioService, RelatorioService>();
 
         //Validation
         services.AddSingleton<IValidator<UsuarioModel>, UsuarioValidacao>();

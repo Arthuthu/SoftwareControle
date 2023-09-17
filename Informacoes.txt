@@ -5,7 +5,7 @@ Colocar no secrets da API:
     "SoftwareControleConnection": ""
   },
   "Jwt": {
-    "Key": "MVOkCkVbj1CpfCc9cCef19OVVjCb1knKkCpCc9fCcMOebCVOVcMkfCj"
+    "Key": "55 random characters"
   }
 }
 

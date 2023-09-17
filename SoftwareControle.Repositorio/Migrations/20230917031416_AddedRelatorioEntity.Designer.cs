@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftwareControle.Repositorio.Context;
 
@@ -11,9 +12,11 @@ using SoftwareControle.Repositorio.Context;
 namespace SoftwareControle.Repositorio.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230917031416_AddedRelatorioEntity")]
+    partial class AddedRelatorioEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,10 +153,22 @@ namespace SoftwareControle.Repositorio.Migrations
                         .HasColumnType("nvarchar(3000)")
                         .HasColumnName("Descricao");
 
+                    b.Property<Guid?>("FerramentaId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("FerramentaId");
+
                     b.Property<string>("FerramentaNome")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)")
                         .HasColumnName("FerramentaNome");
+
+                    b.Property<Guid?>("OrdemId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("OrdemId");
+
+                    b.Property<Guid?>("UsuarioId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("UsuarioId");
 
                     b.Property<string>("UsuarioNome")
                         .HasMaxLength(64)
