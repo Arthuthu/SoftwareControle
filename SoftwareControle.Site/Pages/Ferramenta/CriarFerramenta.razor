@@ -5,6 +5,7 @@
 @inject IUsuarioEndpoints usuarioEndpoints
 @inject IRelatorioEndpoints relatorioEndpoints
 @inject NavigationManager navManager
+@inject ILogger<FerramentaModel> logger
 
 @if(inicializado)
 {
@@ -34,7 +35,7 @@
                 Insira uma imagem
             </div>
             <div>
-                <InputFile OnChange="HandleFileSelected" />
+                <InputFile OnChange="ProcessarImagem" />
             </div>
         </div>
         <div class="d-flex my-5 justify-content-end align-items-center">
@@ -100,29 +101,34 @@
     {
         Ferramenta!.UsuarioId = IdUsuarioLogado;
 
-        var criarResultado = await ferramentaEndpoints.Criar(Ferramenta);
-
-        if(criarResultado is not null)
+        resultado = await ferramentaEndpoints.Criar(Ferramenta);
+        if(resultado is not null)
         {
-            resultado = FiltrarResultado(criarResultado);
+            resultado = FiltrarResultado(resultado);
             return;
         }
 
-        await CriarRelatorio();
+        resultado = await CriarRelatorio();
+        if (resultado is not null)
+        {
+            resultado = FiltrarResultado(resultado);
+            return;
+        }
+
         navManager.NavigateTo("/ferramentas");
     }
-
-    private async Task CriarRelatorio()
+    private async Task<string?> CriarRelatorio()
     {
         Relatorio!.Descricao = $"O usuario {UsuarioLogadoModel!.Nome} adicionou a ferramenta " +
         $"{Ferramenta!.Nome} ao sistema";
         Relatorio.FerramentaNome = Ferramenta.Nome;
         Relatorio.UsuarioNome = UsuarioLogadoModel.Nome;
 
-        await relatorioEndpoints.Criar(Relatorio);
-    }
+        var resultado = await relatorioEndpoints.Criar(Relatorio);
 
-    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+        return resultado;
+    }
+    private async Task ProcessarImagem(InputFileChangeEventArgs e)
     {
         var file = e.File;
 
@@ -137,11 +143,15 @@
 
     private string? FiltrarResultado(string resultado)
     {
-        if (resultado is not null)
+        if (resultado.Contains("The Nome field is required."))
         {
-            return "Preencha todos os campos";
+            return "Preencha o campo nome.";
+        }
+        if (resultado.Contains("The Descricao field is required."))
+        {
+            return "Preencha o campo de descrição.";
         }
 
-        return null;
+        return resultado;
     }
 }

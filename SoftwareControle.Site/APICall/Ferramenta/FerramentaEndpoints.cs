@@ -113,10 +113,10 @@ public class FerramentaEndpoints : IFerramentaEndpoints
                 .LogError("Ocorreu um erro ao atualizar a ferramenta: {authContent}",
                 authContent);
 
-            return null;
+            return await authResult.Content.ReadAsStringAsync(); ;
         }
 
-        return await authResult.Content.ReadAsStringAsync();
+        return null;
     }
     public async Task<string?> Deletar(Guid id)
     {
@@ -129,9 +129,9 @@ public class FerramentaEndpoints : IFerramentaEndpoints
             _logger.LogError("Ocorreu um erro para deletar a ferramenta: {authContent}",
                 authContent);
 
-            return null;
+            return await authResult.Content.ReadAsStringAsync(); ;
         }
 
-        return authContent;
+        return null;
     }
 }

@@ -3,6 +3,7 @@
 @inject ISessaoUsuario sessao
 @inject IFerramentaEndpoints ferramentaEndpoints
 @inject IUsuarioEndpoints usuarioEndpoints
+@inject IRelatorioEndpoints relatorioEndpoints
 @inject NavigationManager navManager
 
 @if (inicializado)
@@ -33,7 +34,7 @@
                     Insira uma imagem
                 </div>
                 <div>
-                    <InputFile OnChange="HandleFileSelected" />
+                    <InputFile OnChange="ProcessarImagem" />
                 </div>
             </div>
             <div class="d-flex my-5 justify-content-end align-items-center">
@@ -55,9 +56,11 @@
 @code {
     [Parameter]
     public string? FerramentaId { get; set; }
+
     private Guid IdUsuarioLogado { get; set; }
     private UsuarioModel? UsuarioLogadoModel { get; set; }
     private FerramentaModel? Ferramenta = new();
+    private RelatorioModel? Relatorio = new();
 
     private bool inicializado = false;
     private string? resultado = "";
@@ -111,18 +114,35 @@
     {
         Ferramenta!.UsuarioId = IdUsuarioLogado;
 
-        var atualizarResultado = await ferramentaEndpoints.Atualizar(Ferramenta);
-
-        if (atualizarResultado == string.Empty)
+        resultado =  await ferramentaEndpoints.Atualizar(Ferramenta);
+        if(resultado is not null)
         {
-            navManager.NavigateTo($"/ferramenta/{Ferramenta.Id}");
+            resultado = FiltrarResultado(resultado);
             return;
         }
 
-        resultado = FiltrarResultado(atualizarResultado ?? "");
+        resultado = await CriarRelatorio();
+        if(resultado is not null)
+        {
+            resultado = FiltrarResultado(resultado);
+            return;
+        }
+
+        navManager.NavigateTo($"/ferramenta/{FerramentaId}");
     }
 
-    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    private async Task<string?> CriarRelatorio()
+    {
+        Relatorio!.Descricao = $"O usuario {UsuarioLogadoModel!.Nome} atualizou a ferramenta " +
+        $"{Ferramenta!.Nome}";
+        Relatorio.UsuarioNome = UsuarioLogadoModel.Nome;
+        Relatorio.FerramentaNome = Ferramenta.Nome;
+
+        var resultado = await relatorioEndpoints.Criar(Relatorio);
+
+        return resultado;
+    }
+    private async Task ProcessarImagem(InputFileChangeEventArgs e)
     {
         var file = e.File;
 
@@ -135,14 +155,17 @@
             Ferramenta!.Imagem = bytes;
         }
     }
-
     private string? FiltrarResultado(string resultado)
     {
-        if (resultado is not null)
+        if (resultado.Contains("The Nome field is required."))
         {
-            return "Preencha todos os campos";
+            return "Preencha o campo nome.";
+        }
+        if (resultado.Contains("The Descricao field is required."))
+        {
+            return "Preencha o campo de descrição.";
         }
 
-        return null;
+        return resultado;
     }
 }

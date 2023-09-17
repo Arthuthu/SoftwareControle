@@ -82,7 +82,7 @@ public class OrdemEndpoints : IOrdemEndpoints
                 .LogError("Ocorreu para registrar a ferramenta: {authContent}",
                 authContent);
 
-            return authContent;
+            return await authResult.Content.ReadAsStringAsync();
         }
 
         return null;
@@ -111,10 +111,10 @@ public class OrdemEndpoints : IOrdemEndpoints
                 .LogError("Ocorreu um erro ao atualizar a ordem: {authContent}",
                 authContent);
 
-            return null;
+            return await authResult.Content.ReadAsStringAsync(); ;
         }
 
-        return await authResult.Content.ReadAsStringAsync();
+        return null;
     }
     public async Task<string?> Deletar(Guid id)
     {
@@ -127,9 +127,9 @@ public class OrdemEndpoints : IOrdemEndpoints
             _logger.LogError("Ocorreu um erro para deletar a ordem: {authContent}",
                 authContent);
 
-            return null;
+            return await authResult.Content.ReadAsStringAsync(); ;
         }
 
-        return authContent;
+        return null;
     }
 }

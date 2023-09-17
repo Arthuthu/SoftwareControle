@@ -76,7 +76,7 @@ public class UsuarioEndpoints : IUsuarioEndpoints
                 .LogError("Ocorreu para criar o usuario: {authContent}",
                 authContent);
 
-            return authContent;
+            return await authResult.Content.ReadAsStringAsync(); ;
         }
 
         return null;
@@ -102,10 +102,10 @@ public class UsuarioEndpoints : IUsuarioEndpoints
                 .LogError("Ocorreu um erro ao atualizar o usuario: {authContent}",
                 authContent);
 
-            return null;
+            return await authResult.Content.ReadAsStringAsync(); ;
         }
 
-        return await authResult.Content.ReadAsStringAsync();
+        return null;
     }
     public async Task<string?> Deletar(Guid id)
     {
@@ -118,9 +118,9 @@ public class UsuarioEndpoints : IUsuarioEndpoints
             _logger.LogError("Ocorreu um erro para deletar o usuario: {authContent}",
                 authContent);
 
-            return null;
+            return await authResult.Content.ReadAsStringAsync();
         }
 
-        return authContent;
+        return null;
     }
 }

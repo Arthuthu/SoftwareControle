@@ -100,10 +100,10 @@ public class RelatorioEndpoints : IRelatorioEndpoints
                 .LogError("Ocorreu um erro ao atualizar o relatorio: {authContent}",
                 authContent);
 
-            return null;
+            return await authResult.Content.ReadAsStringAsync(); ;
         }
 
-        return await authResult.Content.ReadAsStringAsync();
+        return null;
     }
     public async Task<string?> Deletar(Guid id)
     {
@@ -116,9 +116,9 @@ public class RelatorioEndpoints : IRelatorioEndpoints
             _logger.LogError("Ocorreu um erro para deletar o relatorio: {authContent}",
                 authContent);
 
-            return null;
+            return await authResult.Content.ReadAsStringAsync(); ;
         }
 
-        return authContent;
+        return null;
     }
 }
