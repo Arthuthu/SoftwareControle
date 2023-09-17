@@ -7,7 +7,7 @@ namespace SoftwareControle.Site.APICall.Usuario
         Task<List<UsuarioModel>?> Buscar();
         Task<UsuarioModel?> BuscarPorId(Guid id);
         Task<string?> Criar(UsuarioModel usuario);
-        Task<string?> AtualizarUsuario(UsuarioModel usuario);
-        Task<string?> DeletarUsuario(Guid id);
+        Task<string?> Atualizar(UsuarioModel usuario);
+        Task<string?> Deletar(Guid id);
     }
 }

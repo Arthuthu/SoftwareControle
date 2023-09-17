@@ -4,6 +4,7 @@ using SoftwareControle.Models;
 using Microsoft.AspNetCore.Authorization;
 using SoftwareControle.API.Response;
 using SoftwareControle.API.Mapper;
+using SoftwareControle.API.Requests;
 
 namespace SoftwareControle.API.Controllers.v1;
 
@@ -50,11 +51,12 @@ public class UsuarioController : ControllerBase
         return Ok(usuarioResponse);
     }
 
-    [HttpPost, Route("/usuario/criar"), Authorize]
-    public async Task<ActionResult<string?>> Post([FromForm] UsuarioModel usuario,
+    [HttpPost, Route("/usuario/criar")]
+    public async Task<ActionResult<string?>> Post([FromForm] UsuarioRequest usuarioRequest,
         CancellationToken cancellationToken)
     {
-        var resultado = await _usuarioService.Adicionar(usuario, cancellationToken);
+        var resultado = await _usuarioService.Adicionar(usuarioRequest.MapUsuarioRequestToUsuarioModel(),
+            cancellationToken);
 
         if (resultado is not null)
             return BadRequest(resultado);

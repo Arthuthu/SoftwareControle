@@ -67,7 +67,6 @@ public class UsuarioEndpoints : IUsuarioEndpoints
     {
         var data = new FormUrlEncodedContent(new[]
         {
-            new KeyValuePair<string, string>("Id", usuario.Id.ToString()),
             new KeyValuePair<string, string>("Usuario", usuario.Usuario),
             new KeyValuePair<string, string>("Senha", usuario.Senha),
             new KeyValuePair<string, string>("Nome", usuario.Nome)
@@ -89,7 +88,7 @@ public class UsuarioEndpoints : IUsuarioEndpoints
         return null;
     }
 
-    public async Task<string?> AtualizarUsuario(UsuarioModel usuario)
+    public async Task<string?> Atualizar(UsuarioModel usuario)
     {
 		var data = new FormUrlEncodedContent(new[]
 		{
@@ -114,7 +113,7 @@ public class UsuarioEndpoints : IUsuarioEndpoints
 
         return await authResult.Content.ReadAsStringAsync();
     }
-    public async Task<string?> DeletarUsuario(Guid id)
+    public async Task<string?> Deletar(Guid id)
     {
         string deletarUsuarioEndpoint = _config["apiLocation"] + _config["deletarUsuario"] + $"/{id}";
         var authResult = await _client.DeleteAsync(deletarUsuarioEndpoint);

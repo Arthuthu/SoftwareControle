@@ -3,7 +3,7 @@ using SoftwareControle.Models;
 
 namespace SoftwareControle.API.Mapper;
 
-public static class MapLoginRequestToUserModel
+public static class LoginRequestToUsuarioModel
 {
     public static UsuarioModel MapLoginRequestToDomainModel(this LoginRequest loginRequest)
     {

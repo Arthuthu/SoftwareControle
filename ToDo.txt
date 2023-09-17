@@ -1,10 +1,10 @@
 Tela Index
 
 Relatorios
-Admin criar usuario funcionario
 Pagina expiracao
 Logging para erros
 Lightmode
+Pagina mudar senha de usuario
 
 Caching
 

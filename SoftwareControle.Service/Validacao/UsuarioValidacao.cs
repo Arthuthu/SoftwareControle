@@ -9,7 +9,7 @@ public class UsuarioValidacao : AbstractValidator<UsuarioModel>
     {
         RuleFor(x => x.Usuario)
             .NotEmpty().WithMessage("Campo de usuario não pode estar vazio")
-            .MinimumLength(5).WithMessage("Campo de usuário tem que ter no minimo 5 caracteres");
+            .MinimumLength(3).WithMessage("Campo de usuário tem que ter no minimo 3 caracteres");
 
         RuleFor(x => x.Senha)
             .NotEmpty().WithMessage("O campo senha não pode estar vazio")

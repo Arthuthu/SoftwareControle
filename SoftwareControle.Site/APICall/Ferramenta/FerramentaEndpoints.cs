@@ -66,7 +66,6 @@ public class FerramentaEndpoints : IFerramentaEndpoints
 
         var data = new FormUrlEncodedContent(new[]
         {
-            new KeyValuePair<string, string>("Id", ferramenta.Id.ToString()),
             new KeyValuePair<string, string>("Nome", ferramenta.Nome),
             new KeyValuePair<string, string>("Descricao", ferramenta.Descricao),
             new KeyValuePair<string, string>("ImagemString", ferramenta.ImagemString ?? ""),
