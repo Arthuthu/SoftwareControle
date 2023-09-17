@@ -1,6 +1,8 @@
 Tela Index
 
 Adicionar demais relatorios.
+Fotos usuarios (redonda)
+
 Pagina expiracao
 Logging para erros
 Lightmode
@@ -9,5 +11,3 @@ Pagina mudar senha de usuario
 Caching
 
 Revisar codigo
-
-Mudar ferramenta-node para nome generalizado
