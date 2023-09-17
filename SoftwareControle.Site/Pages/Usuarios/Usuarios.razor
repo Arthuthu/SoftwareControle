@@ -22,7 +22,6 @@
 		<div class="elementos-lista">
 			<div class="elemento-node">Foto</div>
 			<div class="elemento-node">Nome</div>
-			<div class="elemento-node">Login</div>
 			<div class="elemento-node">Cargo</div>
 		</div>
 		<Virtualize Items="@ListaUsuarios" Context="usuario" OverscanCount="50">
@@ -38,7 +37,6 @@
 				}
 				</div>
 				<div class="elemento-node">@usuario.Nome</div>
-				<div class="elemento-node">@usuario.Usuario</div>
 				<div class="elemento-node">@usuario.Cargo</div>
 			</a>
 		</Virtualize>
@@ -78,11 +76,6 @@
 		if (UsuarioLogadoModel is null)
 		{
 			navManager.NavigateTo("/naoencontrado");
-			return;
-		}
-		if (UsuarioLogadoModel.Cargo != "Administrador")
-		{
-			navManager.NavigateTo("/naoautorizado");
 			return;
 		}
 

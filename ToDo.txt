@@ -1,7 +1,6 @@
 Tela Index
 
 Adicionar demais relatorios.
-Usuario funcionario pode ver lista de funcionarios?
 
 Pagina expiracao
 Logging para erros
