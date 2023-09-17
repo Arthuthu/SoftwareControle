@@ -134,7 +134,7 @@
     private async Task<string?> CriarRelatorio()
     {
         Relatorio!.Descricao = $"O usuario {UsuarioLogadoModel!.Nome} atualizou a ferramenta " +
-        $"{Ferramenta!.Nome}";
+        $"{Ferramenta!.Nome} no sistema.";
         Relatorio.UsuarioNome = UsuarioLogadoModel.Nome;
         Relatorio.FerramentaNome = Ferramenta.Nome;
 
