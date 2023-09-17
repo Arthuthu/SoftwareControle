@@ -41,11 +41,11 @@ public class FerramentaController : ControllerBase
     }
 
     [HttpPost, Route("/ferramenta/criar"), Authorize]
-    public async Task<ActionResult<string?>> Post([FromForm] FerramentaRequest ferramenta,
+    public async Task<ActionResult<string?>> Post([FromForm] FerramentaRequest ferramentaRequest,
         CancellationToken cancellationToken)
     {
         var resultado = await _ferramentaService
-            .Adicionar(ferramenta.MapFerramentaRequestToFerramentaModel(),cancellationToken);
+            .Adicionar(ferramentaRequest.MapFerramentaRequestToFerramentaModel(),cancellationToken);
 
         if (resultado is not null)
             return BadRequest(resultado);
@@ -54,11 +54,11 @@ public class FerramentaController : ControllerBase
     }
 
     [HttpPut, Route("/ferramenta/atualizar"), Authorize]
-    public async Task<IActionResult> Put([FromForm] FerramentaRequest ferramenta,
+    public async Task<IActionResult> Put([FromForm] FerramentaRequest ferramentaRequest,
         CancellationToken cancellationToken)
     {
         bool ferramentaFoiAtualizada = await _ferramentaService
-            .Atualizar(ferramenta.MapFerramentaRequestToFerramentaModel(), cancellationToken);
+            .Atualizar(ferramentaRequest.MapFerramentaRequestToFerramentaModel(), cancellationToken);
 
         if (ferramentaFoiAtualizada is false)
             return NotFound("Ferramenta não encontrada");

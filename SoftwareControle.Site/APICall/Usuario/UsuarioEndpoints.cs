@@ -92,13 +92,18 @@ public class UsuarioEndpoints : IUsuarioEndpoints
 
     public async Task<string?> Atualizar(UsuarioModel usuario)
     {
+		if (usuario.Imagem is not null)
+		{
+			usuario.ImagemString = Convert.ToBase64String(usuario.Imagem);
+		}
+
 		var data = new FormUrlEncodedContent(new[]
 		{
 			new KeyValuePair<string, string>("Id", usuario.Id.ToString()),
 			new KeyValuePair<string, string>("Usuario", usuario.Usuario),
-			new KeyValuePair<string, string>("Senha", usuario.Senha),
-            new KeyValuePair<string, string>("ImagemString", usuario.ImagemString ?? ""),
-            new KeyValuePair<string, string>("Nome", usuario.Nome),
+			new KeyValuePair<string, string>("Nome", usuario.Nome),
+			new KeyValuePair<string, string>("Cargo", usuario.Cargo),
+			new KeyValuePair<string, string>("ImagemString", usuario.ImagemString ?? ""),
 		});
 
 		string atualizarEndpoint = _config["apiLocation"] + _config["atualizarUsuario"];

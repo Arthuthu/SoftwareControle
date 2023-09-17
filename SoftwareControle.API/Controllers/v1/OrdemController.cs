@@ -40,10 +40,10 @@ public class OrdemController : ControllerBase
     }
 
     [HttpPost, Route("/ordem/criar"), Authorize]
-    public async Task<ActionResult<string?>> Post([FromForm] OrdemModel ordem,
+    public async Task<ActionResult<string?>> Post([FromForm] OrdemModel ordemRequest,
         CancellationToken cancellationToken)
     {
-        var resultado = await _ordemService.Adicionar(ordem, cancellationToken);
+        var resultado = await _ordemService.Adicionar(ordemRequest, cancellationToken);
 
         if (resultado is not null)
             return BadRequest(resultado);
@@ -52,10 +52,10 @@ public class OrdemController : ControllerBase
     }
 
     [HttpPut, Route("/ordem/atualizar"), Authorize]
-    public async Task<IActionResult> Put([FromForm] OrdemModel ordem,
+    public async Task<IActionResult> Put([FromForm] OrdemModel ordemRequest,
         CancellationToken cancellationToken)
     {
-        bool ordemFoiAtualizada = await _ordemService.Atualizar(ordem,
+        bool ordemFoiAtualizada = await _ordemService.Atualizar(ordemRequest,
             cancellationToken);
 
         if (ordemFoiAtualizada is false)

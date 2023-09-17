@@ -40,10 +40,10 @@ public class RelatorioController : ControllerBase
     }
 
     [HttpPost, Route("/relatorio/criar"), Authorize]
-    public async Task<ActionResult<string?>> Post([FromForm] RelatorioModel relatorio,
+    public async Task<ActionResult<string?>> Post([FromForm] RelatorioModel relatorioRequest,
         CancellationToken cancellationToken)
     {
-        var resultado = await _relatorioService.Adicionar(relatorio, cancellationToken);
+        var resultado = await _relatorioService.Adicionar(relatorioRequest, cancellationToken);
 
         if (resultado is not null)
             return BadRequest(resultado);
@@ -52,10 +52,10 @@ public class RelatorioController : ControllerBase
     }
 
     [HttpPut, Route("/relatorio/atualizar"), Authorize]
-    public async Task<IActionResult> Put([FromForm] RelatorioModel relatorio,
+    public async Task<IActionResult> Put([FromForm] RelatorioModel relatorioRequest,
         CancellationToken cancellationToken)
     {
-        bool relatorioFoiAtualizado = await _relatorioService.Atualizar(relatorio,
+        bool relatorioFoiAtualizado = await _relatorioService.Atualizar(relatorioRequest,
             cancellationToken);
 
         if (relatorioFoiAtualizado is false)

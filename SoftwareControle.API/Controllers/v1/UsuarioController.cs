@@ -64,17 +64,17 @@ public class UsuarioController : ControllerBase
         return Ok(null);
     }
 
-    [HttpPut, Route("/usuario/atualizar"), Authorize]
-    public async Task<IActionResult> Put([FromForm] UsuarioModel usuario,
+    [HttpPut, Route("/usuario/atualizar")]
+    public async Task<IActionResult> Put([FromForm] UsuarioRequest usuarioRequest,
         CancellationToken cancellationToken)
     {
-        bool usuarioFoiAtualizado = await _usuarioService.Atualizar(usuario,
+        bool usuarioFoiAtualizado = await _usuarioService.Atualizar(usuarioRequest.MapUsuarioRequestToUsuarioModel(),
             cancellationToken);
 
         if (usuarioFoiAtualizado is false)
             return NotFound("Usuario não encontrado");
 
-        return Ok(usuario);
+        return Ok(null);
     }
 
     [HttpDelete, Route("/usuario/deletar/{id:guid}"), Authorize]
