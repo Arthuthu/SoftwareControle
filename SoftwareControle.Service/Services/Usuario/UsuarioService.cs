@@ -43,6 +43,9 @@ public class UsuarioService : IUsuarioService
 		if (usuarioLoginJaUtilizado is not null)
 			return "Um usuario com este login de usuario ja foi cadastrado";
 
+		usuario.Id = Guid.NewGuid();
+		usuario.DataCriacao = DateTime.UtcNow.AddHours(-3);
+
 		await _usuarioRepositorio.Adicionar(usuario, cancellationToken);
 
 		return null;

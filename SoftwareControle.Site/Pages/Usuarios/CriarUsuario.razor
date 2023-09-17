@@ -25,7 +25,7 @@
 				</div>
 				<div>
 					<InputText type="password" @bind-Value="UsuarioCriado!.Senha"
-							   class="input" placeholder="Senha" />
+						class="input" placeholder="Senha" />
 				</div>
 			</div>
 			<div class="text-center my-4">
@@ -34,8 +34,18 @@
 				</div>
 				<div>
 					<InputText @bind-Value="UsuarioCriado!.Nome"
-							   class="input" placeholder="Nome" />
+						class="input" placeholder="Nome" />
 				</div>
+			</div>
+			<div class="text-center my-4">
+				<div class="fs-3 my-2">
+					Cargo
+				</div>
+				<select @bind="UsuarioCriado.Cargo" class="input">
+					<option value="">Selecionar cargo</option>
+					<option value="Funcionario">Funcionario</option>
+					<option value="Administrador">Administrador</option>
+				</select>
 			</div>
 			<div class="text-center">
 				<div class="fs-3 my-2">
@@ -124,7 +134,7 @@
 
 		if(resultado is null)
 		{
-			navManager.NavigateTo("/");
+			navManager.NavigateTo("/usuarios");
 			return;
 		}
 	}

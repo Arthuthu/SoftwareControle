@@ -1,5 +1,142 @@
-﻿<h3>UsuarioDetalhes</h3>
+﻿@page "/usuario/{UsuarioId}"
+
+@inject ISessaoUsuario sessao
+@inject IUsuarioEndpoints usuarioEndpoints
+@inject NavigationManager navManager
+
+@if (inicializado)
+{
+	<div class="elemento-detalhes-box">
+		@if (UsuarioPerfilModel?.ImagemString != string.Empty)
+		{
+			<div class="text-center my-4">
+				<img id="usuario-foto" 
+					src="data:image/jpeg;base64,@UsuarioPerfilModel?.ImagemString" alt="Foto"
+					class="ferramenta-detalhes-foto">
+			</div>
+		}
+
+		<div>
+			<div class="label-principal">Nome do Usuario</div>
+			<div class="text-center my-2 fs-3">@UsuarioPerfilModel!.Nome</div>
+		</div>
+		<div class="mt-4">
+			<div class="label-principal">Informações</div>
+			<div class="d-flex justify-content-evenly my-4">
+				<div class="text-center">
+					<div class="my-2 fs-2 fw-bold">Cargo</div>
+					<div class="my-2 fs-4">@UsuarioPerfilModel!.Cargo</div>
+				</div>
+				<div class="text-center">
+					<div class="my-2 fs-2 fw-bold">Criado em</div>
+					<div class="my-2 fs-4">@UsuarioPerfilModel.DataCriacao.ToString("dd/MM/yyyy")</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="d-flex my-5 justify-content-end align-items-center">
+		@if (UsuarioLogadoModel!.Cargo == "Administrador")
+		{
+			<div>
+				<a href="/usuario/editar/@UsuarioPerfilModel.Id" class="botao-principal">Editar</a>
+			</div>
+			<div>
+				<button @onclick="MostrarDelete" class="botao-principal"
+						id="botao-padding-ajustes">
+					@mostrarDeletarBotaoNome
+				</button>
+			</div>
+		}
+		<div>
+			<a href="/usuarios" class="botao-principal">Voltar</a>
+		</div>
+	</div>
+	@if (mostrarDeletarDiv)
+	{
+		<div class="text-center">
+			<div class="fs-4 my-4">
+				Tem certeza que deseja deletar esse usuario?
+			</div>
+			<div>
+				<button @onclick="Deletar" class="botao-principal">Confirmar</button>
+			</div>
+		</div>
+	}
+}
 
 @code {
+	[Parameter]
+	public string? UsuarioId { get; set; }
 
+	public Guid UsuarioLogadoId { get; set; }
+	public UsuarioModel? UsuarioLogadoModel { get; set; }
+	public UsuarioModel? UsuarioPerfilModel { get; set; }
+
+	private bool inicializado = false;
+	private string mostrarDeletarBotaoNome = "Deletar";
+	private bool mostrarDeletarDiv = false;
+
+	protected override async Task OnInitializedAsync()
+	{
+		if(UsuarioId == Guid.Empty.ToString())
+		{
+			navManager.NavigateTo("/naoencontrado");
+			return;
+		}
+
+		await BuscarUsuarioPerfilModel();
+		if(UsuarioPerfilModel is null)
+		{
+			navManager.NavigateTo("/naoencontrado");
+			return;
+		}
+
+		await BuscarUsuarioLogadoId();
+		if(UsuarioLogadoId == Guid.Empty)
+		{
+			navManager.NavigateTo("/login");
+			return;
+		}
+
+		await BuscarUsuarioLogadoModel();
+		if(UsuarioLogadoModel is null)
+		{
+			navManager.NavigateTo("/naoencontrado");
+			return;
+		}
+
+		inicializado = true;
+	}
+
+	private async Task BuscarUsuarioLogadoId()
+	{
+		UsuarioLogadoId = await sessao.BuscarIdDoUsuarioLogado();
+	}
+	private async Task BuscarUsuarioLogadoModel()
+	{
+		UsuarioLogadoModel = await usuarioEndpoints.BuscarPorId(UsuarioLogadoId);
+	}
+	private async Task BuscarUsuarioPerfilModel()
+	{
+		UsuarioPerfilModel = await usuarioEndpoints.BuscarPorId(Guid.Parse(UsuarioId!));
+	}
+
+	private async Task Deletar()
+	{
+		await usuarioEndpoints.Deletar(Guid.Parse(UsuarioId!));
+		navManager.NavigateTo("/usuarios");
+	}
+
+	private void MostrarDelete()
+	{
+		if (mostrarDeletarDiv is false)
+		{
+			mostrarDeletarDiv = true;
+			mostrarDeletarBotaoNome = "Ocultar";
+			return;
+		}
+
+		mostrarDeletarDiv = false;
+		mostrarDeletarBotaoNome = "Deletar";
+	}
 }

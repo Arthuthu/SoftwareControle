@@ -70,7 +70,8 @@ public class UsuarioEndpoints : IUsuarioEndpoints
             new KeyValuePair<string, string>("Usuario", usuario.Usuario),
             new KeyValuePair<string, string>("Senha", usuario.Senha),
             new KeyValuePair<string, string>("ImagemString", usuario.ImagemString ?? ""),
-            new KeyValuePair<string, string>("Nome", usuario.Nome)
+            new KeyValuePair<string, string>("Nome", usuario.Nome),
+            new KeyValuePair<string, string>("Cargo", usuario.Cargo)
 		});
 
         string criarEndpoint = _config["apiLocation"] + _config["criarUsuario"];

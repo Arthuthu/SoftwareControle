@@ -27,9 +27,7 @@ public class UsuarioRepositorio : IUsuarioRepositorio
 		return usuario is not null ? usuario : null;
 	}
 	public async Task Adicionar(UsuarioModel usuario, CancellationToken cancellationToken)
-	{
-		usuario.Cargo = "Funcionario";
-
+	{ 
         await _context.Usuarios.AddAsync(usuario, cancellationToken);
 		await _context.SaveChangesAsync(cancellationToken);
 	}

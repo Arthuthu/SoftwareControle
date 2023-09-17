@@ -1,7 +1,7 @@
 Tela Index
 
 Adicionar demais relatorios.
-Fotos usuarios (redonda)
+Usuario funcionario pode ver lista de funcionarios?
 
 Pagina expiracao
 Logging para erros

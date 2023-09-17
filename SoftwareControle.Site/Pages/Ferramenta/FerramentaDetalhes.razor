@@ -7,7 +7,7 @@
 
 @if (inicializado)
 {
-	<div class="ferramenta-detalhes-box">
+	<div class="elemento-detalhes-box">
 		@if(Ferramenta?.ImagemString != string.Empty)
 		{
 			<div class="text-center my-4">
@@ -35,7 +35,7 @@
 					<div class="text-color-danger">Indisponivel</div>
 				}
 			</div>
-			<div>Data Criação: @FerramentaDataCriacaoFormatado</div>
+			<div>Data Criação: @Ferramenta.DataCriacao.ToString("dd/MM/yyyy")</div>
 			@if (Ferramenta!.DataAtualizacao is not null)
 			{
 				<div>Ultima Atualização: @Ferramenta.DataAtualizacao</div>
@@ -86,7 +86,6 @@
 	private UsuarioModel? UsuarioLogadoModel { get; set; }
 	private FerramentaModel? Ferramenta { get; set; }
 
-	private string FerramentaDataCriacaoFormatado = string.Empty;
 	private string mostrarDeletarBotaoNome = "Deletar";
 	private bool mostrarDeletarDiv = false;
 	private bool inicializado = false;
@@ -116,7 +115,6 @@
 			return;
 		}
 
-		FerramentaDataCriacaoFormatado = Ferramenta.DataCriacao.ToString("dd/MM/yyyy");
 		inicializado = true;
 	}
 
@@ -155,5 +153,4 @@
 		mostrarDeletarDiv = false;
 		mostrarDeletarBotaoNome = "Deletar";
 	}
-
 }
