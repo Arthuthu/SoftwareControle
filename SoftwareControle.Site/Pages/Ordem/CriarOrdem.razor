@@ -145,7 +145,7 @@
             resultado = ex.Message;
         }
 
-        if(resultado == string.Empty)
+        if(resultado is null)
         {
             await CriarRelatorio();
             navManager.NavigateTo($"/ordens");
@@ -154,7 +154,8 @@
     }
     private async Task CriarRelatorio()
     {
-        Relatorio.Descricao = $"Foi criado uma ordem: {Ordem!.Descricao} da ferramenta {Ordem.NomeFerramenta}";
+        Relatorio.Descricao = $"Foi criado uma ordem: {Ordem!.Descricao} da ferramenta {Ordem.NomeFerramenta}" +
+        $"Nivel de urgência: {Ordem.NivelUrgencia} com o prazo até {Ordem.DataPrazoMaximo.ToString("dd/MM/yyyy")}.";
         Relatorio.FerramentaNome = Ordem.NomeFerramenta;
 
         await relatorioEndpoints.Criar(Relatorio);

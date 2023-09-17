@@ -63,7 +63,7 @@ public class FerramentaController : ControllerBase
         if (ferramentaFoiAtualizada is false)
             return NotFound("Ferramenta não encontrada");
 
-        return Ok(true);
+        return Ok(null);
     }
 
     [HttpDelete, Route("/ferramenta/deletar/{id:guid}"), Authorize]

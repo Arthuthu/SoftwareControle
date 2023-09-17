@@ -101,8 +101,8 @@
 	}
 	private async Task CriarRelatorio()
 	{
-		Relatorio.Descricao = $"O {UsuarioLogadoModel!.Nome} aceitou a ordem {OrdemModel!.Descricao} " +
-		$"Ferramenta: {OrdemModel.NomeFerramenta}"; 
+		Relatorio.Descricao = $"O usuario {UsuarioLogadoModel!.Nome} finalizou a ordem {OrdemModel!.Descricao} " +
+		$"Ferramenta: {OrdemModel.NomeFerramenta}."; 
 		Relatorio.UsuarioNome = UsuarioLogadoModel.Nome;
 
 		await relatorioEndpoints.Criar(Relatorio);
