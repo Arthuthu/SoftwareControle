@@ -8,6 +8,7 @@ public class UsuarioResponse
     public string Usuario { get; set; } = string.Empty;
     public string Nome { get; set; } = string.Empty;
     public string Cargo { get; set; } = string.Empty;
+    public string ImagemString { get; set;} = string.Empty;
     public DateTime DataCriacao { get; set; }
     public DateTime? DataAtualizacao { get; set; }
 

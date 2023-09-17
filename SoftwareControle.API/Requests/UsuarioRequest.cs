@@ -7,4 +7,5 @@ public class UsuarioRequest
 	public string Senha { get; set; } = string.Empty;
 	public string Nome { get; set; } = string.Empty;
 	public string Cargo { get; set; } = string.Empty;
+	public string? ImagemString { get; set; } = string.Empty;	
 }

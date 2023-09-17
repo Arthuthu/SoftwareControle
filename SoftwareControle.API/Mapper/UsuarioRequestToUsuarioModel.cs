@@ -7,13 +7,16 @@ public static class UsuarioRequestToUsuarioModel
 {
 	public static UsuarioModel MapUsuarioRequestToUsuarioModel(this UsuarioRequest usuarioRequest)
 	{
-		return new UsuarioModel
+        byte[] byteArray = Convert.FromBase64String(usuarioRequest.ImagemString ?? "");
+
+        return new UsuarioModel
 		{
 			Id = usuarioRequest.Id,
 			Usuario = usuarioRequest.Usuario,
 			Senha = usuarioRequest.Senha,
 			Nome = usuarioRequest.Nome,
-			Cargo = usuarioRequest.Cargo
+			Cargo = usuarioRequest.Cargo,
+			Imagem = byteArray
 		};
 	}
 }

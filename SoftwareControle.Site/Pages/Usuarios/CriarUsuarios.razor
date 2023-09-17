@@ -37,6 +37,14 @@
 							   class="input" placeholder="Nome" />
 				</div>
 			</div>
+			<div class="text-center">
+				<div class="fs-3 my-2">
+					Foto de perfil
+				</div>
+				<div>
+					<InputFile OnChange="ProcessarImagem" />
+				</div>
+			</div>
 			<div class="d-flex my-5 justify-content-end align-items-center">
 				<div>
 					<button type="submit" class="botao-principal"
@@ -96,6 +104,19 @@
 	private async Task BuscarUsuarioLogadoModel()
 	{
 		UsuarioLogadoModel = await usuarioEndpoints.BuscarPorId(UsuarioLogadoId);
+	}
+
+	private async Task ProcessarImagem(InputFileChangeEventArgs e)
+	{
+		var file = e.File;
+
+		if (file != null)
+		{
+			var stream = file.OpenReadStream();
+			var bytes = new byte[stream.Length];
+			await stream.ReadAsync(bytes);
+			UsuarioCriado!.Imagem = bytes;
+		}
 	}
 	private async Task Criar()
 	{

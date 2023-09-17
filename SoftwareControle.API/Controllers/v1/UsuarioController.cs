@@ -51,7 +51,7 @@ public class UsuarioController : ControllerBase
         return Ok(usuarioResponse);
     }
 
-    [HttpPost, Route("/usuario/criar")]
+    [HttpPost, Route("/usuario/criar"), Authorize]
     public async Task<ActionResult<string?>> Post([FromForm] UsuarioRequest usuarioRequest,
         CancellationToken cancellationToken)
     {

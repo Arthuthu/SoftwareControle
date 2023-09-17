@@ -215,13 +215,13 @@ navbar {
     width: 100%;
 }
 
-.ferramentas-lista-foto {
+.elementos-lista-foto {
     height: 80px;
     width: 80px;
     border: solid #808080;
 }
 
-.ferramentas-lista-foto:hover {
+.elementos-lista-foto:hover {
     height: 100px;
     width: 100px;
 }
@@ -230,4 +230,9 @@ navbar {
     height: 300px;
     width: 300px;
     border: solid #808080;
+}
+
+/* Usuarios */
+#usuario-foto {
+    border-radius: 100px;
 }

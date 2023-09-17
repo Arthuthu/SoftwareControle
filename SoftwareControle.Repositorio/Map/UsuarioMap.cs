@@ -20,6 +20,7 @@ public class UsuarioMap : BaseMap<UsuarioModel>
 		builder.Property(x => x.Senha).IsRequired().HasColumnName("Senha").HasMaxLength(20);
 		builder.Property(x => x.Nome).IsRequired().HasColumnName("Nome").HasMaxLength(100);
 		builder.Property(x => x.Cargo).IsRequired().HasColumnName("Cargo").HasMaxLength(100);
+		builder.Property(x => x.Imagem).HasColumnName("Imagem");
         builder.Property(x => x.DataCriacao).IsRequired().HasColumnName("DataCriacao").HasMaxLength(100);
 		builder.Property(x => x.DataAtualizacao).HasColumnName("DataAtualizacao");
 
