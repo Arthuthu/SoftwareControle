@@ -7,18 +7,18 @@
 
 @if (inicializado)
 {
+    <div class="filtros-botoes-div">
+        <button class="botao-filtro" @onclick="BuscarTodasOrdens">Todas</button>
+        <button class="botao-filtro" @onclick="OrdensFinalizadas">Finalizadas</button>
+        <button class="botao-filtro" @onclick="OrdensEmEspera">Espera</button>
+        <button class="botao-filtro" @onclick="OrdensIniciadas">Iniciadas</button>
+    </div>
     @if(ListaOrdem is null || ListaOrdem.Count() == 0)
     {
         <div class="text-center my-5 fs-3 fw-bold">Não foi registrado nenhuma ordem</div>
     }
     else
     {
-        <div class="filtros-botoes-div">
-            <button class="botao-filtro" @onclick="BuscarTodasOrdens">Todas</button>
-            <button class="botao-filtro" @onclick="OrdensFinalizadas">Finalizadas</button>
-            <button class="botao-filtro" @onclick="OrdensEmEspera">Espera</button>
-            <button class="botao-filtro" @onclick="OrdensIniciadas">Iniciadas</button>
-        </div>
         <div class="elementos-lista" id="elementos-lista-label">
             <div class="elemento-node">Descrição</div>
             <div class="elemento-node">Urgência</div>

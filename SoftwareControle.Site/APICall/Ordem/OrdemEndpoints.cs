@@ -99,7 +99,7 @@ public class OrdemEndpoints : IOrdemEndpoints
             new KeyValuePair<string, string>("Situacao", ordem.Situacao.ToString()),
             new KeyValuePair<string, string>("NomeResponsavel", ordem.NomeResponsavel!.ToString()),
             new KeyValuePair<string, string>("NomeFerramenta", ordem.NomeFerramenta.ToString()),
-            new KeyValuePair<string, string>("OrdemDescricaoResponsavel", ordem.DescricaoResponsavel?.ToString() ?? ""),
+            new KeyValuePair<string, string>("DescricaoResponsavel", ordem.DescricaoResponsavel?.ToString() ?? ""),
 			new KeyValuePair<string, string>("DataIniciado", ordem.DataIniciado?.ToString() ?? ""),
 			new KeyValuePair<string, string>("DataFinalizado", ordem.DataFinalizado?.ToString() ?? ""),
 		});

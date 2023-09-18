@@ -44,6 +44,9 @@ public class OrdemRepositorio : IOrdemRepositorio
 		requestedOrdem.DataPrazoMaximo = ordem.DataPrazoMaximo;
 		requestedOrdem.DataAtualizacao = DateTime.UtcNow.AddHours(-3);
 		requestedOrdem.NomeResponsavel = ordem.NomeResponsavel;
+		requestedOrdem.DataIniciado = ordem.DataIniciado;
+		requestedOrdem.DataFinalizado = ordem.DataFinalizado;
+		requestedOrdem.DescricaoResponsavel = ordem.DescricaoResponsavel;
 
 		_context.Ordens.Update(requestedOrdem);
 		await _context.SaveChangesAsync(cancellationToken);
