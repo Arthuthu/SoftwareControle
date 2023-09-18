@@ -14,14 +14,10 @@
     else
     {
         <div class="filtros-botoes-div">
-            <button class="botao-principal" id="botao-padding-ajustes"
-                @onclick="BuscarTodasOrdens">Todas</button>
-            <button class="botao-principal" id="botao-padding-ajustes"  
-                @onclick="OrdensFinalizadas">Finalizadas</button>
-            <button class="botao-principal" id="botao-padding-ajustes" 
-                @onclick="OrdensEmEspera">Espera</button>
-            <button class="botao-principal" id="botao-padding-ajustes"
-                @onclick="OrdensIniciadas">Iniciadas</button>
+            <button class="botao-filtro" @onclick="BuscarTodasOrdens">Todas</button>
+            <button class="botao-filtro" @onclick="OrdensFinalizadas">Finalizadas</button>
+            <button class="botao-filtro" @onclick="OrdensEmEspera">Espera</button>
+            <button class="botao-filtro" @onclick="OrdensIniciadas">Iniciadas</button>
         </div>
         <div class="elementos-lista" id="elementos-lista-label">
             <div class="elemento-node">Descrição</div>

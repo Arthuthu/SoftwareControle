@@ -1,10 +1,8 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 root {
-    --background-primary-color: #000000;
-    --background-secondary-color: #808080;
-    --background-button-primary-color: #dc6b0b;
-    --background-button-primary-color-hover: #fc831c;
+    --primary-background-color: #030202;
+    --secondary-background-color: #0a0a0a;
 }
 
 body {
@@ -110,14 +108,28 @@ body.light .elementos-lista:hover {
         color: #FFF;
     }
 
+#botao-padding-ajustes {
+    padding: 8px 20px;
+}
+
+.botao-filtro {
+    color: #FFF;
+    background-color: #dc5b10;
+    border-color: transparent;
+    padding: 5px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.botao-filtro:hover {
+    transition: 500ms;
+    background-color: #983909;
+}
+
 .icone-tema {
     height: 20px;
     width: 20px;
     margin: 0 0 0 20px;
-}
-
-#botao-padding-ajustes {
-    padding: 8px 20px;
 }
 
 .label-principal,
@@ -283,5 +295,11 @@ navbar {
 
 #usuario-foto {
     border-radius: 50%;
+}
+
+/* Ordens */
+.filtros-botoes-div {
+    background-color: #0a0a0a;
+    padding: 20px;
 }
 
