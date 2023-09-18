@@ -9,7 +9,8 @@
             Software Controle
         </a>
         <div>
-            <button class="botao-tema" id="light-button" @onclick="ToggleLightMode">@botaoTema</button>
+            <img src="./icons/@iconeTema" class="icone-tema" @onclick="ToggleLightMode" 
+                id="light-button"/>
         </div>
     </div>
 
@@ -51,18 +52,18 @@
 </div>
 
 @code {
-    private string botaoTema = "Escuro";
+    private string iconeTema = "moonicon.png";
 
     private async Task ToggleLightMode()
     {
         await JSRuntime.InvokeVoidAsync("toggleLightMode");
 
-        if(botaoTema == "Escuro")
+        if (iconeTema == "moonicon.png")
         {
-            botaoTema = "Claro";
+            iconeTema = "sunicon.png";
             return;
         };
 
-        botaoTema = "Escuro";
+        iconeTema = "moonicon.png";
     }
 }

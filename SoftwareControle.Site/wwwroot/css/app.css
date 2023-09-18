@@ -110,15 +110,10 @@ body.light .elementos-lista:hover {
         color: #FFF;
     }
 
-.botao-tema {
-    background-color: transparent;
-    color: #FFF;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 10px;
-    border: solid #FFF;
-    margin-left: 100px;
-    border-radius: 13px;
+.icone-tema {
+    height: 20px;
+    width: 20px;
+    margin: 0 0 0 20px;
 }
 
 #botao-padding-ajustes {
