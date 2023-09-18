@@ -6,10 +6,10 @@
 
 @if (inicializado)
 {
-	<div>
-		<InputText @bind-Value="@usuarioLoginNome" class="ferramenta-buscar-input"
+	<div class="buscar-input-div">
+		<InputText @bind-Value="@usuarioLoginNome" class="elemento-buscar-input"
 		@oninput="(e) => FiltrarUsuarioPorNome(e.Value?.ToString())"
-				   placeholder="Procurar ferramenta por nome" />
+				   placeholder="Procurar usuario por nome" />
 	</div>
 	@if (ListaUsuarios is null || ListaUsuarios.Count() == 0)
 	{

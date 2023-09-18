@@ -7,8 +7,8 @@
 
 @if (inicializado)
 {
-	<div>
-		<InputText @bind-Value="@nomeFerramenta" class="ferramenta-buscar-input"
+	<div class="buscar-input-div">
+		<InputText @bind-Value="@nomeFerramenta" class="elemento-buscar-input"
 		@oninput="(e) => FilterFerramentaPorNome(e.Value?.ToString())"
 				   placeholder="Procurar ferramenta por nome" />
 	</div>
