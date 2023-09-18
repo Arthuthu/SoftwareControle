@@ -73,7 +73,7 @@
 	private async Task CriarRelatorio()
 	{
 		Relatorio.Descricao = $"O usuario {UsuarioLogadoModel!.Nome} aceitou a ordem {Ordem!.Descricao} " + 
-		$"Ferramenta: {Ordem.NomeFerramenta}.";
+		$"Ferramenta: {Ordem.NomeFerramenta} no dia {DateTime.UtcNow.AddHours(-3)}.";
 		Relatorio.UsuarioNome = UsuarioLogadoModel.Nome;
 
 		await relatorioEndpoints.Criar(Relatorio);

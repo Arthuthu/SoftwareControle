@@ -80,12 +80,23 @@
 					</div>
 				</div>
 			</div>
+			@if (OrdemModel.HorasTrabalhadas is not null)
+			{
+				<div class="my-4 text-center">
+					<div class="mb-2 fs-3 fw-bold">Horas trabalhadas</div>
+					<div class="fs-4">
+						@OrdemModel.HorasTrabalhadas.Value.ToString(@"hh\:mm\:ss")
+					</div>
+				</div>
+			}
 		</div>
 		@if(OrdemModel.NomeResponsavel != string.Empty)
 		{
-			<div>
+			<div class="my-4 text-center">
 				<div class="label-principal">Responsavel</div>
-				<div class="text-center my-4 fs-3">@OrdemModel.NomeResponsavel</div>
+				<div class="my-4 fs-4">
+					@OrdemModel.NomeResponsavel
+				</div>
 			</div>
 		}
 		@if (OrdemModel.Situacao == "Finalizada")
@@ -112,6 +123,17 @@
 					</button>
 				</div>
 			</EditForm>
+		</div>
+	}
+	@if (mostrarDeletarDiv)
+	{
+		<div class="text-center">
+			<div class="fs-4 my-4">
+				Tem certeza que deseja deletar essa ordem?
+			</div>
+			<div>
+				<button @onclick="Deletar" class="botao-principal">Confirmar</button>
+			</div>
 		</div>
 	}
 	<div class="d-flex my-5 justify-content-end align-items-center">
@@ -144,18 +166,6 @@
 			<a href="/ordens" class="botao-principal">Voltar</a>
 		</div>
 	</div>
-
-	@if (mostrarDeletarDiv)
-	{
-		<div class="text-center">
-			<div class="fs-4 my-4">
-				Tem certeza que deseja deletar essa ordem?
-			</div>
-			<div>
-				<button @onclick="Deletar" class="botao-principal">Confirmar</button>
-			</div>
-		</div>
-	}
 }
 
 @code {
@@ -236,6 +246,7 @@
 	private async Task Deletar()
 	{
 		await ordemEndpoints.Deletar(Guid.Parse(OrdemId!));
+		navManager.NavigateTo("/ordens");
 	}
 	private void ToggleMostrarFinalizarDescricao()
 	{

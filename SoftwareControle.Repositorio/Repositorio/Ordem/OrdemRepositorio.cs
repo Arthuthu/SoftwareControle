@@ -47,8 +47,9 @@ public class OrdemRepositorio : IOrdemRepositorio
 		requestedOrdem.DataIniciado = ordem.DataIniciado;
 		requestedOrdem.DataFinalizado = ordem.DataFinalizado;
 		requestedOrdem.DescricaoResponsavel = ordem.DescricaoResponsavel;
+		requestedOrdem.HorasTrabalhadas = ordem.HorasTrabalhadas;
 
-		_context.Ordens.Update(requestedOrdem);
+        _context.Ordens.Update(requestedOrdem);
 		await _context.SaveChangesAsync(cancellationToken);
 
 		return true;

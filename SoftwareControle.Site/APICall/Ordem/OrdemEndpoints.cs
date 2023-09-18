@@ -102,6 +102,7 @@ public class OrdemEndpoints : IOrdemEndpoints
             new KeyValuePair<string, string>("DescricaoResponsavel", ordem.DescricaoResponsavel?.ToString() ?? ""),
 			new KeyValuePair<string, string>("DataIniciado", ordem.DataIniciado?.ToString() ?? ""),
 			new KeyValuePair<string, string>("DataFinalizado", ordem.DataFinalizado?.ToString() ?? ""),
+			new KeyValuePair<string, string>("HorasTrabalhadas", ordem.HorasTrabalhadas?.ToString() ?? ""),
 		});
 
         string atualizarEndpoint = _config["apiLocation"] + _config["atualizarOrdem"];

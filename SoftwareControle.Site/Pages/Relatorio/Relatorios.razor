@@ -1,0 +1,24 @@
+﻿@page "/relatorios"
+
+@inject ISessaoUsuario sessao
+@inject IRelatorioEndpoints relatorioRendpoints
+@inject NavigationManager navManager
+
+@code {
+	private Guid UsuarioLogadoId { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		await BuscarUsuarioLogadoId();
+		if(UsuarioLogadoId == Guid.Empty)
+		{
+			navManager.NavigateTo("/login");
+			return;
+		}
+	}
+
+	private async Task BuscarUsuarioLogadoId()
+	{
+		UsuarioLogadoId = await sessao.BuscarIdDoUsuarioLogado();
+	}
+}

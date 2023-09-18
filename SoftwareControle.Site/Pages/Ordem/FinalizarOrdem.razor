@@ -87,6 +87,7 @@
 		OrdemModel!.Situacao = "Finalizada";
 		OrdemModel.DataFinalizado = DateTime.UtcNow.AddHours(-3);
 		OrdemModel.DescricaoResponsavel = OrdemFinalizarDescricao;
+		OrdemModel.HorasTrabalhadas = OrdemModel.DataFinalizado - OrdemModel.DataIniciado;
 		FerramentaModel!.Disponivel = true;
 
 		try
@@ -106,7 +107,7 @@
 	private async Task CriarRelatorio()
 	{
 		Relatorio.Descricao = $"O usuario {UsuarioLogadoModel!.Nome} finalizou a ordem {OrdemModel!.Descricao} " +
-		$"Ferramenta: {OrdemModel.NomeFerramenta}."; 
+		$"Ferramenta: {OrdemModel.NomeFerramenta} no dia {DateTime.UtcNow.AddHours(-3)}."; ;
 		Relatorio.UsuarioNome = UsuarioLogadoModel.Nome;
 
 		await relatorioEndpoints.Criar(Relatorio);

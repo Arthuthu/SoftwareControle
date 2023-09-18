@@ -15,7 +15,7 @@
     </div>
     @if(ListaOrdem is null || ListaOrdem.Count() == 0)
     {
-        <div class="text-center my-5 fs-3 fw-bold">Não foi registrado nenhuma ordem</div>
+        <div class="text-center my-5 fs-3 fw-bold">Não foi encontrado nenhuma ordem.</div>
     }
     else
     {
@@ -98,6 +98,11 @@
             .OrderByDescending(x => x.NivelUrgencia)
             .ThenBy(x => x.Situacao)
             .ToList();
+        }
+
+        if(ListaOrdem!.Count() == 0)
+        {
+            ListaOrdem = TodasOrdens;
         }
     }
     private void BuscarTodasOrdens()
