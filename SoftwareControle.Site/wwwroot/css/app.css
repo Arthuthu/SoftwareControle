@@ -34,15 +34,18 @@ body.light .form-label,
 body.light .login-form,
 body.light .botao-tema,
 body.light .label-principal {
-    border: solid #000;
+    border: solid #827a7a;
 }
 
-/* Text colors */
-
-.text-color-success {
-    color: #2fce10;
-    font-weight: bold;
+body.light .label-principal {
+    border-radius: 0px;
 }
+
+    /* Text colors */
+    .text-color-success {
+        color: #2fce10;
+        font-weight: bold;
+    }
 
 .text-color-danger {
     color: #f60f0f;
