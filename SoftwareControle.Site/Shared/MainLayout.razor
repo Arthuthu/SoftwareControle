@@ -9,7 +9,7 @@
             Software Controle
         </a>
         <div>
-            <button class="botao-tema" id="light-button" @onclick="ToggleLightMode">Tema</button>
+            <button class="botao-tema" id="light-button" @onclick="ToggleLightMode">@botaoTema</button>
         </div>
     </div>
 
@@ -51,8 +51,18 @@
 </div>
 
 @code {
+    private string botaoTema = "Escuro";
+
     private async Task ToggleLightMode()
     {
         await JSRuntime.InvokeVoidAsync("toggleLightMode");
+
+        if(botaoTema == "Escuro")
+        {
+            botaoTema = "Claro";
+            return;
+        };
+
+        botaoTema = "Escuro";
     }
 }

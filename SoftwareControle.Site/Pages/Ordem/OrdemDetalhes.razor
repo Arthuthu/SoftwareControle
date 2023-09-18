@@ -29,7 +29,7 @@
 						}
 						else
 						{
-							<div class="text-light">Normal</div>
+							<div>Normal</div>
 						}
 					</div>
 				</div>
@@ -91,9 +91,6 @@
 
 		@if (UsuarioLogadoModel!.Cargo == "Administrador")
 		{
-			<div>
-				<a href="/ordem/editar/@OrdemModel.Id" class="botao-principal">Editar</a>
-			</div>
 			<div>
 				<button @onclick="MostrarDelete" class="botao-principal"
 						id="botao-padding-ajustes">

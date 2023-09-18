@@ -32,7 +32,8 @@ body.light .botao-tema {
 body.light .criar-form-div,
 body.light .form-label,
 body.light .login-form,
-body.light .botao-tema {
+body.light .botao-tema,
+body.light .label-principal {
     border: solid #000;
 }
 
@@ -92,6 +93,17 @@ body.light .botao-tema {
         background-color: #fc831c;
         color: #FFF;
     }
+
+.botao-tema {
+    background-color: transparent;
+    color: #FFF;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    border: solid #FFF;
+    margin-left: 100px;
+    border-radius: 13px;
+}
 
 #botao-padding-ajustes {
     padding: 8px 20px;
@@ -252,13 +264,3 @@ navbar {
     border-radius: 50%;
 }
 
-.botao-tema {
-    background-color: transparent;
-    color: #FFF;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 10px;
-    border: solid #FFF;
-    margin-left: 100px;
-    border-radius: 20px;
-}
