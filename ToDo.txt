@@ -1,11 +1,9 @@
 Tela Index
 
 Listar relatorios
-Filtros lista ordem
 
 Pagina expiracao
 Logging para erros
-Lightmode
 Pagina mudar senha de usuario
 
 Caching
