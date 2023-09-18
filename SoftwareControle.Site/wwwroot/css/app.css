@@ -6,27 +6,28 @@ root {
     --background-button-primary-color: #dc6b0b;
     --background-button-primary-color-hover: #fc831c;
 }
+
 body {
     margin: 0 20px;
 }
 
 body, body #anchor {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-image: linear-gradient(#000000, #090909);
-    background-color: #0db415;
+    background-color: #030202;
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     color: #FFF;
 }
 
+/* Light mode */
 body.light,
 body.light #anchor,
 body.light .form-label,
 body.light .label-principal,
 body.light .botao-tema {
     color: #000;
-    background-image: linear-gradient(#FFF, #FFF);
+    background-color: #FFF;
 }
 
 body.light .criar-form-div,
@@ -34,18 +35,30 @@ body.light .form-label,
 body.light .login-form,
 body.light .botao-tema,
 body.light .label-principal {
-    border: solid #827a7a;
+    border: solid #e8e6e6;
 }
 
-body.light .label-principal {
-    border-radius: 0px;
+body.light .criar-form-div,
+body.light .form-label,
+body.light .login-form,
+body.light .botao-tema,
+body.light .label-principal,
+body.light .elementos-lista {
+    background-color: #e4e4e4;
+    border-color: #e8e6e6;
+    color: #000;
 }
 
-    /* Text colors */
-    .text-color-success {
-        color: #2fce10;
-        font-weight: bold;
-    }
+body.light .elementos-lista:hover {
+    background-color: #bebebe;
+    font-weight: bold;
+}
+
+/* Text colors */
+.text-color-success {
+    color: #2fce10;
+    font-weight: bold;
+}
 
 .text-color-danger {
     color: #f60f0f;
@@ -118,7 +131,7 @@ body.light .label-principal {
     padding: 20px 0;
     font-size: 30px;
     font-weight: bold;
-    background-image: linear-gradient(#2f2c2c, #2b2929);
+    background-color: #0a0a0a;
     border-radius: 10px 10px 0 0;
 }
 
@@ -213,15 +226,18 @@ navbar {
     align-items: center;
     padding: 10px 0;
     font-size: 20px;
-    border: solid #808080;
+    border-bottom: solid #100f0f;
     text-decoration: none;
     margin: 0;
+    background-color: #0a0a0a;
+    color: #FFF;
 }
 
 .elementos-lista:hover {
     background-color: #827a7a;
-    transition: 500ms;
     cursor: pointer;
+    color: #FFF;
+    font-weight: bold;
 }
 
 .elemento-node {
@@ -235,7 +251,7 @@ navbar {
 }
 
 .elemento-detalhes-box {
-    border: solid #827a7a;
+    border: solid #0a0a0a;
     border-radius: 10px 10px 0 0;
 }
 
