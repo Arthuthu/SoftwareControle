@@ -1,6 +1,6 @@
 Tela Index
 
-Adicionar demais relatorios.
+Listar relatorios
 
 Pagina expiracao
 Logging para erros

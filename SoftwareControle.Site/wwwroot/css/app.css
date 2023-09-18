@@ -6,28 +6,34 @@ root {
     --background-button-primary-color: #dc6b0b;
     --background-button-primary-color-hover: #fc831c;
 }
-
-html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-image: linear-gradient(#000000, #090909);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    color: #FFF;
+body {
     margin: 0 20px;
 }
 
-.dark-mode {
+body, body #anchor {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-image: linear-gradient(#000000, #090909);
+    background-color: #0db415;
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     color: #FFF;
 }
 
-.light-mode {
+body.light,
+body.light #anchor,
+body.light .form-label,
+body.light .label-principal,
+body.light .botao-tema {
     color: #000;
-    background-color: #FFF;
+    background-image: linear-gradient(#FFF, #FFF);
+}
+
+body.light .criar-form-div,
+body.light .form-label,
+body.light .login-form,
+body.light .botao-tema {
+    border: solid #000;
 }
 
 /* Text colors */
@@ -43,7 +49,6 @@ html, body {
 }
 
 .situacao-espera, .situacao-espera-detalhes {
-    color: #FFF;
     font-weight: bold;
 }
 
@@ -113,11 +118,9 @@ navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #FFF;
 }
 
 .logo {
-    color: #FFF;
     padding: 20px;
     font-size: 40px;
     font-weight: bold;
@@ -132,7 +135,6 @@ navbar {
 }
 
 .nav-link {
-    color: #FFF;
     font-size: 22px;
     text-decoration: none;
     font-weight: bold;
@@ -198,13 +200,12 @@ navbar {
     font-size: 20px;
     border: solid #808080;
     text-decoration: none;
-    color: #FFF;
+    margin: 0;
 }
 
 .elementos-lista:hover {
     background-color: #827a7a;
     transition: 500ms;
-    color: #FFF;
     cursor: pointer;
 }
 
@@ -246,6 +247,18 @@ navbar {
 }
 
 /* Usuarios */
+
 #usuario-foto {
     border-radius: 50%;
+}
+
+.botao-tema {
+    background-color: transparent;
+    color: #FFF;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    border: solid #FFF;
+    margin-left: 100px;
+    border-radius: 20px;
 }

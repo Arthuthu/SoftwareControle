@@ -1,35 +1,42 @@
 ﻿@inherits LayoutComponentBase
 
 @inject ISessaoUsuario sessao
+@inject IJSRuntime JSRuntime
 
 <navbar>
-    <a class="logo" href="/">
-        Software Controle
-    </a>
+    <div class="d-flex align-items-center">
+        <a class="logo" href="/" id="anchor">
+            Software Controle
+        </a>
+        <div>
+            <button class="botao-tema" id="light-button" @onclick="ToggleLightMode">Tema</button>
+        </div>
+    </div>
+
     <AuthorizeView>
         <Authorized>
             <div class="d-flex">
                 <div>
-                    <a class="nav-link" href="/ferramentas">Ferramentas</a>
+                    <a class="nav-link" href="/ferramentas" id="anchor">Ferramentas</a>
                 </div>
                 <div>
-                    <a class="nav-link" href="/usuarios">Usuarios</a>
+                    <a class="nav-link" href="/usuarios" id="anchor">Usuarios</a>
                 </div>
                 <div>
-                    <a class="nav-link" href="/ordens">Ordens</a>
+                    <a class="nav-link" href="/ordens" id="anchor">Ordens</a>
                 </div>
             </div>
             <div class="nav-links">
-                <a class="nav-link" href="/usuario/@context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value">
+                <a class="nav-link" href="/usuario/@context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value" id="anchor">
                     @context.User.FindFirst(ClaimTypes.Name)?.Value
                 </a>
-                <a class="nav-link" href="/logout">
+                <a class="nav-link" href="/logout" id="anchor">
                     <span>Sair</span>
                 </a>
             </div>
         </Authorized>
         <NotAuthorized>
-            <a class="nav-link" href="/login">
+            <a class="nav-link" href="/login" id="anchor">
                 <span>Entrar</span>
             </a>
          </NotAuthorized>
@@ -44,16 +51,8 @@
 </div>
 
 @code {
-    private string theme = "dark-mode";
-
-    private void ToggleMode()
+    private async Task ToggleLightMode()
     {
-        if (theme == "dark-mode")
-        {
-            theme = "light-mode";
-            return;
-        }
-
-        theme = "dark-mode";
+        await JSRuntime.InvokeVoidAsync("toggleLightMode");
     }
 }

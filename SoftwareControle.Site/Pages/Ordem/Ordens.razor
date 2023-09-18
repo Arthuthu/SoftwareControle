@@ -23,7 +23,7 @@
             <div class="elemento-node">Ferramenta</div>
         </div>
         <Virtualize Items="@ListaOrdem" Context="ordem" OverscanCount="50">
-            <a class="elementos-lista" href="/ordem/@ordem.Id">
+            <a class="elementos-lista" href="/ordem/@ordem.Id" id="anchor">
                 <div class="elemento-node">@ordem.Descricao</div>
                 <div class="elemento-node">@if(@ordem.NivelUrgencia.ToString() == "Urgente")
                     {
@@ -31,7 +31,7 @@
                     }
                     else
                     {
-                        <div class="text-light">Normal</div>
+                        <div>Normal</div>
                     }
                 </div>
                 <div class="elemento-node">@ordem.DataCriacao</div>
