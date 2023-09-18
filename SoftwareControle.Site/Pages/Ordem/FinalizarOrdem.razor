@@ -1,4 +1,4 @@
-﻿@page "/finalizarordem/{OrdemId}"
+﻿@page "/finalizarordem/{OrdemId}/{OrdemFinalizarDescricao}"
 
 @inject ISessaoUsuario sessao
 @inject IUsuarioEndpoints usuarioEndpoints
@@ -10,6 +10,8 @@
 @code {
 	[Parameter]
 	public string? OrdemId { get; set; }
+	[Parameter]
+	public string? OrdemFinalizarDescricao { get; set; }
 
 	private Guid UsuarioLogadoId { get; set; }
 	private UsuarioModel? UsuarioLogadoModel { get; set; }
@@ -83,6 +85,8 @@
 	private async Task Atualizar()
 	{
 		OrdemModel!.Situacao = "Finalizada";
+		OrdemModel.DataFinalizado = DateTime.UtcNow.AddHours(-3);
+		OrdemModel.DescricaoResponsavel = OrdemFinalizarDescricao;
 		FerramentaModel!.Disponivel = true;
 
 		try

@@ -13,6 +13,16 @@
     }
     else
     {
+        <div class="filtros-botoes-div">
+            <button class="botao-principal" id="botao-padding-ajustes"
+                @onclick="BuscarTodasOrdens">Todas</button>
+            <button class="botao-principal" id="botao-padding-ajustes"  
+                @onclick="OrdensFinalizadas">Finalizadas</button>
+            <button class="botao-principal" id="botao-padding-ajustes" 
+                @onclick="OrdensEmEspera">Espera</button>
+            <button class="botao-principal" id="botao-padding-ajustes"
+                @onclick="OrdensIniciadas">Iniciadas</button>
+        </div>
         <div class="elementos-lista" id="elementos-lista-label">
             <div class="elemento-node">Descrição</div>
             <div class="elemento-node">Urgência</div>
@@ -57,6 +67,7 @@
 @code {
     private Guid UsuarioLogadoId { get; set; }
     private List<OrdemModel>? ListaOrdem = new();
+    private List<OrdemModel>? TodasOrdens = new();
 
     private bool inicializado = false;
 
@@ -69,7 +80,7 @@
             return;
         }
 
-        await BuscarTodasAsOrdens();
+        await BuscarOrdens();
 
         inicializado = true;
     }
@@ -78,8 +89,51 @@
     {
         UsuarioLogadoId = await sessao.BuscarIdDoUsuarioLogado();
     }
-    private async Task BuscarTodasAsOrdens()
+    private async Task BuscarOrdens()
     {
-        ListaOrdem = await ordemEndpoints.Buscar();
+        var ordens = await ordemEndpoints.Buscar();
+
+        TodasOrdens = ordens;
+
+        if(ordens is not null)
+        {
+            ListaOrdem = ordens
+            .Where(x => x.Situacao != "Finalizada")
+            .OrderByDescending(x => x.NivelUrgencia)
+            .ThenBy(x => x.Situacao)
+            .ToList();
+        }
+    }
+    private void BuscarTodasOrdens()
+    {
+        if(TodasOrdens is not null)
+            ListaOrdem = TodasOrdens
+            .OrderByDescending(x => x.DataCriacao)
+            .ToList();
+    }
+    private void OrdensFinalizadas()
+    {
+        if(TodasOrdens is not null)
+            ListaOrdem = TodasOrdens
+            .Where(x => x.Situacao == "Finalizada")
+            .OrderBy(x => x.DataCriacao)
+            .ToList();
+    }
+    private void OrdensEmEspera()
+    {
+        if (TodasOrdens is not null)
+            ListaOrdem = TodasOrdens
+            .Where(x => x.Situacao == "Espera")
+            .OrderByDescending(x => x.NivelUrgencia)
+            .ThenByDescending(x => x.DataPrazoMaximo)
+            .ToList();
+    }
+    private void OrdensIniciadas()
+    {
+        if (TodasOrdens is not null)
+            ListaOrdem = TodasOrdens
+            .Where(x => x.Situacao == "Iniciada")
+            .OrderBy(x => x.DataCriacao)
+            .ToList();
     }
 }

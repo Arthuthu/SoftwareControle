@@ -63,6 +63,7 @@
 	{
 		Ordem!.NomeResponsavel = UsuarioLogadoModel!.Nome;
 		Ordem.Situacao = "Iniciada";
+		Ordem.DataIniciado = DateTime.UtcNow.AddHours(-3);
 
 		await ordemEndpoints.Atualizar(Ordem);
 		await CriarRelatorio();

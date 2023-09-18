@@ -8,8 +8,11 @@ public class OrdemModel
     public string Situacao { get; set; } = string.Empty;
     public string NomeFerramenta { get; set; } = string.Empty;
     public string? NomeResponsavel { get; set; } = string.Empty;
+    public string? DescricaoResponsavel { get; set; } = string.Empty;
     public DateTime DataPrazoMaximo { get; set; }
     public DateTime DataCriacao { get; set; }
+    public DateTime? DataIniciado { get; set; }
+    public DateTime? DataFinalizado { get; set; }
     public DateTime? DataAtualizacao { get; set; }
 
     //Chaves estrangeira

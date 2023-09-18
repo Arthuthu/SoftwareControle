@@ -135,6 +135,8 @@
         try
         {
             resultado = await ordemEndpoints.Criar(Ordem);
+            resultado = FiltrarResultado(resultado);
+
             if (resultado is not null)
                 return;
 
@@ -159,5 +161,16 @@
         Relatorio.FerramentaNome = Ordem.NomeFerramenta;
 
         await relatorioEndpoints.Criar(Relatorio);
+    }
+
+    private string? FiltrarResultado(string? resultado)
+    {
+        if(resultado is not null)
+        if (resultado.Contains("NivelUrgencia field is required"))
+        {
+            return "Selecione o nivel de urgência";
+        }
+
+        return null;
     }
 }
