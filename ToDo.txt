@@ -2,7 +2,6 @@ Tela Index
 
 Filtro nas ordens e relatorios (data range)
 
-Pagina expiracao
 Logging para erros
 Pagina mudar senha de usuario
 

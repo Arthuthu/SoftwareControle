@@ -6,6 +6,21 @@
 
 @if (inicializado)
 {
+	<div class="buscar-input-div">
+		<div>
+			<div>De</div>
+			<div>
+				<InputDate class="input" @bind-Value="@DataInicio" />
+			</div>
+		</div>
+		<div>
+			<div>Ate</div>
+			<div>
+				<InputDate class="input" @bind-Value="@DataFim" />
+			</div>
+		</div>
+		<button class="botao-filtro" @onclick="FiltrarRelatorioPorData">Buscar</button>
+	</div>
 	@if (ListaRelatorios is null || ListaRelatorios.Count() == 0)
     {
         <div class="text-center my-5 fs-3 fw-bold">Não foi encontrado nenhum relatório.</div>
@@ -33,6 +48,9 @@
 	private Guid UsuarioLogadoId { get; set; }
 
 	private List<RelatorioModel>? ListaRelatorios { get; set; }
+	private List<RelatorioModel>? TodosRelatorios { get; set; }
+	private DateTime DataInicio { get; set; } = DateTime.Today.AddDays(-7);
+	private DateTime DataFim { get; set; } = DateTime.Today;
 
 	private bool inicializado = false;
 
@@ -63,6 +81,18 @@
 			ListaRelatorios = relatorios
 			.OrderByDescending(x => x.DataCriacao)
 			.ToList();
+
+			TodosRelatorios = ListaRelatorios;
+		}
+	}
+	private void FiltrarRelatorioPorData()
+	{
+		if (TodosRelatorios is not null)
+		{
+			ListaRelatorios = TodosRelatorios
+				.Where(x => x.DataCriacao >= DataInicio && x.DataCriacao <= DataFim.AddHours(23).AddMinutes(59))
+				.OrderByDescending(x => x.DataCriacao)
+				.ToList();
 		}
 	}
 }
