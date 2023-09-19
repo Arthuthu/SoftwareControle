@@ -87,7 +87,7 @@
 		OrdemModel!.Situacao = "Finalizada";
 		OrdemModel.DataFinalizado = DateTime.UtcNow.AddHours(-3);
 		OrdemModel.DescricaoResponsavel = OrdemFinalizarDescricao;
-		OrdemModel.HorasTrabalhadas = OrdemModel.DataFinalizado - OrdemModel.DataIniciado;
+		OrdemModel.HorasTrabalhadas = CalcularHorasTrabalhadas();
 		FerramentaModel!.Disponivel = true;
 
 		try
@@ -111,5 +111,19 @@
 		Relatorio.UsuarioNome = UsuarioLogadoModel.Nome;
 
 		await relatorioEndpoints.Criar(Relatorio);
+	}
+	private int CalcularHorasTrabalhadas()
+	{
+		DateTime inicio = DateTime.Parse(OrdemModel!.DataIniciado.ToString()!);
+		DateTime fim = DateTime.Parse(OrdemModel!.DataFinalizado.ToString()!);
+
+		int horas = 0;
+
+		for (var i = inicio; i < fim; i = i.AddHours(1))
+		{
+			horas++;
+		}
+
+		return horas;
 	}
 }
