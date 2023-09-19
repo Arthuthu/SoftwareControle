@@ -6,11 +6,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SoftwareControle.Repositorio.Migrations
 {
     /// <inheritdoc />
-    public partial class MigracaoInicial : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Relatorios",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(3000)", maxLength: 3000, nullable: false),
+                    FerramentaNome = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    UsuarioNome = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
+                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Relatorios", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Usuarios",
                 columns: table => new
@@ -20,6 +35,7 @@ namespace SoftwareControle.Repositorio.Migrations
                     Senha = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Cargo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Imagem = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     DataCriacao = table.Column<DateTime>(type: "datetime2", maxLength: 100, nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -57,14 +73,18 @@ namespace SoftwareControle.Repositorio.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Descricao = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(3000)", maxLength: 3000, nullable: false),
                     NivelUrgencia = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Situacao = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     NomeFerramenta = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     NomeResponsavel = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    DescricaoResponsavel = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataPrazoMaximo = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime2", maxLength: 50, nullable: false),
+                    DataIniciado = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DataFinalizado = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DataAtualizacao1 = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    HorasTrabalhadas = table.Column<long>(type: "bigint", nullable: true),
                     UsuarioId = table.Column<Guid>(type: "uniqueidentifier", maxLength: 50, nullable: false),
                     FerramentaId = table.Column<Guid>(type: "uniqueidentifier", maxLength: 50, nullable: false)
                 },
@@ -105,6 +125,9 @@ namespace SoftwareControle.Repositorio.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Ordens");
+
+            migrationBuilder.DropTable(
+                name: "Relatorios");
 
             migrationBuilder.DropTable(
                 name: "Ferramentas");

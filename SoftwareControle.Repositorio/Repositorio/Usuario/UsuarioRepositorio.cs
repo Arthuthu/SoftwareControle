@@ -43,6 +43,8 @@ public class UsuarioRepositorio : IUsuarioRepositorio
 		requestedUser.Nome = user.Nome;
 		requestedUser.Senha = user.Senha;
 		requestedUser.Cargo = user.Cargo;
+		requestedUser.Imagem = user.Imagem;
+
 		requestedUser.DataAtualizacao = DateTime.UtcNow.AddHours(-3);
 
 		_context.Usuarios.Update(requestedUser);

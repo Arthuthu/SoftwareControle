@@ -12,8 +12,8 @@ using SoftwareControle.Repositorio.Context;
 namespace SoftwareControle.Repositorio.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230918193135_OrdemHorasTrabalhadas")]
-    partial class OrdemHorasTrabalhadas
+    [Migration("20230919204258_HorasTrabalhadasInt")]
+    partial class HorasTrabalhadasInt
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -105,8 +105,9 @@ namespace SoftwareControle.Repositorio.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("FerramentaId");
 
-                    b.Property<TimeSpan?>("HorasTrabalhadas")
-                        .HasColumnType("time");
+                    b.Property<int?>("HorasTrabalhadas")
+                        .HasColumnType("int")
+                        .HasColumnName("HorasTrabalhadas");
 
                     b.Property<string>("NivelUrgencia")
                         .IsRequired()

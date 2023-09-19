@@ -6,21 +6,24 @@
 
 @if (inicializado)
 {
-	<div class="buscar-input-div">
-		<div>
-			<div>De</div>
+	<div class="buscar-input-date-div">
+		<div class="text-center">
+			<div class="fw-bold m-2">De</div>
 			<div>
-				<InputDate class="input" @bind-Value="@DataInicio" />
+				<InputDate class="input-date" @bind-Value="@DataInicio" />
 			</div>
 		</div>
-		<div>
-			<div>Ate</div>
+		<div class="text-center">
+			<div class="fw-bold m-2">Ate</div>
 			<div>
-				<InputDate class="input" @bind-Value="@DataFim" />
+				<InputDate class="input-date" @bind-Value="@DataFim" />
 			</div>
 		</div>
-		<button class="botao-filtro" @onclick="FiltrarRelatorioPorData">Buscar</button>
+		<div class="mx-4">
+			<button class="botao-filtro" @onclick="FiltrarRelatorioPorData">Buscar</button>
+		</div>
 	</div>
+
 	@if (ListaRelatorios is null || ListaRelatorios.Count() == 0)
     {
         <div class="text-center my-5 fs-3 fw-bold">Não foi encontrado nenhum relatório.</div>
@@ -52,6 +55,7 @@
 	private DateTime DataInicio { get; set; } = DateTime.Today.AddDays(-7);
 	private DateTime DataFim { get; set; } = DateTime.Today;
 
+	private string nomeResponsavel = string.Empty;
 	private bool inicializado = false;
 
 	protected override async Task OnInitializedAsync()

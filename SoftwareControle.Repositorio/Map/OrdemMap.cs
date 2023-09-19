@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SoftwareControle.Models;
 
 namespace SoftwareControle.Map;
@@ -25,6 +26,7 @@ public class OrdemMap : BaseMap<OrdemModel>
         builder.Property(x => x.DataCriacao).HasColumnName("DataAtualizacao");
         builder.Property(x => x.NomeFerramenta).IsRequired().HasColumnName("NomeFerramenta").HasMaxLength(64);
         builder.Property(x => x.NomeResponsavel).HasColumnName("NomeResponsavel").HasMaxLength(100);
+		builder.Property(x => x.HorasTrabalhadas).HasColumnName("HorasTrabalhadas");
 
         builder.HasOne(x => x.Ferramenta).WithMany(x => x.Ordem)
 			.HasForeignKey(x => x.FerramentaId);

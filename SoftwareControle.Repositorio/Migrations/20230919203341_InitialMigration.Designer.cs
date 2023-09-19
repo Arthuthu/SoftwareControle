@@ -12,8 +12,8 @@ using SoftwareControle.Repositorio.Context;
 namespace SoftwareControle.Repositorio.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230915201257_MigracaoInicial")]
-    partial class MigracaoInicial
+    [Migration("20230919203341_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,19 +82,32 @@ namespace SoftwareControle.Repositorio.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("DataAtualizacao");
 
+                    b.Property<DateTime?>("DataFinalizado")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataIniciado")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DataPrazoMaximo")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)")
                         .HasColumnName("Descricao");
+
+                    b.Property<string>("DescricaoResponsavel")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("FerramentaId")
                         .HasMaxLength(50)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("FerramentaId");
+
+                    b.Property<long?>("HorasTrabalhadas")
+                        .HasColumnType("bigint")
+                        .HasColumnName("HorasTrabalhadas");
 
                     b.Property<string>("NivelUrgencia")
                         .IsRequired()
@@ -137,6 +150,37 @@ namespace SoftwareControle.Repositorio.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SoftwareControle.Models.RelatorioModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DataCriacao");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)")
+                        .HasColumnName("Descricao");
+
+                    b.Property<string>("FerramentaNome")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
+                        .HasColumnName("FerramentaNome");
+
+                    b.Property<string>("UsuarioNome")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)")
+                        .HasColumnName("UsuarioNome");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Relatorios", (string)null);
+                });
+
             modelBuilder.Entity("SoftwareControle.Models.UsuarioModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -157,6 +201,10 @@ namespace SoftwareControle.Repositorio.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("datetime2")
                         .HasColumnName("DataCriacao");
+
+                    b.Property<byte[]>("Imagem")
+                        .HasColumnType("varbinary(max)")
+                        .HasColumnName("Imagem");
 
                     b.Property<string>("Nome")
                         .IsRequired()

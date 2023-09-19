@@ -14,7 +14,7 @@ public class OrdemModel
     public DateTime? DataIniciado { get; set; }
     public DateTime? DataFinalizado { get; set; }
     public DateTime? DataAtualizacao { get; set; }
-    public TimeSpan? HorasTrabalhadas { get; set; }
+    public int? HorasTrabalhadas { get; set; }
 
     //Chaves estrangeira
     public Guid UsuarioId { get; set; }

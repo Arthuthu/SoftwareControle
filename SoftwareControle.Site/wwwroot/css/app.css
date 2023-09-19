@@ -142,19 +142,28 @@ body.light .elementos-lista:hover {
     border-radius: 10px 10px 0 0;
 }
 
-.buscar-input-div {
+.buscar-input-div, .buscar-input-date-div {
     background-color: #0a0a0a;
     padding: 20px;
     border: solid #000;
 }
 
-.input {
-    font-size: 1.4rem;
-    width: 80%;
+.buscar-input-date-div {
+    display: flex;
+    align-items: center;
+}
+
+    .input {
+        font-size: 1.4rem;
+        width: 80%;
+    }
+
+.input-date {
+    font-size: 20px;
+    margin-left: 10px;
 }
 
 /* Navbar */
-
 navbar {
     display: flex;
     justify-content: space-between;

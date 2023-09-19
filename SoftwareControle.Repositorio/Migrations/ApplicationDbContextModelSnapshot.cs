@@ -102,8 +102,9 @@ namespace SoftwareControle.Repositorio.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("FerramentaId");
 
-                    b.Property<TimeSpan?>("HorasTrabalhadas")
-                        .HasColumnType("time");
+                    b.Property<int?>("HorasTrabalhadas")
+                        .HasColumnType("int")
+                        .HasColumnName("HorasTrabalhadas");
 
                     b.Property<string>("NivelUrgencia")
                         .IsRequired()
