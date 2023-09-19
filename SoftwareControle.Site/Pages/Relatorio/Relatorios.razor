@@ -1,11 +1,40 @@
 ﻿@page "/relatorios"
 
 @inject ISessaoUsuario sessao
-@inject IRelatorioEndpoints relatorioRendpoints
+@inject IRelatorioEndpoints relatorioEndpoints
 @inject NavigationManager navManager
+
+@if (inicializado)
+{
+	@if (ListaRelatorios is null || ListaRelatorios.Count() == 0)
+    {
+        <div class="text-center my-5 fs-3 fw-bold">Não foi encontrado nenhum relatório.</div>
+    }
+    else
+    {
+        <div class="elementos-lista" id="elementos-lista-label">
+            <div class="elemento-node">Descrição</div>
+            <div class="elemento-node">Usuario</div>
+            <div class="elemento-node">Ferramenta</div>
+            <div class="elemento-node">Data criado</div>
+        </div>
+        <Virtualize Items="@ListaRelatorios" Context="relatorio" OverscanCount="50">
+            <div class="elementos-lista">
+                <div class="elemento-node">@relatorio.Descricao</div>
+                <div class="elemento-node">@relatorio.UsuarioNome</div>
+                <div class="elemento-node">@relatorio.FerramentaNome</div>
+                <div class="elemento-node">@relatorio.DataCriacao</div>
+            </div>
+        </Virtualize>
+	}
+}
 
 @code {
 	private Guid UsuarioLogadoId { get; set; }
+
+	private List<RelatorioModel>? ListaRelatorios { get; set; }
+
+	private bool inicializado = false;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -15,10 +44,25 @@
 			navManager.NavigateTo("/login");
 			return;
 		}
+
+		await BuscarRelatorios();
+
+		inicializado = true;
 	}
 
 	private async Task BuscarUsuarioLogadoId()
 	{
 		UsuarioLogadoId = await sessao.BuscarIdDoUsuarioLogado();
+	}
+	private async Task BuscarRelatorios()
+	{
+		var relatorios = await relatorioEndpoints.Buscar();
+
+		if(relatorios is not null)
+		{
+			ListaRelatorios = relatorios
+			.OrderByDescending(x => x.DataCriacao)
+			.ToList();
+		}
 	}
 }
