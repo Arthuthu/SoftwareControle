@@ -1,8 +1,5 @@
-﻿using SoftwareControle.Site.Models;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using Newtonsoft.Json;
-using SoftwareControle.Site.Pages.Ferramenta;
+﻿using Newtonsoft.Json;
+using SoftwareControle.Site.Models;
 
 namespace SoftwareControle.Site.APICall.Usuario;
 
@@ -137,4 +134,37 @@ public class UsuarioEndpoints : IUsuarioEndpoints
 
         return null;
     }
+
+	public async Task<string?> AtualizarSenha(UsuarioModel usuario)
+	{
+		if (usuario.Imagem is not null)
+		{
+			usuario.ImagemString = Convert.ToBase64String(usuario.Imagem);
+		}
+
+		var data = new FormUrlEncodedContent(new[]
+		{
+			new KeyValuePair<string, string>("Id", usuario.Id.ToString()),
+			new KeyValuePair<string, string>("Usuario", usuario.Usuario),
+			new KeyValuePair<string, string>("Nome", usuario.Nome),
+			new KeyValuePair<string, string>("Senha", usuario.Senha),
+			new KeyValuePair<string, string>("Cargo", usuario.Cargo),
+			new KeyValuePair<string, string>("ImagemString", usuario.ImagemString ?? ""),
+		});
+
+		string atualizarEndpoint = _config["apiLocation"] + _config["atualizarUsuario"];
+		var authResult = await _client.PutAsync(atualizarEndpoint, data);
+		var authContent = await authResult.Content.ReadAsStringAsync();
+
+		if (authResult.IsSuccessStatusCode is false)
+		{
+			_logger
+				.LogError("Ocorreu um erro ao atualizar a senha: {authContent}",
+				authContent);
+
+			return await authResult.Content.ReadAsStringAsync(); ;
+		}
+
+		return null;
+	}
 }
