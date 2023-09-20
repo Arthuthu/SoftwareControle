@@ -1,5 +1,4 @@
 Tela Index
 Logging para erros
-Pagina mudar senha de usuario
 
 Caching
