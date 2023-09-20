@@ -130,8 +130,8 @@
     {
         Relatorio!.Descricao = $"O usuario {UsuarioLogadoModel!.Nome} atualizou a ferramenta " +
         $"{Ferramenta!.Nome} no sistema.";
-        Relatorio.UsuarioNome = UsuarioLogadoModel.Nome;
-        Relatorio.FerramentaNome = Ferramenta.Nome;
+        Relatorio.NomeUsuario = UsuarioLogadoModel.Nome;
+        Relatorio.NomeFerramenta = Ferramenta.Nome;
 
         var resultado = await relatorioEndpoints.Criar(Relatorio);
 

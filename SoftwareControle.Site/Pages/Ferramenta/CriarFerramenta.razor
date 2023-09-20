@@ -115,8 +115,8 @@
     {
         Relatorio!.Descricao = $"O usuario {UsuarioLogadoModel!.Nome} adicionou a ferramenta " +
         $"{Ferramenta!.Nome} ao sistema";
-        Relatorio.FerramentaNome = Ferramenta.Nome;
-        Relatorio.UsuarioNome = UsuarioLogadoModel.Nome;
+        Relatorio.NomeFerramenta = Ferramenta.Nome;
+        Relatorio.NomeUsuario = UsuarioLogadoModel.Nome;
 
         var resultado = await relatorioEndpoints.Criar(Relatorio);
 

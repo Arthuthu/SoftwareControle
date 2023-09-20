@@ -2,7 +2,7 @@
 
 root {
     --primary-background-color: #030202;
-    --secondary-background-color: #0a0a0a;
+    --secondary-background-color: #222222;
 }
 
 body {
@@ -138,12 +138,12 @@ body.light .elementos-lista:hover {
     padding: 20px 0;
     font-size: 30px;
     font-weight: bold;
-    background-color: #0a0a0a;
+    background-color: #222222;
     border-radius: 10px 10px 0 0;
 }
 
 .buscar-input-div, .buscar-input-date-div {
-    background-color: #0a0a0a;
+    background-color: #222222;
     padding: 20px;
     border: solid #000;
 }
@@ -197,8 +197,14 @@ navbar {
     cursor: pointer;
 }
 
-/* Login */
+.data-filtro-label {
+    font-weight: bold;
+    margin: 7px 0;
+    font-size: 18px;
+    color: #FFF;
+}
 
+/* Login */
 .login-form {
     text-align: center;
     border: solid #ffffff;
@@ -251,7 +257,7 @@ navbar {
     border-bottom: solid #100f0f;
     text-decoration: none;
     margin: 0;
-    background-color: #0a0a0a;
+    background-color: #222222;
     color: #FFF;
 }
 
@@ -273,7 +279,7 @@ navbar {
 }
 
 .elemento-detalhes-box {
-    border: solid #0a0a0a;
+    border: solid #222222;
     border-radius: 10px 10px 0 0;
 }
 
@@ -308,7 +314,7 @@ navbar {
 
 /* Ordens */
 .filtros-botoes-div {
-    background-color: #0a0a0a;
+    background-color: #222222;
     padding: 20px;
 }
 

@@ -8,19 +8,29 @@
 {
 	<div class="buscar-input-date-div">
 		<div class="text-center">
-			<div class="fw-bold m-2">De</div>
+			<div class="data-filtro-label">De</div>
 			<div>
 				<InputDate class="input-date" @bind-Value="@DataInicio" />
 			</div>
 		</div>
 		<div class="text-center">
-			<div class="fw-bold m-2">Ate</div>
+			<div class="data-filtro-label">Ate</div>
 			<div>
 				<InputDate class="input-date" @bind-Value="@DataFim" />
 			</div>
 		</div>
 		<div class="mx-4">
 			<button class="botao-filtro" @onclick="FiltrarRelatorioPorData">Buscar</button>
+		</div>
+		<div class="w-75">
+			<InputText @bind-Value="@nomeUsuario" class="elemento-buscar-input"
+			@oninput="(e) => FiltrarRelatorioPorUsuario(e.Value?.ToString()!)"
+					   placeholder="Procurar relatorio por nome do usuario" />
+		</div>
+		<div class="w-75">
+			<InputText @bind-Value="@nomeFerramenta" class="elemento-buscar-input"
+			@oninput="(e) => FiltrarRelatorioPorFerramenta(e.Value?.ToString()!)"
+					   placeholder="Procurar relatorio por nome da ferramenta" />
 		</div>
 	</div>
 
@@ -39,8 +49,8 @@
         <Virtualize Items="@ListaRelatorios" Context="relatorio" OverscanCount="50">
             <div class="elementos-lista">
                 <div class="elemento-node">@relatorio.Descricao</div>
-                <div class="elemento-node">@relatorio.UsuarioNome</div>
-                <div class="elemento-node">@relatorio.FerramentaNome</div>
+                <div class="elemento-node">@relatorio.NomeUsuario</div>
+                <div class="elemento-node">@relatorio.NomeFerramenta</div>
                 <div class="elemento-node">@relatorio.DataCriacao</div>
             </div>
         </Virtualize>
@@ -55,7 +65,8 @@
 	private DateTime DataInicio { get; set; } = DateTime.Today.AddDays(-7);
 	private DateTime DataFim { get; set; } = DateTime.Today;
 
-	private string nomeResponsavel = string.Empty;
+	private string nomeUsuario = string.Empty;
+	private string nomeFerramenta = string.Empty;
 	private bool inicializado = false;
 
 	protected override async Task OnInitializedAsync()
@@ -98,5 +109,41 @@
 				.OrderByDescending(x => x.DataCriacao)
 				.ToList();
 		}
+	}
+
+	private void FiltrarRelatorioPorUsuario(string nomeUsuario)
+	{
+		List<RelatorioModel>? relatoriosFiltrados = new();
+
+		if(TodosRelatorios is not null)
+		{
+			relatoriosFiltrados = TodosRelatorios.Where(x => x.NomeUsuario is not null).ToList();
+		}
+
+		ListaRelatorios = relatoriosFiltrados
+			.Where(x => x.NomeUsuario!.ToLower()
+			.Contains(nomeUsuario.ToLower()))
+			.ToList();
+
+		if (nomeUsuario == string.Empty)
+			ListaRelatorios = TodosRelatorios;
+	}
+
+	private void FiltrarRelatorioPorFerramenta(string nomeFerramenta)
+	{
+		List<RelatorioModel>? relatoriosFiltrados = new();
+
+		if (TodosRelatorios is not null)
+		{
+			relatoriosFiltrados = TodosRelatorios.Where(x => x.NomeUsuario is not null).ToList();
+		}
+
+		ListaRelatorios = relatoriosFiltrados
+			.Where(x => x.NomeFerramenta!.ToLower()
+			.Contains(nomeFerramenta.ToLower()))
+			.ToList();
+
+		if (nomeFerramenta == string.Empty)
+			ListaRelatorios = TodosRelatorios;
 	}
 }

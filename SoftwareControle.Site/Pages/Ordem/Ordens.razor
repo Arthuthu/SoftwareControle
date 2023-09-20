@@ -9,10 +9,26 @@
 {
     <div class="filtros-botoes-div">
         <button class="botao-filtro" @onclick="BuscarTodasOrdens">Todas</button>
-        <button class="botao-filtro" @onclick="OrdensFinalizadas">Finalizadas</button>
-        <button class="botao-filtro" @onclick="OrdensEmEspera">Espera</button>
-        <button class="botao-filtro" @onclick="OrdensIniciadas">Iniciadas</button>
+        <button class="botao-filtro" @onclick="FiltrarOrdensFinalizadas">Finalizadas</button>
+        <button class="botao-filtro" @onclick="FiltrarOrdensEmEspera">Espera</button>
+        <button class="botao-filtro" @onclick="FiltrarOrdensIniciadas">Iniciadas</button>
+        <div>
+            <div>
+                <InputText @bind-Value="@nomeResponsavel" class="elemento-buscar-input"
+                @oninput="(e) => FiltrarOrdemPorResponsavel(e.Value?.ToString()!)"
+                           placeholder="Procurar ordem por nome do responsável" />
+            </div>
+            <div>
+                <InputText @bind-Value="@nomeFerramenta" class="elemento-buscar-input"
+                @oninput="(e) => FiltrarOrdemPorFerramenta(e.Value?.ToString()!)"
+                           placeholder="Procurar ordem por nome da ferramenta" />
+            </div>
+        </div>
+        <div>
+
+        </div>
     </div>
+
     @if(ListaOrdem is null || ListaOrdem.Count() == 0)
     {
         <div class="text-center my-5 fs-3 fw-bold">Não foi encontrado nenhuma ordem.</div>
@@ -66,6 +82,8 @@
     private List<OrdemModel>? TodasOrdens = new();
 
     private bool inicializado = false;
+    private string nomeResponsavel = string.Empty;
+    private string nomeFerramenta = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -112,7 +130,8 @@
             .OrderByDescending(x => x.DataCriacao)
             .ToList();
     }
-    private void OrdensFinalizadas()
+
+    private void FiltrarOrdensFinalizadas()
     {
         if(TodasOrdens is not null)
             ListaOrdem = TodasOrdens
@@ -120,7 +139,7 @@
             .OrderBy(x => x.DataCriacao)
             .ToList();
     }
-    private void OrdensEmEspera()
+    private void FiltrarOrdensEmEspera()
     {
         if (TodasOrdens is not null)
             ListaOrdem = TodasOrdens
@@ -129,12 +148,48 @@
             .ThenByDescending(x => x.DataPrazoMaximo)
             .ToList();
     }
-    private void OrdensIniciadas()
+    private void FiltrarOrdensIniciadas()
     {
         if (TodasOrdens is not null)
             ListaOrdem = TodasOrdens
             .Where(x => x.Situacao == "Iniciada")
             .OrderBy(x => x.DataCriacao)
             .ToList();
+    }
+
+    private void FiltrarOrdemPorResponsavel(string nomeResponsavel)
+    {
+        List<OrdemModel>? ordensFiltradas = new();
+
+        if (TodasOrdens is not null)
+        {
+            ordensFiltradas = TodasOrdens.Where(x => x.NomeResponsavel is not null).ToList();
+        }
+
+        ListaOrdem = ordensFiltradas
+            .Where(x => x.NomeResponsavel!.ToLower()
+            .Contains(nomeResponsavel.ToLower()))
+            .ToList();
+
+        if (nomeResponsavel == string.Empty)
+            ListaOrdem = TodasOrdens;
+    }
+
+    private void FiltrarOrdemPorFerramenta(string nomeFerramenta)
+    {
+        List<OrdemModel>? ordensFiltradas = new();
+
+        if (TodasOrdens is not null)
+        {
+            ordensFiltradas = TodasOrdens.Where(x => x.NomeFerramenta is not null).ToList();
+        }
+
+        ListaOrdem = ordensFiltradas
+            .Where(x => x.NomeFerramenta!.ToLower()
+            .Contains(nomeFerramenta.ToLower()))
+            .ToList();
+
+        if (nomeFerramenta == string.Empty)
+            ListaOrdem = TodasOrdens;
     }
 }

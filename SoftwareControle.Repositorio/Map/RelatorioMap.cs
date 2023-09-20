@@ -19,9 +19,9 @@ public class RelatorioMap : BaseMap<RelatorioModel>
 
         builder.Property(x => x.Descricao).IsRequired().HasColumnName("Descricao")
             .HasMaxLength(3000);
-        builder.Property(x => x.FerramentaNome).HasColumnName("FerramentaNome")
+        builder.Property(x => x.NomeFerramenta).HasColumnName("NomeFerramenta")
             .HasMaxLength(64);
-        builder.Property(x => x.UsuarioNome).HasColumnName("UsuarioNome")
+        builder.Property(x => x.NomeUsuario).HasColumnName("NomeUsuario")
             .HasMaxLength(64);
         builder.Property(x => x.DataCriacao).HasColumnName("DataCriacao");
     } 

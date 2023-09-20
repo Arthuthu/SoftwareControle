@@ -60,8 +60,8 @@ public class RelatorioEndpoints : IRelatorioEndpoints
         var data = new FormUrlEncodedContent(new[]
         {
             new KeyValuePair<string, string>("Descricao", relatorio.Descricao),
-            new KeyValuePair<string, string>("UsuarioNome", relatorio.UsuarioNome ?? ""),
-            new KeyValuePair<string, string>("FerramentaNome", relatorio.FerramentaNome ?? "")
+            new KeyValuePair<string, string>("NomeUsuario", relatorio.NomeUsuario ?? ""),
+            new KeyValuePair<string, string>("NomeFerramenta", relatorio.NomeFerramenta ?? "")
         });
 
         string criarUsuarioEndpoint = _config["apiLocation"] + _config["criarRelatorio"];
@@ -86,8 +86,8 @@ public class RelatorioEndpoints : IRelatorioEndpoints
         {
             new KeyValuePair<string, string>("Id", relatorio.Id.ToString()),
             new KeyValuePair<string, string>("Descricao", relatorio.Descricao),
-            new KeyValuePair<string, string>("UsuarioNome", relatorio.UsuarioNome ?? ""),
-            new KeyValuePair<string, string>("FerramentaNome", relatorio.FerramentaNome ?? "")
+            new KeyValuePair<string, string>("NomeUsuario", relatorio.NomeUsuario ?? ""),
+            new KeyValuePair<string, string>("NomeFerramenta", relatorio.NomeFerramenta ?? "")
         });
 
         string atualizarUsuarioEndpoint = _config["apiLocation"] + _config["atualizarRelatorio"];
