@@ -7,30 +7,34 @@
 @if (inicializado)
 {
 	<div class="buscar-input-date-div">
-		<div class="text-center">
-			<div class="data-filtro-label">De</div>
-			<div>
-				<InputDate class="input-date" @bind-Value="@DataInicio" />
+		<div class="d-flex align-items-center">
+			<div class="text-center">
+				<div class="data-filtro-label">De</div>
+				<div>
+					<InputDate class="input-date" @bind-Value="@DataInicio" />
+				</div>
+			</div>
+			<div class="text-center">
+				<div class="data-filtro-label">Ate</div>
+				<div>
+					<InputDate class="input-date" @bind-Value="@DataFim" />
+				</div>
+			</div>
+			<div class="mx-4">
+				<button class="botao-filtro" @onclick="FiltrarRelatorioPorData">Buscar</button>
 			</div>
 		</div>
-		<div class="text-center">
-			<div class="data-filtro-label">Ate</div>
+		<div class="w-50">
 			<div>
-				<InputDate class="input-date" @bind-Value="@DataFim" />
+				<InputText @bind-Value="@nomeUsuario" class="elemento-buscar-input"
+				@oninput="(e) => FiltrarRelatorioPorUsuario(e.Value?.ToString()!)"
+							placeholder="Procurar relatorio por nome do usuario" />
 			</div>
-		</div>
-		<div class="mx-4">
-			<button class="botao-filtro" @onclick="FiltrarRelatorioPorData">Buscar</button>
-		</div>
-		<div class="w-75">
-			<InputText @bind-Value="@nomeUsuario" class="elemento-buscar-input"
-			@oninput="(e) => FiltrarRelatorioPorUsuario(e.Value?.ToString()!)"
-					   placeholder="Procurar relatorio por nome do usuario" />
-		</div>
-		<div class="w-75">
-			<InputText @bind-Value="@nomeFerramenta" class="elemento-buscar-input"
-			@oninput="(e) => FiltrarRelatorioPorFerramenta(e.Value?.ToString()!)"
-					   placeholder="Procurar relatorio por nome da ferramenta" />
+			<div>
+				<InputText @bind-Value="@nomeFerramenta" class="elemento-buscar-input"
+				@oninput="(e) => FiltrarRelatorioPorFerramenta(e.Value?.ToString()!)"
+							placeholder="Procurar relatorio por nome da ferramenta" />
+			</div>
 		</div>
 	</div>
 

@@ -119,6 +119,7 @@ body.light .elementos-lista:hover {
     padding: 5px;
     font-weight: bold;
     font-size: 20px;
+    margin: 0 2px;
 }
 
 .botao-filtro:hover {
@@ -150,13 +151,13 @@ body.light .elementos-lista:hover {
 
 .buscar-input-date-div {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
 }
 
-    .input {
-        font-size: 1.4rem;
-        width: 80%;
-    }
+.input {
+    font-size: 1.4rem;
+    width: 80%;
+}
 
 .input-date {
     font-size: 20px;
@@ -285,8 +286,8 @@ navbar {
 
 .elemento-buscar-input {
     font-size: 1.2rem;
-    width: 80%;
-    border-radius: 10px;
+    width: 100%;
+    border-radius: 7px;
 }
 
 .elementos-lista-foto {
@@ -311,10 +312,3 @@ navbar {
 #usuario-foto {
     border-radius: 50%;
 }
-
-/* Ordens */
-.filtros-botoes-div {
-    background-color: #222222;
-    padding: 20px;
-}
-
