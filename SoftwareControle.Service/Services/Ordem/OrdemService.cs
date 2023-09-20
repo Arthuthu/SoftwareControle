@@ -20,12 +20,10 @@ public class OrdemService : IOrdemService
 	{
 		return await _ordemRepositorio.Buscar(cancellationToken);
 	}
-
 	public async Task<OrdemModel?> Buscar(Guid id, CancellationToken cancellationToken)
 	{
 		return await _ordemRepositorio.Buscar(id, cancellationToken);
 	}
-
 	public async Task<string?> Adicionar(OrdemModel ordem, CancellationToken cancellationToken)
 	{
         var resultado = _ordemValidator.Validate(ordem);
@@ -43,7 +41,6 @@ public class OrdemService : IOrdemService
 
 		return null;
 	}
-
 	public async Task<bool> Atualizar(OrdemModel ordem, CancellationToken cancellationToken)
 	{
 		return await _ordemRepositorio.Atualizar(ordem, cancellationToken);
@@ -52,4 +49,9 @@ public class OrdemService : IOrdemService
 	{
 		return await _ordemRepositorio.Deletar(id, cancellationToken);
 	}
+    public async Task<List<OrdemModel>?> BuscarPorNomeResponsavel(string nomeResponsavel,
+		CancellationToken cancellationToken)
+    {
+        return await _ordemRepositorio.BuscarPorNomeResponsavel(nomeResponsavel, cancellationToken);
+    }
 }

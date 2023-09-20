@@ -9,5 +9,6 @@ namespace SoftwareControle.Site.APICall.Ordem
         Task<OrdemModel?> BuscarPorId(Guid id);
         Task<string?> Criar(OrdemModel ordem);
         Task<string?> Deletar(Guid id);
+        Task<List<OrdemModel>?> BuscarPorNomeResponsavel(string nomeResponsavel);
     }
 }

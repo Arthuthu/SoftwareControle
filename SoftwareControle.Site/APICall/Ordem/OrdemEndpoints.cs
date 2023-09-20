@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using SoftwareControle.Models;
-using SoftwareControle.Site.Models;
 
 namespace SoftwareControle.Site.APICall.Ordem;
 
@@ -135,5 +133,27 @@ public class OrdemEndpoints : IOrdemEndpoints
         }
 
         return null;
+    }
+
+        public async Task<List<OrdemModel>?> BuscarPorNomeResponsavel(string nomeResponsavel)
+    {
+        string buscarPorIdEndpoint = _config["apiLocation"] 
+            + _config["buscarOrdemPorNomeResponsavel"] 
+            + $"/{nomeResponsavel}";
+        var authResult = await _client.GetAsync(buscarPorIdEndpoint);
+        var authContent = await authResult.Content.ReadAsStringAsync();
+
+        if (authResult.IsSuccessStatusCode is false)
+        {
+            _logger
+                .LogError("Ocorreu um erro durante o carregamento da ordem por nome do responsavel: {authContent}",
+                authContent);
+
+            return null;
+        }
+
+        var ordemModel = JsonConvert.DeserializeObject<List<OrdemModel>>(authContent);
+
+        return ordemModel;
     }
 }

@@ -63,4 +63,13 @@ public class OrdemRepositorio : IOrdemRepositorio
 
 		return colunasAfetadas > 0;
 	}
+    public async Task<List<OrdemModel>?> BuscarPorNomeResponsavel(string nomeResponsavel, 
+		CancellationToken cancellationToken)
+    {
+        List<OrdemModel>? ordens = await _context.Ordens
+			.Where(u => u.NomeResponsavel == nomeResponsavel)
+			.ToListAsync(cancellationToken);
+
+        return ordens is not null ? ordens : null;
+    }
 }

@@ -9,5 +9,7 @@ namespace SoftwareControle.Services.Services.Usuario
 		Task<List<OrdemModel>?> Buscar(CancellationToken cancellationToken);
 		Task<OrdemModel?> Buscar(Guid id, CancellationToken cancellationToken);
 		Task<bool> Deletar(Guid id, CancellationToken cancellationToken);
-	}
+		Task<List<OrdemModel>?> BuscarPorNomeResponsavel(string nomeResponsavel,
+		CancellationToken cancellationToken);
+    }
 }

@@ -2,6 +2,7 @@
 
 @inject ISessaoUsuario sessao
 @inject IUsuarioEndpoints usuarioEndpoints
+@inject IOrdemEndpoints ordemEndpoints
 @inject NavigationManager navManager
 
 @if (inicializado)
@@ -34,6 +35,17 @@
 			</div>
 		</div>
 	</div>
+	@if (mostrarDeletarDiv)
+	{
+		<div class="text-center">
+			<div class="fs-4 my-4">
+				Tem certeza que deseja deletar esse usuario?
+			</div>
+			<div>
+				<button @onclick="Deletar" class="botao-principal">Confirmar</button>
+			</div>
+		</div>
+	}
 	<div class="d-flex my-5 justify-content-end align-items-center">
 		@if (UsuarioLogadoModel!.Cargo == "Administrador")
 		{
@@ -51,17 +63,44 @@
 			<a href="/usuarios" class="botao-principal">Voltar</a>
 		</div>
 	</div>
-	@if (mostrarDeletarDiv)
-	{
-		<div class="text-center">
-			<div class="fs-4 my-4">
-				Tem certeza que deseja deletar esse usuario?
+
+	<div class="text-center my-4 fs-3 fw-bold">
+		Ordens concluidas pelo usuario.
+	</div>
+
+	<Virtualize Items="@ListaOrdem" Context="ordem" OverscanCount="50">
+		<a class="elementos-lista" href="/ordem/@ordem.Id">
+			<div class="elemento-node">@ordem.Descricao</div>
+			<div class="elemento-node">
+				@if (@ordem.NivelUrgencia.ToString() == "Urgente")
+				{
+					<div class="text-color-danger">Urgente</div>
+				}
+				else
+				{
+					<div>Normal</div>
+				}
 			</div>
-			<div>
-				<button @onclick="Deletar" class="botao-principal">Confirmar</button>
+			<div class="elemento-node">@ordem.DataCriacao</div>
+			<div class="elemento-node">@ordem.DataPrazoMaximo.ToString("dd/MM/yyyy")</div>
+			<div class="elemento-node">
+				@if (ordem.Situacao == "Espera")
+				{
+					<div class="situacao-espera">Espera</div>
+				}
+				else if (ordem.Situacao == "Iniciada")
+				{
+					<div class="situacao-iniciada">Iniciada</div>
+				}
+				else
+				{
+					<div class="situacao-finalizada">Finalizada</div>
+				}
 			</div>
-		</div>
-	}
+			<div class="elemento-node">@ordem.NomeResponsavel</div>
+			<div class="elemento-node">@ordem.NomeFerramenta</div>
+		</a>
+	</Virtualize>
 }
 
 @code {
@@ -71,6 +110,7 @@
 	public Guid UsuarioLogadoId { get; set; }
 	public UsuarioModel? UsuarioLogadoModel { get; set; }
 	public UsuarioModel? UsuarioPerfilModel { get; set; }
+	private List<OrdemModel>? ListaOrdem { get; set; }
 
 	private bool inicializado = false;
 	private string mostrarDeletarBotaoNome = "Deletar";
@@ -105,6 +145,8 @@
 			return;
 		}
 
+		await BuscarOrdens();
+
 		inicializado = true;
 	}
 
@@ -125,6 +167,16 @@
 	{
 		await usuarioEndpoints.Deletar(Guid.Parse(UsuarioId!));
 		navManager.NavigateTo("/usuarios");
+	}
+
+	private async Task BuscarOrdens()
+	{
+		var ordens = await ordemEndpoints.BuscarPorNomeResponsavel(UsuarioLogadoModel!.Nome);
+
+		if(ordens is not null)
+		{
+			ListaOrdem = ordens.OrderByDescending(x => x.DataCriacao).ToList();
+		}
 	}
 
 	private void MostrarDelete()

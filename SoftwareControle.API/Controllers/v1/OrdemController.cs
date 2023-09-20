@@ -74,4 +74,21 @@ public class OrdemController : ControllerBase
 
         return Ok("Ordem deletada com sucesso");
     }
+
+    [HttpGet, Route("/ordem/buscarpornomeresponsavel/{nomeResponsavel}"), Authorize]
+    public async Task<IActionResult> Get(string nomeResponsavel, CancellationToken cancellationToken)
+    {
+        List<OrdemModel>? listaOrdens = new();
+
+        if(nomeResponsavel is not null)
+        {
+            listaOrdens = await _ordemService.BuscarPorNomeResponsavel(nomeResponsavel,
+                cancellationToken);
+        }
+
+        if (listaOrdens is null)
+            return NotFound();
+
+        return Ok(listaOrdens);
+    }
 }
