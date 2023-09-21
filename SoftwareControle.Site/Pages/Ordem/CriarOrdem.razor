@@ -63,7 +63,7 @@
     [Parameter]
     public string? FerramentaId { get; set; }
 
-    public Guid UsuarioLogadoId { get; set; }
+    private Guid UsuarioLogadoId { get; set; }
     private OrdemModel? Ordem { get; set; } = new();
     private FerramentaModel? Ferramenta { get; set; }
     private UsuarioModel? UsuarioLogadoModel { get; set; }

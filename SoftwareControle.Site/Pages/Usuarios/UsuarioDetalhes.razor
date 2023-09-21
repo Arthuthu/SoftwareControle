@@ -110,9 +110,9 @@
 	[Parameter]
 	public string? UsuarioId { get; set; }
 
-	public Guid UsuarioLogadoId { get; set; }
-	public UsuarioModel? UsuarioLogadoModel { get; set; }
-	public UsuarioModel? UsuarioPerfilModel { get; set; }
+	private Guid UsuarioLogadoId { get; set; }
+	private UsuarioModel? UsuarioLogadoModel { get; set; }
+	private UsuarioModel? UsuarioPerfilModel { get; set; }
 	private List<OrdemModel>? ListaOrdem { get; set; }
 
 	private bool inicializado = false;
