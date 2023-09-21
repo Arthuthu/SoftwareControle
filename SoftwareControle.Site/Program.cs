@@ -8,6 +8,7 @@ using SoftwareControle.Site.APICall.Authenticacao;
 using SoftwareControle.Site.APICall.Ferramenta;
 using SoftwareControle.Site.APICall.Ordem;
 using SoftwareControle.Site.APICall.Usuario;
+using SoftwareControle.Site.Generator;
 using SoftwareControle.Site.Sessao;
 using SoftwareControle.Website.Session;
 
@@ -18,6 +19,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
 builder.Services.AddScoped<ISessaoUsuario, SessaoUsuario>();
+builder.Services.AddScoped<IRelatorioGenerator, RelatorioGenerator>();
 
 builder.Services.AddScoped<IUsuarioEndpoints, UsuarioEndpoints>();
 builder.Services.AddScoped<IFerramentaEndpoints, FerramentaEndpoints>();

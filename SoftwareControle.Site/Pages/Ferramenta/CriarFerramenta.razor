@@ -4,6 +4,7 @@
 @inject IFerramentaEndpoints ferramentaEndpoints
 @inject IUsuarioEndpoints usuarioEndpoints
 @inject IRelatorioEndpoints relatorioEndpoints
+@inject IRelatorioGenerator relatorioGenerator
 @inject NavigationManager navManager
 
 @if(inicializado)
@@ -113,10 +114,8 @@
     }
     private async Task<string?> CriarRelatorio()
     {
-        Relatorio!.Descricao = $"O usuario {UsuarioLogadoModel!.Nome} adicionou a ferramenta " +
-        $"{Ferramenta!.Nome} ao sistema";
-        Relatorio.NomeFerramenta = Ferramenta.Nome;
-        Relatorio.NomeUsuario = UsuarioLogadoModel.Nome;
+        Relatorio = relatorioGenerator.CriarFerramentaRelatorio(UsuarioLogadoModel!.Nome,
+            Ferramenta!.Nome);
 
         var resultado = await relatorioEndpoints.Criar(Relatorio);
 

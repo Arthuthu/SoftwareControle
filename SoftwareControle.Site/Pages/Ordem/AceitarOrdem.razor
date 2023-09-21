@@ -4,6 +4,7 @@
 @inject IUsuarioEndpoints usuarioEndpoints
 @inject IOrdemEndpoints ordemEndpoints
 @inject IRelatorioEndpoints relatorioEndpoints
+@inject IRelatorioGenerator relatorioGenerator
 @inject NavigationManager navManager
 
 @code {
@@ -12,7 +13,7 @@
 
 	private Guid UsuarioLogadoId { get; set; }
 	private UsuarioModel? UsuarioLogadoModel { get; set; }
-	private OrdemModel? Ordem { get; set; }
+	private OrdemModel? OrdemModel { get; set; }
 	private RelatorioModel Relatorio = new();
 
 	protected async override Task OnInitializedAsync()
@@ -24,7 +25,8 @@
 		}
 
 		await BuscarOrdemModel();
-		if(Ordem is null || Ordem.NomeResponsavel != string.Empty || Ordem.Situacao != "Espera")
+		if (OrdemModel is null || OrdemModel.NomeResponsavel != string.Empty ||
+				OrdemModel.Situacao != "Espera")
 		{
 			navManager.NavigateTo("/naoencontrado");
 			return;
@@ -57,25 +59,23 @@
 	}
 	private async Task BuscarOrdemModel()
 	{
-		Ordem = await ordemEndpoints.BuscarPorId(Guid.Parse(OrdemId!));
+		OrdemModel = await ordemEndpoints.BuscarPorId(Guid.Parse(OrdemId!));
 	}
 	private async Task AceitarOrdemMethod()
 	{
-		Ordem!.NomeResponsavel = UsuarioLogadoModel!.Nome;
-		Ordem.Situacao = "Iniciada";
-		Ordem.DataIniciado = DateTime.UtcNow.AddHours(-3);
+		OrdemModel!.NomeResponsavel = UsuarioLogadoModel!.Nome;
+		OrdemModel.Situacao = "Iniciada";
+		OrdemModel.DataIniciado = DateTime.UtcNow.AddHours(-3);
 
-		await ordemEndpoints.Atualizar(Ordem);
+		await ordemEndpoints.Atualizar(OrdemModel);
 		await CriarRelatorio();
 
 		navManager.NavigateTo($"/ordem/{OrdemId}");
 	}
 	private async Task CriarRelatorio()
 	{
-		Relatorio.Descricao = $"O usuario {UsuarioLogadoModel!.Nome} aceitou a ordem {Ordem!.Descricao} " + 
-		$"Ferramenta: {Ordem.NomeFerramenta} no dia {DateTime.UtcNow.AddHours(-3)}.";
-		Relatorio.NomeUsuario = UsuarioLogadoModel.Nome;
-		Relatorio.NomeFerramenta = Ordem.NomeFerramenta;
+		Relatorio = relatorioGenerator.AceitarOrdemRelatorio(OrdemModel!.NomeResponsavel!,
+			OrdemModel.NomeFerramenta, OrdemModel.Descricao);
 
 		await relatorioEndpoints.Criar(Relatorio);
 	}

@@ -5,6 +5,7 @@
 @inject IFerramentaEndpoints ferramentaEndpoints
 @inject IOrdemEndpoints ordemEndpoints
 @inject IRelatorioEndpoints relatorioEndpoints
+@inject IRelatorioGenerator relatorioGenerator
 @inject NavigationManager navManager
 
 @code {
@@ -106,10 +107,8 @@
 	}
 	private async Task CriarRelatorio()
 	{
-		Relatorio.Descricao = $"O usuario {UsuarioLogadoModel!.Nome} finalizou a ordem {OrdemModel!.Descricao} " +
-		$"Ferramenta: {OrdemModel.NomeFerramenta} no dia {DateTime.UtcNow.AddHours(-3)}."; ;
-		Relatorio.NomeUsuario = UsuarioLogadoModel.Nome;
-		Relatorio.NomeFerramenta = OrdemModel.NomeFerramenta;
+		Relatorio = relatorioGenerator.FinalizarOrdemRelatorio(OrdemModel!.NomeResponsavel!,
+			OrdemModel.NomeFerramenta, OrdemModel.Descricao);
 
 		await relatorioEndpoints.Criar(Relatorio);
 	}
