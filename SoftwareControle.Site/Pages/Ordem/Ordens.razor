@@ -125,10 +125,10 @@
     {
         var ordens = await ordemEndpoints.Buscar();
 
-        TodasOrdens = ordens;
-
         if(ordens is not null)
         {
+            TodasOrdens = ordens.OrderByDescending(x => x.DataCriacao).ToList();
+
             ListaOrdem = ordens
             .Where(x => x.Situacao != "Finalizada")
             .OrderByDescending(x => x.NivelUrgencia)

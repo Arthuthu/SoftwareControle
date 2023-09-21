@@ -75,6 +75,7 @@
 		Relatorio.Descricao = $"O usuario {UsuarioLogadoModel!.Nome} aceitou a ordem {Ordem!.Descricao} " + 
 		$"Ferramenta: {Ordem.NomeFerramenta} no dia {DateTime.UtcNow.AddHours(-3)}.";
 		Relatorio.NomeUsuario = UsuarioLogadoModel.Nome;
+		Relatorio.NomeFerramenta = Ordem.NomeFerramenta;
 
 		await relatorioEndpoints.Criar(Relatorio);
 	}

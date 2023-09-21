@@ -1,6 +1,6 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
-root {
+:root {
     --primary-background-color: #030202;
     --secondary-background-color: #222222;
 }
@@ -11,7 +11,7 @@ body {
 
 body, body #anchor {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: #030202;
+    background-color: var(--primary-background-color);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -139,12 +139,12 @@ body.light .elementos-lista:hover {
     padding: 20px 0;
     font-size: 30px;
     font-weight: bold;
-    background-color: #222222;
+    background-color: var(--secondary-background-color);
     border-radius: 10px 10px 0 0;
 }
 
 .buscar-input-div, .buscar-input-date-div {
-    background-color: #222222;
+    background-color: var(--secondary-background-color);
     padding: 20px;
     border: solid #000;
 }
@@ -258,7 +258,7 @@ navbar {
     border-bottom: solid #100f0f;
     text-decoration: none;
     margin: 0;
-    background-color: #222222;
+    background-color: var(--secondary-background-color);
     color: #FFF;
 }
 
@@ -280,7 +280,7 @@ navbar {
 }
 
 .elemento-detalhes-box {
-    border: solid #222222;
+    border: solid var(--secondary-background-color);
     border-radius: 10px 10px 0 0;
 }
 
