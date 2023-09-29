@@ -23,12 +23,13 @@ public class FerramentaController : ControllerBase
 	[HttpGet, Route("/ferramenta/buscar"), Authorize]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-        var ferramentas = await _ferramentaService.Buscar(cancellationToken);
+
+		var	ferramentas = await _ferramentaService.Buscar(cancellationToken);
 
         if (ferramentas!.Count == 0)
         {
             _logger.LogWarning("Não foi encontrado nenhuma ferramenta");
-			return NotFound();
+			return NotFound("Não foi encontrado nenhuma ferramenta");
 		}
 
 		return Ok(ferramentas);
