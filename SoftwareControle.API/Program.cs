@@ -1,6 +1,7 @@
 using Serilog;
 using SoftwareControle.WebUi.Configuration;
 using System.Text.Json.Serialization;
+using WebUi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -33,6 +34,8 @@ app.UseHttpsRedirection();
 app.UseCors("OpenCorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 app.MapControllers();
 

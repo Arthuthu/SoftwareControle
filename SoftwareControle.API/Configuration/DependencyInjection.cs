@@ -16,6 +16,7 @@ using SoftwareControle.Models;
 using SoftwareControle.Service.Validacao;
 using SoftwareControle.Repositorio.Repositorio.Relatorio;
 using SoftwareControle.Service.Services.Relatorio;
+using WebUi.Middlewares;
 
 namespace SoftwareControle.WebUi.Configuration;
 
@@ -43,7 +44,9 @@ public static class DependencyInjection
         services.AddSingleton<IValidator<OrdemModel>, OrdemValidacao>();
         services.AddSingleton<IValidator<RelatorioModel>, RelatorioValidacao>();
 
-        return services;
+		services.AddTransient<GlobalExceptionHandlingMiddleware>();
+
+		return services;
     }
 
     public static IServiceCollection AddApplicationDbContext(this IServiceCollection services,
