@@ -9,6 +9,13 @@ public class ExceptionController : ControllerBase
     [HttpGet, Route("/exception/throw")]
     public IActionResult ThrowException()
     {
-        throw new Exception("Exception thrown");
-    }
+		try
+		{
+			throw new Exception("Exception thrown");
+		}
+		catch (Exception ex)
+		{
+			return StatusCode(500, "An error occurred: " + ex.Message);
+		}
+	}
 }
