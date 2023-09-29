@@ -1,9 +1,8 @@
-﻿using SoftwareControle.Services.Services.Usuario;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SoftwareControle.Models;
-using Microsoft.AspNetCore.Authorization;
-using SoftwareControle.API.Requests;
 using SoftwareControle.API.Mapper;
+using SoftwareControle.API.Requests;
+using SoftwareControle.Services.Services.Usuario;
 
 namespace SoftwareControle.API.Controllers.v1;
 
@@ -12,21 +11,27 @@ namespace SoftwareControle.API.Controllers.v1;
 public class FerramentaController : ControllerBase
 {
     private readonly IFerramentaService _ferramentaService;
+    private readonly ILogger<FerramentaController> _logger;
 
-    public FerramentaController(IFerramentaService ferramentaService)
-    {
-        _ferramentaService = ferramentaService;
-    }
+	public FerramentaController(IFerramentaService ferramentaService,
+        ILogger<FerramentaController> logger)
+	{
+		_ferramentaService = ferramentaService;
+		_logger = logger;
+	}
 
-    [HttpGet, Route("/ferramenta/buscar"), Authorize]
+	[HttpGet, Route("/ferramenta/buscar"), Authorize]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
         var ferramentas = await _ferramentaService.Buscar(cancellationToken);
 
-        if (ferramentas is null)
-            return NotFound();
+        if (ferramentas!.Count == 0)
+        {
+            _logger.LogWarning("Não foi encontrado nenhuma ferramenta");
+			return NotFound();
+		}
 
-        return Ok(ferramentas);
+		return Ok(ferramentas);
     }
 
     [HttpGet, Route("/ferramenta/buscarporid/{id:guid}"), Authorize]

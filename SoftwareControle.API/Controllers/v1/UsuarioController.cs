@@ -1,10 +1,9 @@
-﻿using SoftwareControle.Services.Services.Usuario;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SoftwareControle.Models;
-using Microsoft.AspNetCore.Authorization;
-using SoftwareControle.API.Response;
 using SoftwareControle.API.Mapper;
 using SoftwareControle.API.Requests;
+using SoftwareControle.API.Response;
+using SoftwareControle.Services.Services.Usuario;
 
 namespace SoftwareControle.API.Controllers.v1;
 
@@ -13,13 +12,15 @@ namespace SoftwareControle.API.Controllers.v1;
 public class UsuarioController : ControllerBase
 {
     private readonly IUsuarioService _usuarioService;
+    private readonly ILogger<UsuarioController> _logger;
 
-    public UsuarioController(IUsuarioService usuarioService)
-    {
-        _usuarioService = usuarioService;
-    }
+	public UsuarioController(IUsuarioService usuarioService, ILogger<UsuarioController> logger)
+	{
+		_usuarioService = usuarioService;
+		_logger = logger;
+	}
 
-    [HttpGet, Route("/usuario/buscar"), Authorize]
+	[HttpGet, Route("/usuario/buscar"), Authorize]
     public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
         var usuarios = await _usuarioService.Buscar(cancellationToken);
@@ -27,9 +28,11 @@ public class UsuarioController : ControllerBase
         List<UsuarioResponse> usuariosResponse = new();
 
         if (usuarios is null)
-            return NotFound();
+        {
+			return NotFound();
+		}
 
-        foreach (var usuario in usuarios)
+		foreach (var usuario in usuarios)
         {
             var usuarioResponse = usuario.MapUsuarioModelToResponse();
             usuariosResponse.Add(usuarioResponse);

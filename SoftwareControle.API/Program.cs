@@ -1,3 +1,4 @@
+using Serilog;
 using SoftwareControle.WebUi.Configuration;
 using System.Text.Json.Serialization;
 
@@ -16,6 +17,9 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Host.UseSerilog((context, configuration) =>
+	configuration.ReadFrom.Configuration(context.Configuration));
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -24,6 +28,7 @@ if (app.Environment.IsDevelopment())
 	app.UseSwaggerUI();
 }
 
+app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 app.UseCors("OpenCorsPolicy");
 app.UseAuthentication();

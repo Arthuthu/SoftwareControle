@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 using SoftwareControle.Models;
-using System.Collections;
-using System.Net.Http.Headers;
 
 namespace SoftwareControle.Site.APICall.Ferramenta;
 
