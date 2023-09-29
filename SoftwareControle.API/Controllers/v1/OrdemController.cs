@@ -22,8 +22,8 @@ public class OrdemController : ControllerBase
     {
         var ordens = await _ordemService.Buscar(cancellationToken);
 
-        if (ordens is null)
-            return NotFound();
+        if (ordens is null || ordens.Count == 0)
+            return NotFound("Não foi encontrado nenhuma ordem");
 
         return Ok(ordens);
     }
@@ -34,7 +34,7 @@ public class OrdemController : ControllerBase
         var ordem = await _ordemService.Buscar(id, cancellationToken);
 
         if (ordem is null)
-            return NotFound();
+            return NotFound("Não foi encontrado nenhuma ordem");
 
         return Ok(ordem);
     }
@@ -59,7 +59,7 @@ public class OrdemController : ControllerBase
             cancellationToken);
 
         if (ordemFoiAtualizada is false)
-            return NotFound("Ordem não encontrada");
+            return NotFound("Não foi possivel atualizar a ordem");
 
         return Ok(null);
     }
@@ -70,7 +70,7 @@ public class OrdemController : ControllerBase
         bool ordemFoiDeletada = await _ordemService.Deletar(id, cancellationToken);
 
         if (ordemFoiDeletada is false)
-            return NotFound("Ordem não encontrada");
+            return NotFound("Não foi possivel deletar a ordem");
 
         return Ok("Ordem deletada com sucesso");
     }
@@ -87,7 +87,7 @@ public class OrdemController : ControllerBase
         }
 
         if (listaOrdens is null)
-            return NotFound();
+            return NotFound("Não foi encontrada nenhuma ordem por responsavel");
 
         return Ok(listaOrdens);
     }

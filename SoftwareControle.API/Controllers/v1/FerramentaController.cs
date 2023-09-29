@@ -27,10 +27,7 @@ public class FerramentaController : ControllerBase
 		var	ferramentas = await _ferramentaService.Buscar(cancellationToken);
 
         if (ferramentas!.Count == 0)
-        {
-            _logger.LogWarning("Não foi encontrado nenhuma ferramenta");
 			return NotFound("Não foi encontrado nenhuma ferramenta");
-		}
 
 		return Ok(ferramentas);
     }
@@ -41,7 +38,7 @@ public class FerramentaController : ControllerBase
         var ferramenta = await _ferramentaService.Buscar(id, cancellationToken);
 
         if (ferramenta is null)
-            return NotFound();
+            return NotFound("Não foi encontrado nenhuma ferramenta");
 
         return Ok(ferramenta);
     }
@@ -67,7 +64,7 @@ public class FerramentaController : ControllerBase
             .Atualizar(ferramentaRequest.MapFerramentaRequestToFerramentaModel(), cancellationToken);
 
         if (ferramentaFoiAtualizada is false)
-            return NotFound("Ferramenta não encontrada");
+            return NotFound("Ocorreu um erro ao atualizar os dados da ferramenta");
 
         return Ok(null);
     }
@@ -78,7 +75,7 @@ public class FerramentaController : ControllerBase
         bool ferramentaFoiDeletada = await _ferramentaService.Deletar(id, cancellationToken);
 
         if (ferramentaFoiDeletada is false)
-            return NotFound("Ferramenta não encontrada");
+            return NotFound("Não foi possivel deletar a ferramenta");
 
         return Ok("Ferramenta deletada com sucesso");
     }

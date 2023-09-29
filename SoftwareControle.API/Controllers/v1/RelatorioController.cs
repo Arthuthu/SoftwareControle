@@ -23,7 +23,7 @@ public class RelatorioController : ControllerBase
         var relatorios = await _relatorioService.Buscar(cancellationToken);
 
         if (relatorios is null)
-            return NotFound();
+            return NotFound("Não foi encontrado nenhum relatorio");
 
         return Ok(relatorios);
     }
@@ -34,7 +34,7 @@ public class RelatorioController : ControllerBase
         var relatorio = await _relatorioService.Buscar(id, cancellationToken);
 
         if (relatorio is null)
-            return NotFound();
+            return NotFound("Não foi encontrado nenhum relatorio");
 
         return Ok(relatorio);
     }
@@ -59,7 +59,7 @@ public class RelatorioController : ControllerBase
             cancellationToken);
 
         if (relatorioFoiAtualizado is false)
-            return NotFound("Relatorio não encontrado");
+            return NotFound("Não foi possivel atualizar o relatorio");
 
         return Ok(null);
     }
@@ -70,7 +70,7 @@ public class RelatorioController : ControllerBase
         bool relatorioFoiDeletado = await _relatorioService.Deletar(id, cancellationToken);
 
         if (relatorioFoiDeletado is false)
-            return NotFound("Relatorio não encontrado");
+            return NotFound("Não foi possivel deletar o relatorio");
 
         return Ok("Relatorio deletado com sucesso");
     }

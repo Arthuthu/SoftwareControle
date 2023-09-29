@@ -28,9 +28,7 @@ public class UsuarioController : ControllerBase
         List<UsuarioResponse> usuariosResponse = new();
 
         if (usuarios is null)
-        {
-			return NotFound();
-		}
+			return NotFound("Não foi encontrado nenhum usuario");
 
 		foreach (var usuario in usuarios)
         {
@@ -47,7 +45,7 @@ public class UsuarioController : ControllerBase
         var usuario = await _usuarioService.Buscar(id, cancellationToken);
 
         if (usuario is null)
-            return NotFound();
+            return NotFound("Não foi encontrado nenhum usuario");
 
         UsuarioResponse? usuarioResponse = usuario.MapUsuarioModelToResponse();
 
@@ -75,7 +73,7 @@ public class UsuarioController : ControllerBase
             cancellationToken);
 
         if (usuarioFoiAtualizado is false)
-            return NotFound("Usuario não encontrado");
+            return NotFound("Não foi possivel atualizar o usuario");
 
         return Ok(null);
     }
@@ -86,7 +84,7 @@ public class UsuarioController : ControllerBase
         bool usuarioFoiDeletado = await _usuarioService.Deletar(id, cancellationToken);
 
         if (usuarioFoiDeletado is false)
-            return NotFound("Usuario não encontrado");
+            return NotFound("Não foi possivel deletar o usuario");
 
         return Ok("Usuario deletado com sucesso");
     }
