@@ -18,4 +18,10 @@ public class ExceptionController : ControllerBase
 			return StatusCode(500, "An error occurred: " + ex.Message);
 		}
 	}
+
+    [HttpGet, Route("/ok")]
+    public IActionResult OkResult()
+    {
+		return Ok("Request successfull");
+    }
 }
