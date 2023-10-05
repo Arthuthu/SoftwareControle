@@ -28,36 +28,36 @@
 			<div>
 				<InputText @bind-Value="@nomeUsuario" class="elemento-buscar-input"
 				@oninput="(e) => FiltrarRelatorioPorUsuario(e.Value?.ToString()!)"
-							placeholder="Procurar relatorio por nome do usuario" />
+						   placeholder="Procurar relatorio por nome do usuario" />
 			</div>
 			<div>
 				<InputText @bind-Value="@nomeFerramenta" class="elemento-buscar-input"
 				@oninput="(e) => FiltrarRelatorioPorFerramenta(e.Value?.ToString()!)"
-							placeholder="Procurar relatorio por nome da ferramenta" />
+						   placeholder="Procurar relatorio por nome da ferramenta" />
 			</div>
 		</div>
 	</div>
 
 	@if (ListaRelatorios is null || ListaRelatorios.Count() == 0)
-    {
-        <div class="text-center my-5 fs-3 fw-bold">Não foi encontrado nenhum relatório.</div>
-    }
-    else
-    {
-        <div class="elementos-lista" id="elementos-lista-label">
-            <div class="elemento-node">Descrição</div>
-            <div class="elemento-node">Usuario</div>
-            <div class="elemento-node">Ferramenta</div>
-            <div class="elemento-node">Data criado</div>
-        </div>
-        <Virtualize Items="@ListaRelatorios" Context="relatorio" OverscanCount="50">
-            <div class="elementos-lista">
-                <div class="elemento-node">@relatorio.Descricao</div>
-                <div class="elemento-node">@relatorio.NomeUsuario</div>
-                <div class="elemento-node">@relatorio.NomeFerramenta</div>
-                <div class="elemento-node">@relatorio.DataCriacao</div>
-            </div>
-        </Virtualize>
+	{
+		<div class="text-center my-5 fs-3 fw-bold">Não foi encontrado nenhum relatório.</div>
+	}
+	else
+	{
+		<div class="elementos-listcor" id="elementos-lista-label">
+			<div class="elemento-node">Descrição</div>
+			<div class="elemento-node">Usuario</div>
+			<div class="elemento-node">Ferramenta</div>
+			<div class="elemento-node">Data criado</div>
+		</div>
+		<Virtualize Items="@ListaRelatorios" Context="relatorio" OverscanCount="50">
+			<div class="elementos-lista">
+				<div class="elemento-descricao">@relatorio.Descricao</div>
+				<div class="elemento-node">@relatorio.NomeUsuario</div>
+				<div class="elemento-node">@relatorio.NomeFerramenta</div>
+				<div class="elemento-node">@relatorio.DataCriacao</div>
+			</div>
+		</Virtualize>
 	}
 }
 
@@ -76,7 +76,7 @@
 	protected override async Task OnInitializedAsync()
 	{
 		await BuscarUsuarioLogadoId();
-		if(UsuarioLogadoId == Guid.Empty)
+		if (UsuarioLogadoId == Guid.Empty)
 		{
 			navManager.NavigateTo("/login");
 			return;
@@ -95,7 +95,7 @@
 	{
 		var relatorios = await relatorioEndpoints.Buscar();
 
-		if(relatorios is not null)
+		if (relatorios is not null)
 		{
 			ListaRelatorios = relatorios
 			.OrderByDescending(x => x.DataCriacao)
@@ -119,7 +119,7 @@
 	{
 		List<RelatorioModel>? relatoriosFiltrados = new();
 
-		if(TodosRelatorios is not null)
+		if (TodosRelatorios is not null)
 		{
 			relatoriosFiltrados = TodosRelatorios.Where(x => x.NomeUsuario is not null).ToList();
 		}

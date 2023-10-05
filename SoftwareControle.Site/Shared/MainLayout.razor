@@ -4,15 +4,13 @@
 @inject IUsuarioEndpoints usuarioEndpoints
 @inject IJSRuntime JSRuntime
 
+<!--barra de navegalçao-->
 <navbar>
     <div class="d-flex align-items-center">
         <a class="logo" href="/" id="anchor">
             Software Controle
         </a>
-        <div>
-            <img src="./icons/@iconeTema" class="icone-tema" @onclick="ToggleLightMode" 
-                id="light-button"/>
-        </div>
+
     </div>
 
     <AuthorizeView>
@@ -47,9 +45,15 @@
             <a class="nav-link" href="/login" id="anchor">
                 <span>Entrar</span>
             </a>
-         </NotAuthorized>
+        </NotAuthorized>
     </AuthorizeView>
 </navbar>
+
+<img src="images/test2.jpeg" alt="Imagem de exemplo" class="fullscreen-image">
+
+
+
+
 <div>
     <main>
         <div>
@@ -62,7 +66,7 @@
     private Guid UsuarioLogadoId { get; set; }
     private UsuarioModel? UsuarioLogadoModel { get; set; }
 
-    private string iconeTema = "moonicon.png";
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -77,20 +81,9 @@
 
     private async Task BuscarUsuarioLogadoModel()
     {
-        if(UsuarioLogadoId != Guid.Empty)
+        if (UsuarioLogadoId != Guid.Empty)
             UsuarioLogadoModel = await usuarioEndpoints.BuscarPorId(UsuarioLogadoId);
     }
 
-    private async Task ToggleLightMode()
-    {
-        await JSRuntime.InvokeVoidAsync("toggleLightMode");
 
-        if (iconeTema == "moonicon.png")
-        {
-            iconeTema = "sunicon.png";
-            return;
-        };
-
-        iconeTema = "moonicon.png";
-    }
 }

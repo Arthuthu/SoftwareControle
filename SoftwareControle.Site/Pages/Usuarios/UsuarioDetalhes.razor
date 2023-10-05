@@ -7,13 +7,14 @@
 
 @if (inicializado)
 {
+
 	<div class="elemento-detalhes-box">
 		@if (UsuarioPerfilModel?.ImagemString != string.Empty)
 		{
 			<div class="text-center my-4">
-				<img id="usuario-foto" 
-					src="data:image/jpeg;base64,@UsuarioPerfilModel?.ImagemString" alt="Foto"
-					class="ferramenta-detalhes-foto">
+				<img id="usuario-foto"
+					 src="data:image/jpeg;base64,@UsuarioPerfilModel?.ImagemString" alt="Foto"
+					 class="ferramenta-detalhes-foto">
 			</div>
 		}
 
@@ -24,12 +25,12 @@
 		<div class="mt-4">
 			<div class="label-principal">Informações</div>
 			<div class="d-flex justify-content-evenly my-4">
-				<div class="text-center">
-					<div class="my-2 fs-2 fw-bold">Cargo</div>
+				<div class="text-center ">
+					<div class="my-2 fs-2 fw-bold" style="color:silver">Cargo</div>
 					<div class="my-2 fs-4">@UsuarioPerfilModel!.Cargo</div>
 				</div>
 				<div class="text-center">
-					<div class="my-2 fs-2 fw-bold">Criado em</div>
+					<div class="my-2 fs-2 fw-bold" style="color:silver">Criado em</div>
 					<div class="my-2 fs-4">@UsuarioPerfilModel.DataCriacao.ToString("dd/MM/yyyy")</div>
 				</div>
 			</div>
@@ -55,9 +56,9 @@
 			<div>
 				<a href="/alterarsenha/@UsuarioPerfilModel.Id" class="botao-principal">Alterar senha</a>
 			</div>
-			<div>
+			<div style="margin-bottom: 6px;">
 				<button @onclick="MostrarDelete" class="botao-principal"
-						id="botao-padding-ajustes">
+						id="botao-principal">
 					@mostrarDeletarBotaoNome
 				</button>
 			</div>
@@ -121,28 +122,28 @@
 
 	protected override async Task OnInitializedAsync()
 	{
-		if(UsuarioId == Guid.Empty.ToString())
+		if (UsuarioId == Guid.Empty.ToString())
 		{
 			navManager.NavigateTo("/naoencontrado");
 			return;
 		}
 
 		await BuscarUsuarioPerfilModel();
-		if(UsuarioPerfilModel is null)
+		if (UsuarioPerfilModel is null)
 		{
 			navManager.NavigateTo("/naoencontrado");
 			return;
 		}
 
 		await BuscarUsuarioLogadoId();
-		if(UsuarioLogadoId == Guid.Empty)
+		if (UsuarioLogadoId == Guid.Empty)
 		{
 			navManager.NavigateTo("/login");
 			return;
 		}
 
 		await BuscarUsuarioLogadoModel();
-		if(UsuarioLogadoModel is null)
+		if (UsuarioLogadoModel is null)
 		{
 			navManager.NavigateTo("/naoencontrado");
 			return;
@@ -176,7 +177,7 @@
 	{
 		var ordens = await ordemEndpoints.BuscarPorNomeResponsavel(UsuarioLogadoModel!.Nome);
 
-		if(ordens is not null)
+		if (ordens is not null)
 		{
 			ListaOrdem = ordens.OrderByDescending(x => x.DataCriacao).ToList();
 		}

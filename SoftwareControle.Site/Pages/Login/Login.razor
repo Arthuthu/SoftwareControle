@@ -5,36 +5,38 @@
 @inject IAuthenticationService authService
 
 <EditForm Model="LoginUser" OnValidSubmit="ExecuteLogin">
-	<div class="login-form">
+	<div class="login-box">
 		<div class="login-label">
 			Iniciar sessão
 		</div>
 
-		<div>
+		<div class="user-box">
 			<label for="email" class="visually-hidden">Usuario</label>
-			<div>
-				<InputText @bind-Value="LoginUser.Usuario" placeholder="Usuario" 
-					class="primary-input-text"/>
+			<div class="inputtt-group">
+				<InputText @bind-Value="LoginUser.Usuario" placeholder="Usuario" class=" inputtt" />
+				<label>Usuario</label>
 			</div>
 		</div>
 
-		<div>
+		<div class="user-box">
 			<label for="senha" class="visually-hidden">Senha</label>
-			<div>
-				<InputText type="password" @bind-Value="LoginUser.Senha" placeholder="Senha" 
-					class="primary-input-text"/>
+			<div class="inputtt-group">
+				<InputText type="password" @bind-Value="LoginUser.Senha" placeholder="Senha" class="inputtt" />
+				<label> Senha</label>
 			</div>
 		</div>
+
 
 		<div class="text-center mt-4">
-			<button type="submit" class="botao-principal">Entrar</button>
+			<button type="submit" class="botao-principal">Login</button>
 		</div>
+
 	</div>
 
 	@if (showAuthenticationError)
 	{
-		<div role="alert" class="alert-message-div">
-			<p class="login-erro">@authenticationErrorText</p>
+		<div role="alert" class="error-box">
+			<p class="error-text">@authenticationErrorText</p>
 		</div>
 	}
 </EditForm>
@@ -52,7 +54,7 @@
 
 		if (result is not null)
 		{
-			navManager.NavigateTo("/");
+			navManager.NavigateTo("/", forceLoad: true);
 		}
 		else
 		{
