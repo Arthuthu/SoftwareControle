@@ -13,14 +13,14 @@ body {
     background-attachment: fixed;
 }
 
-    body, body #anchor {
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        background-color: var(--primary-background-color);
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        color: #FFF;
-    }
+body, body #anchor {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: var(--primary-background-color);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #FFF;
+}
 
 .fullscreen-image {
     position: absolute;
@@ -30,11 +30,6 @@ body {
     min-height: 100%;
     z-index: -1;
 }
-
-
-
-/* Light mode */
-
 
 /* Text colors */
 .text-color-success {
@@ -98,7 +93,7 @@ body {
 
 
 #botao-padding-ajustes {
-    padding: 8px 20px;
+    padding: 10px 20px;
 }
 
 .botao-filtro {
@@ -138,10 +133,6 @@ body {
         background: linear-gradient(to right, #ccc, #b9a8a5);
         font-size: 1.1rem;
     }
-
-
-
-
 
 .icone-tema {
     height: 20px;
@@ -197,11 +188,6 @@ body {
     
 }
 
-
-
-
-
-
 .buscar-input-div, .buscar-input-date-div {
     padding: 10px 10px 10px 30px;
     border-radius: 50px 50px 50px 50px;
@@ -226,11 +212,6 @@ body {
     margin: 8px;
     display: flex;
 }
-
-
-
-
-
 
 /* Navbar */
 navbar {
@@ -272,11 +253,6 @@ navbar {
     font-size: 18px;
     color: #75a1e8;
 }
-
-
-
-
-
 
 .inputt {
     color: #fff;
@@ -331,18 +307,13 @@ navbar {
     width: 100%;
 }
 
-
-
 /* Login */
-
 
 .login-label {
     font-size: 30px;
     font-weight: bold;
     padding: 0 0 20px 0;
 }
-
-
 
 .login-erro {
     position: center;
@@ -352,11 +323,6 @@ navbar {
     font-weight: bold;
     margin: 480px 0px 0px 130px;
 }
-
-
-
-
-
 
 /* Estilo para a caixa de erro */
 .error-box {
@@ -377,34 +343,6 @@ navbar {
     font-weight: bold;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .inputtt-group {
     position: relative;
     margin-left: 20px;
@@ -422,8 +360,6 @@ navbar {
     
 }
 
-
-
     .inputtt:focus, inputtt:valid {
         outline: none;
         border: 1.5px solid #f60f0f;
@@ -434,10 +370,6 @@ navbar {
             padding: 0 .6em;
             color: rgb(255, 255, 255);
         }
-
-
-
-
 
 .login-box {
     position: absolute;
@@ -452,101 +384,64 @@ navbar {
     border-radius: 0px 50px 50px 50px;
 }
 
-    .login-box .user-box {
-        position: relative;
-    }
+.login-box .user-box {
+    position: relative;
+}
 
-        .login-box .user-box input {
-            width: 100%;
-            padding: 20px 20px;
-            font-size: 20px;
-            color: #808080;
-            margin-bottom: 30px;
-            border: none;
-            border-bottom: 2px solid #FFF;
-            outline: none;
-            background: transparent;
-        }
+.login-box .user-box input {
+    width: 100%;
+    padding: 20px 20px;
+    font-size: 20px;
+    color: #808080;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 2px solid #FFF;
+    outline: none;
+    background: transparent;
+}
 
-        .login-box .user-box label {
-            position: absolute;
-            padding: 10px 1px;
-            font-size: 2px;
-            color: #fff;
-            pointer-events: none;
-            transition: .3s;
-        }
+.login-box .user-box label {
+    position: absolute;
+    padding: 10px 1px;
+    font-size: 2px;
+    color: #fff;
+    pointer-events: none;
+    transition: .3s;
+}
 
-        .login-box .user-box input:focus ~ label,
-        .login-box .user-box input:valid ~ label {
-            top: -20px;
-            left: -3px;
-            color: #3b82f6;
-            font-size: 18px;
-        }
+.login-box .user-box input:focus ~ label,
+.login-box .user-box input:valid ~ label {
+    top: -20px;
+    left: -3px;
+    color: #3b82f6;
+    font-size: 18px;
+}
 
-    .login-box form a {
-        position: relative;
-        display: inline-block;
-        padding: 10px 20px;
-        color: #ffffff;
-        font-size: 16px;
-        text-decoration: none;
-        text-transform: uppercase;
-        overflow: hidden;
-        transition: .5s;
-        margin-top: 40px;
-        letter-spacing: 4px
-    }
+.login-box form a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #ffffff;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    margin-top: 40px;
+    letter-spacing: 4px
+}
 
-    .login-box a:hover {
-        background: #03f40f;
-        color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 0 5px #03f40f, 0 0 25px #03f40f, 0 0 50px #03f40f, 0 0 100px #03f40f;
-    }
+.login-box a:hover {
+    background: #03f40f;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #03f40f, 0 0 25px #03f40f, 0 0 50px #03f40f, 0 0 100px #03f40f;
+}
 
-    .login-box a span {
-        position: absolute;
-        display: block;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.login-box a span {
+    position: absolute;
+    display: block;
+}
 
 /* Ferramenta */
 
@@ -593,8 +488,6 @@ navbar {
     color: black;
 }
 
-
-
 .elementos-lista:hover {
     background: linear-gradient(to right, rgba(204, 204, 204, 0.5), rgba(255, 220, 220, 0.5));
     cursor: pointer;
@@ -628,13 +521,6 @@ navbar {
     font-size: 22px;
 }
 
-
-
-
-
-
-
-
 .elemento-detalhes-box {
     border: 5px solid gray;
     border-radius: 100px 100px 100px 100px;
@@ -652,36 +538,11 @@ navbar {
     background: linear-gradient(160deg, #000000, #333333);
 }
 
-
-
-
-
-
-
 .elemento-buscar-input {
     font-size: 1.2rem;
     width: 100%;
     border-radius: 17px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .elemento-detalhes-boxx {
     border: solid var(--secondary-background-color);
